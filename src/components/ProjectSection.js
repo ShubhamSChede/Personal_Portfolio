@@ -9,26 +9,26 @@ const ProjectsSection = () => {
   const projects = [
     {
       id: '01',
-      name: 'Epikcart',
-      technologies: ['React', 'Redux', 'React i18n'],
+      name: 'FitTrack',
+      technologies: ['Next.js', 'Express.js', 'MongoDB'],
       screenshot: '/api/placeholder/600/400',
     },
     {
       id: '02',
-      name: 'Resume Roaster',
-      technologies: ['GPT-4', 'Next.js', 'PostgreSQL'],
+      name: 'Wedding Invites Business Website',
+      technologies: ['Next.js', 'Tailwind CSS'],
       screenshot: '/api/placeholder/600/400',
     },
     {
       id: '03',
-      name: 'Real Estate',
-      technologies: ['React.js', 'Redux', 'Tailwind CSS'],
+      name: 'MYTRACKERY',
+      technologies: ['React Native', 'Firebase', 'PostgreSQL'],
       screenshot: '/api/placeholder/600/400',
     },
     {
       id: '04',
-      name: 'Consulting Finance',
-      technologies: ['HTML', 'CSS & SCSS', 'Javascript'],
+      name: 'TECHNIX 2025',
+      technologies: ['Next.js'],
       screenshot: '/api/placeholder/600/400',
     },
   ];

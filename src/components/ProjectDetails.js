@@ -9,88 +9,71 @@ const ProjectDetails = () => {
 
   const projectsData = {
     '01': {
-      id: '01',
-      name: 'Epikcart',
-      fullName: 'Epikcart - E-commerce Solution',
-      description: 'A comprehensive e-commerce platform built with React and Redux, offering seamless shopping experiences with internationalization support.',
-      technologies: ['React', 'Redux', 'React i18n'],
-      features: [
-        'Advanced product filtering and search',
-        'Multi-language support',
-        'Responsive cart and checkout system',
-        'User authentication and profiles',
-        'Order tracking and history'
-      ],
-      images: [
-        '/api/placeholder/900/500',
-        '/api/placeholder/900/500',
-        '/api/placeholder/900/500'
-      ],
-      year: '2023',
-      link: 'https://example.com/epikcart'
+        id: '01',
+        name: 'FitTrack',
+        fullName: 'FitTrack - Comprehensive Fitness Tracker',
+        description: 'A fitness tracking application with real-time insights and an intuitive dashboard.',
+        technologies: ['Next.js', 'Express.js', 'MongoDB'],
+        features: [
+            'User profile management with BMI calculation',
+            'Fitness dashboard with daily steps, active minutes, and calories burned',
+            'Exercise tracking with workout distribution visualization',
+            'Food logging with automatic protein count calculation',
+            'Sleep tracking with trend visualization',
+            'Community chatroom using Socket.io',
+            'Gamification features with badge rewards',
+            'Two-factor authentication (2FA)',
+            'Light/dark mode for UI customization'
+        ],
+        year: '2025',
+        link: 'https://example.com/fittrack'
     },
     '02': {
-      id: '02',
-      name: 'Resume Roaster',
-      fullName: 'Resume Roaster - AI Resume Analysis',
-      description: 'An AI-powered resume analysis tool that provides detailed feedback and improvement suggestions using GPT-4.',
-      technologies: ['GPT-4', 'Next.js', 'PostgreSQL'],
-      features: [
-        'AI-driven resume feedback',
-        'Industry-specific recommendations',
-        'Expert reviewer matching',
-        'Resume version control',
-        'Interview preparation tips'
-      ],
-      images: [
-        '/api/placeholder/900/500',
-        '/api/placeholder/900/500',
-        '/api/placeholder/900/500'
-      ],
-      year: '2024',
-      link: 'https://example.com/resumeroaster'
+        id: '02',
+        name: 'Wedding Invites Business Website',
+        fullName: 'Wedding Invites Business Website',
+        description: 'A full-stack website for a wedding invites business with an admin panel for managing categories and reviews.',
+        technologies: ['Next.js', 'Tailwind CSS'],
+        features: [
+            'Sections: Home, Categories, Reviews, Terms & Conditions, Order Process',
+            'Password-protected Admin Panel for managing categories and reviews',
+            'Responsive and modern UI for enhanced user experience'
+        ],
+        year: '2025',
+        link: 'https://example.com/wedding-invites'
     },
     '03': {
-      id: '03',
-      name: 'Real Estate',
-      fullName: 'Real Estate - Property Management Platform',
-      description: 'A modern real estate platform for property listings, management, and client interactions built with React and Tailwind CSS.',
-      technologies: ['React.js', 'Redux', 'Tailwind CSS'],
-      features: [
-        'Interactive property maps',
-        'Advanced property search filters',
-        'Virtual tour integration',
-        'Agent-client messaging system',
-        'Appointment scheduling'
-      ],
-      images: [
-        '/api/placeholder/900/500',
-        '/api/placeholder/900/500',
-        '/api/placeholder/900/500'
-      ],
-      year: '2023',
-      link: 'https://example.com/realestate'
+        id: '03',
+        name: 'MYTRACKERY',
+        fullName: 'MYTRACKERY - Personal Finance & Growth Tracker',
+        description: 'A mobile application for expense tracking and personal growth management.',
+        technologies: ['React Native', 'MongoDB', 'Express.js'],
+        features: [
+            'Categorized expense tracking with add, view, and delete functionality',
+            'Visual spending insights with pie charts and bar graphs',
+            'Monthly journal for tracking mood, productivity, and health',
+            'Yearly financial statistics and spending categories',
+            'PDF export for financial reports',
+            'Automatic login/logout and recent expenses snapshot'
+        ],
+        year: '2025',
+        link: 'https://example.com/mytrackery'
     },
     '04': {
-      id: '04',
-      name: 'Consulting Finance',
-      fullName: 'Consulting Finance - Financial Advisory Platform',
-      description: 'A comprehensive financial consulting platform offering tools and resources for financial planning and analysis.',
-      technologies: ['HTML', 'CSS & SCSS', 'Javascript'],
-      features: [
-        'Interactive financial calculators',
-        'Personalized investment strategies',
-        'Retirement planning tools',
-        'Budget optimization',
-        'Tax planning assistance'
-      ],
-      images: [
-        '/api/placeholder/900/500',
-        '/api/placeholder/900/500',
-        '/api/placeholder/900/500'
-      ],
-      year: '2022',
-      link: 'https://example.com/consultingfinance'
+        id: '04',
+        name: 'TECHNIX 2025',
+        fullName: 'TECHNIX 2025 - Technical Event Website',
+        description: 'A responsive website for our department\'s technical event, TECH NIX 2025, with a Squid Game-themed UI.',
+        technologies: ['Next.js'],
+        features: [
+            'Fast performance and seamless navigation',
+            'Squid Game-themed UI with interactive elements',
+            'Attractive and dynamic UI design',
+            'Mobile responsiveness for accessibility',
+            'Animations and visual effects for enhanced interaction'
+        ],
+        year: '2025',
+        link: 'https://example.com/technix2025'
     }
   };
 
@@ -162,7 +145,7 @@ const ProjectDetails = () => {
             href={project.link} 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="inline-block bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300"
+            className="inline-block   text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300"
           >
             Visit Project
           </a>

@@ -34,7 +34,7 @@ const Page = () => {
         <AboutMe/>
         <TechStack/>
         <ProjectSection/>
-        <UiuxSection/>
+       
       </div>
     </div>
   );
