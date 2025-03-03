@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import ProjectSection from '../components/ProjectSection';
 import AboutMe from '../components/AboutMe';
 import TechStack from '../components/TechStack';
+import Navbar from '../components/Navbar';
 
 const Page = () => {
   const videoRef = useRef(null);
@@ -29,12 +30,20 @@ const Page = () => {
         Your browser does not support the video tag.
       </video>
 
+      {/* Navigation */}
+      <Navbar />
+
       {/* Content */}
-      <div className="relative z-10">
-        <AboutMe/>
-        <TechStack/>
-        <ProjectSection/>
-       
+      <div className="relative z-10 pt-24">
+        <div id="about">
+          <AboutMe />
+        </div>
+        <div id="tech">
+          <TechStack />
+        </div>
+        <div id="projects">
+          <ProjectSection />
+        </div>
       </div>
     </div>
   );
