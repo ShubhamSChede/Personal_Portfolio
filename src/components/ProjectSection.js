@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const ProjectsSection = () => {
   const [hoveredProject, setHoveredProject] = useState(null);
@@ -11,30 +12,30 @@ const ProjectsSection = () => {
       id: '01',
       name: 'FitTrack',
       technologies: ['Next.js', 'Express.js', 'MongoDB'],
-      screenshot: '/api/placeholder/600/400',
+      screenshot: `/images/01.jpg`,
     },
     {
       id: '02',
       name: 'Wedding Invites Business Website',
-      technologies: ['Next.js', 'Tailwind CSS'],
-      screenshot: '/api/placeholder/600/400',
+      technologies: ['Next.js', 'Tailwind CSS','MongoDB'],
+      screenshot: `/images/02.jpg`,
     },
     {
       id: '03',
       name: 'MYTRACKERY',
-      technologies: ['React Native', 'Firebase', 'PostgreSQL'],
-      screenshot: '/api/placeholder/600/400',
+      technologies: ['React Native', 'Express.js', 'MongoDB'],
+      screenshot: `/images/03.jpg`,
     },
     {
       id: '04',
       name: 'TECHNIX 2025',
       technologies: ['Next.js'],
-      screenshot: '/api/placeholder/600/400',
+      screenshot: `/images/04.jpg`,
     },
   ];
 
   return (
-    <div className="relative flex min-h-screen bg-black text-white p-12">
+    <div className="relative flex min-h-screen text-white p-12">
       <div className="w-full md:w-2/3">
         <div className="flex items-center mb-12">
           <div className="w-10 h-10 mr-4">
@@ -75,12 +76,16 @@ const ProjectsSection = () => {
       </div>
 
       {hoveredProject && (
-        <div className="fixed top-1/2 right-12 transform -translate-y-1/2 w-1/3 h-auto transition-all duration-300 opacity-100">
-          <img 
-            src={projects.find(p => p.id === hoveredProject).screenshot} 
-            alt={projects.find(p => p.id === hoveredProject).name} 
-            className="rounded-lg w-full h-auto shadow-xl"
-          />
+        <div className="fixed top-1/2 right-12 transform -translate-y-1/2 w-1/3 h-96 transition-all duration-300 opacity-100">
+          <div className="relative w-full h-full">
+            <Image 
+              src={`/images/${hoveredProject}.jpg`}
+              alt={projects.find(p => p.id === hoveredProject).name} 
+              fill 
+              style={{objectFit: 'contain'}}
+              className="rounded-lg shadow-xl"
+            />
+          </div>
         </div>
       )}
     </div>

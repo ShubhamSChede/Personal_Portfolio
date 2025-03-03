@@ -48,10 +48,11 @@ const StyledWrapper = styled.div`
     padding: 0.8em;
     outline: none;
     border: none;
-    background: white;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    background: #1a1a1a;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 5px -1px,
       rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     transition: 0.2s ease-in-out;
+    border-radius: 4px;
   }
 
   .instagram {
@@ -63,7 +64,7 @@ const StyledWrapper = styled.div`
   }
 
   .github {
-    fill: #333;
+    fill: #fff;
   }
 
   .Link__instagram:hover {
@@ -89,7 +90,7 @@ const StyledWrapper = styled.div`
   .Link__github:hover {
     cursor: pointer;
     scale: 1.1;
-    background-color: black;
+    background-color: #333;
   }
 
   .Link__github:hover .github {

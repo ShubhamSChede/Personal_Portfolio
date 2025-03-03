@@ -17,7 +17,6 @@ const TechStack = () => {
           { name: "React", icon: "⚛️" },
           { name: "Next.Js", icon: "N" },
           { name: "Tailwind CSS", icon: "TW" },
-          { name: "SASS", icon: "S" },
         ]
       },
       {
@@ -25,6 +24,7 @@ const TechStack = () => {
         technologies: [
           { name: "Node.Js", icon: "N" },
           { name: "Express.Js", icon: "Ex" },
+          { name: "Next.Js", icon: "N" },
         ]
       },
       {
@@ -168,7 +168,6 @@ const TechStack = () => {
   );
 };
 
-// Add this CSS to your global styles or a separate CSS module
 const styleSheet = `
 @keyframes fadeInUp {
   from {
@@ -190,7 +189,6 @@ const styleSheet = `
 }
 `;
 
-// Inject the styles
 if (typeof document !== 'undefined') {
   const style = document.createElement('style');
   style.textContent = styleSheet;
