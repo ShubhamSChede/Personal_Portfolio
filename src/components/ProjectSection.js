@@ -1,4 +1,7 @@
+'use client';
+
 import React, { useState } from 'react';
+import Link from 'next/link';
 
 const ProjectsSection = () => {
   const [hoveredProject, setHoveredProject] = useState(null);
@@ -31,7 +34,7 @@ const ProjectsSection = () => {
   ];
 
   return (
-    <div className="relative flex min-h-screen  text-white p-12">
+    <div className="relative flex min-h-screen bg-black text-white p-12">
       <div className="w-full md:w-2/3">
         <div className="flex items-center mb-12">
           <div className="w-10 h-10 mr-4">
@@ -54,9 +57,11 @@ const ProjectsSection = () => {
               <div className="flex items-center mb-2 opacity-60">
                 <span className="font-mono text-xl">_{project.id}.</span>
               </div>
-              <h3 className="text-8xl font-bold tracking-tighter transition-all duration-300 text-gray-600 group-hover:text-green-400">
-                {project.name}
-              </h3>
+              <Link href={`/ProjectDetails?id=${project.id}`}>
+                <h3 className="text-8xl font-bold tracking-tighter transition-all duration-300 text-gray-600 group-hover:text-green-400">
+                  {project.name}
+                </h3>
+              </Link>
               <div className="flex flex-wrap mt-2 gap-6 opacity-70">
                 {project.technologies.map((tech, index) => (
                   <span key={index} className="text-lg">
