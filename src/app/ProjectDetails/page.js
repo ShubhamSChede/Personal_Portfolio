@@ -8,8 +8,8 @@ import Image from 'next/image';
 // Loading component to use within Suspense
 const LoadingComponent = () => (
   <div className="min-h-screen bg-black text-white flex items-center justify-center">
-    <div className="text-center">
-      <h1 className="text-4xl font-bold mb-6">Loading project details...</h1>
+    <div className="text-center p-4">
+      <h1 className="text-2xl sm:text-4xl font-bold mb-6">Loading project details...</h1>
       <Link href="/" className="text-green-400 hover:text-green-300 underline">
         Back to Projects
       </Link>
@@ -106,8 +106,8 @@ const ProjectContent = () => {
   if (!project) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold mb-6">Loading project details...</h1>
+        <div className="text-center p-4">
+          <h1 className="text-2xl sm:text-4xl font-bold mb-6">Loading project details...</h1>
           <Link href="/" className="text-green-400 hover:text-green-300 underline">
             Back to Projects
           </Link>
@@ -117,49 +117,49 @@ const ProjectContent = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white px-12 py-16">
+    <div className="min-h-screen bg-black text-white px-4 sm:px-8 md:px-12 py-8 sm:py-16 max-w-7xl mx-auto">
       <Link 
         href="/#projects" 
-        className="inline-flex items-center text-green-600 hover:text-green-300 mb-12"
+        className="inline-flex items-center text-green-600 hover:text-green-300 mb-8 sm:mb-12"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
         </svg>
         Back to Projects
       </Link>
 
-      <div className="flex items-center mb-6 opacity-60">
-        <span className="font-mono text-xl">_{project.id}.</span>
+      <div className="flex items-center mb-4 sm:mb-6 opacity-60">
+        <span className="font-mono text-base sm:text-xl">_{project.id}.</span>
       </div>
       
-      <h1 className="text-7xl font-bold tracking-tighter text-green-600 mb-4">
+      <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-green-600 mb-3 sm:mb-4">
         {project.name}
       </h1>
       
-      <h2 className="text-3xl mb-8 text-gray-300">{project.fullName}</h2>
+      <h2 className="text-xl sm:text-2xl md:text-3xl mb-6 sm:mb-8 text-gray-300">{project.fullName}</h2>
       
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 mb-16">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-16 mb-12 lg:mb-16">
         <div className="lg:col-span-2">
-          <p className="text-xl text-gray-300 mb-8">
+          <p className="text-lg sm:text-xl text-gray-300 mb-6 sm:mb-8">
             {project.description}
           </p>
           
-          <h3 className="text-2xl font-semibold mb-4">Key Features</h3>
-          <ul className="list-disc pl-5 mb-8 space-y-2">
+          <h3 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">Key Features</h3>
+          <ul className="list-disc pl-5 mb-6 sm:mb-8 space-y-1 sm:space-y-2">
             {project.features.map((feature, index) => (
-              <li key={index} className="text-lg text-gray-300">{feature}</li>
+              <li key={index} className="text-base sm:text-lg text-gray-300">{feature}</li>
             ))}
           </ul>
           
-          <div className="flex flex-wrap gap-4 mb-8">
+          <div className="flex flex-wrap gap-2 sm:gap-4 mb-6 sm:mb-8">
             {project.technologies.map((tech, index) => (
-              <span key={index} className="bg-gray-800 text-gray-200 px-4 py-2 rounded-md">
+              <span key={index} className="bg-gray-800 text-gray-200 px-3 py-1 sm:px-4 sm:py-2 rounded-md text-sm sm:text-base">
                 {tech}
               </span>
             ))}
           </div>
           
-          <div className="mb-8">
+          <div className="mb-6 sm:mb-8">
             <span className="text-gray-400">Year: </span>
             <span className="text-white">{project.year}</span>
           </div>
@@ -168,20 +168,21 @@ const ProjectContent = () => {
             href={project.link} 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="inline-block hover:text-green-600 border-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300"
+            className="inline-block border border-green-600 text-green-500 hover:bg-green-600/10 font-semibold py-2 px-4 sm:py-3 sm:px-6 rounded-lg transition-colors duration-300"
           >
             Visit Project
           </a>
         </div>
         
-        <div className="lg:col-span-1">
-          <div className="sticky top-8">
-            <div className="relative h-80 w-full rounded-lg shadow-xl mb-6 overflow-hidden">
+        {/* Featured image - moves to top on mobile, stays sticky on desktop */}
+        <div className="order-first lg:order-last mb-8 lg:mb-0 lg:col-span-1">
+          <div className="lg:sticky lg:top-24">
+            <div className="relative h-60 sm:h-80 w-full rounded-lg shadow-xl mb-6 overflow-hidden">
               <Image 
                 src={`/images/${project.id}.jpg`} 
                 alt={project.name}
                 fill
-                style={{objectFit: 'contain'}}
+                style={{objectFit: 'cover'}}
                 className="rounded-lg"
               />
             </div>
@@ -189,11 +190,12 @@ const ProjectContent = () => {
         </div>
       </div>
       
-      <div className="mb-16">
-        <h3 className="text-3xl font-semibold mb-8">Project Gallery</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Project Gallery */}
+      <div className="mb-12 sm:mb-16">
+        <h3 className="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8">Project Gallery</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {project.images.map((image, index) => (
-            <div key={index} className="overflow-hidden rounded-lg relative h-64">
+            <div key={index} className="overflow-hidden rounded-lg relative h-48 sm:h-56 md:h-64">
               <Image 
                 src={image} 
                 alt={`${project.name} screenshot ${index + 1}`}
@@ -204,6 +206,31 @@ const ProjectContent = () => {
             </div>
           ))}
         </div>
+      </div>
+      
+      {/* Bottom navigation */}
+      <div className="flex flex-col sm:flex-row justify-between items-center pt-8 border-t border-gray-800">
+        <Link 
+          href="/#projects" 
+          className="inline-flex items-center text-green-600 hover:text-green-300 mb-4 sm:mb-0"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          All Projects
+        </Link>
+        
+        <a 
+          href={project.link} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="inline-flex items-center text-green-600 hover:text-green-300"
+        >
+          Visit Live Site
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
       </div>
     </div>
   );
