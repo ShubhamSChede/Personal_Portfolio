@@ -30,7 +30,7 @@ const ProjectDetails = () => {
         ],
         year: '2025',
         link: 'https://fitness-tracker-seven-lime.vercel.app/',
-        images: ['/projects/fittrack-1.jpg', '/projects/fittrack-2.jpg', '/projects/fittrack-3.jpg']
+        images: ['/images/fittrack-1.png', '/images/fittrack-2.png', '/images/fittrack-3.png', '/images/fittrack-4.png', '/images/fittrack-5.png', '/images/fittrack-6.png', '/images/fittrack-7.png', '/images/fittrack-8.png', '/images/fittrack-9.png']
     },
     '02': {
         id: '02',
@@ -45,7 +45,7 @@ const ProjectDetails = () => {
         ],
         year: '2025',
         link: 'https://roshstocks.vercel.app/',
-        images: ['/projects/wedding-1.jpg', '/projects/wedding-2.jpg', '/projects/wedding-3.jpg']
+        images: ['/images/rosh (3).png', '/images/rosh (4).png', '/images/rosh (5).png', '/images/rosh (6).png', '/images/rosh (7).png', '/images/rosh (8).png', '/images/rosh (9).png', '/images/rosh (10).png', '/images/rosh (11).png', '/images/rosh (1).png', '/images/rosh (2).png']
     },
     '03': {
         id: '03',
@@ -63,13 +63,14 @@ const ProjectDetails = () => {
         ],
         year: '2025',
         link: 'https://my-trackery-website.vercel.app/',
-        images: ['/projects/mytrackery-1.jpg', '/projects/mytrackery-2.jpg', '/projects/mytrackery-3.jpg']
+        //write uptil mt16
+        images: ['/images/Mytrakcery/mt1.jpg', '/images/Mytrakcery/mt2.jpg', '/images/Mytrakcery/mt3.jpg', '/images/Mytrakcery/mt4.jpg', '/images/Mytrakcery/mt5.jpg', '/images/Mytrakcery/mt6.jpg', '/images/Mytrakcery/mt7.jpg', '/images/Mytrakcery/mt8.jpg', '/images/Mytrakcery/mt9.jpg', '/images/Mytrakcery/mt10.jpg', '/images/Mytrakcery/mt11.jpg', '/images/Mytrakcery/mt12.jpg', '/images/Mytrakcery/mt13.jpg', '/images/Mytrakcery/mt14.jpg', '/images/Mytrakcery/mt15.jpg', '/images/Mytrakcery/mt16.jpg',]
     },
     '04': {
         id: '04',
         name: 'TECHNIX 2025',
         fullName: 'TECHNIX 2025 - Technical Event Website',
-        description: 'A responsive website for our department\'s technical event, TECH NIX 2025, with a Squid Game-themed UI.',
+        description: 'A responsive website for our department\'s technical event, TECH NIX 2025, with a Squid Game-themed UI.  ( under development )',
         technologies: ['Next.js'],
         features: [
             'Fast performance and seamless navigation',
@@ -80,7 +81,7 @@ const ProjectDetails = () => {
         ],
         year: '2025',
         link: 'https://technix-2025.vercel.app/',
-        images: ['/projects/technix-1.jpg', '/projects/technix-2.jpg', '/projects/technix-3.jpg']
+        images: ['/images/t1 (1).png', '/images/t1 (2).png', '/images/t1 (3).png', '/images/t1 (4).png']
     },
   };
 
@@ -105,7 +106,10 @@ const ProjectDetails = () => {
 
   return (
     <div className="min-h-screen bg-black text-white px-12 py-16">
-      <Link href="/" className="inline-flex items-center text-green-400 hover:text-green-300 mb-12">
+      <Link 
+        href="/#projects" 
+        className="inline-flex items-center text-green-600 hover:text-green-300 mb-12"
+      >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
         </svg>
@@ -116,7 +120,7 @@ const ProjectDetails = () => {
         <span className="font-mono text-xl">_{project.id}.</span>
       </div>
       
-      <h1 className="text-7xl font-bold tracking-tighter text-green-400 mb-4">
+      <h1 className="text-7xl font-bold tracking-tighter text-green-600 mb-4">
         {project.name}
       </h1>
       
@@ -152,7 +156,7 @@ const ProjectDetails = () => {
             href={project.link} 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="inline-block bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300"
+            className="inline-block  hover:text-green-600 border-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300"
           >
             Visit Project
           </a>
@@ -182,7 +186,7 @@ const ProjectDetails = () => {
                 src={image} 
                 alt={`${project.name} screenshot ${index + 1}`}
                 fill
-                style={{objectFit: 'cover'}}
+                style={{objectFit: 'contain'}}
                 className="transform hover:scale-105 transition-transform duration-300"
               />
             </div>

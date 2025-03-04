@@ -46,7 +46,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="text-white font-bold text-xl md:text-2xl">
-          <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 text-transparent bg-clip-text">
+          <span className="bg-green-600 text-transparent bg-clip-text">
             SHUBHAM CHEDE
           </span>
         </Link>
@@ -73,7 +73,7 @@ const Navbar = () => {
           </button>
           <Link 
             href="/contact" 
-            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors font-medium"
+            className=" hover:text-green-400 text-white px-4 py-2 rounded-lg transition-colors font-medium"
           >
             Contact Me
           </Link>
@@ -118,12 +118,12 @@ const Navbar = () => {
             >
               Projects
             </button>
-            <Link 
-              href="/contact"
-              className="inline-block bg-green-600 hover:bg-green-700 text-white text-center px-4 py-2 rounded-lg transition-colors font-medium"
+            <button
+              onClick={() => scrollToSection('contact')}
+              className=" hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors font-medium"
             >
               Contact Me
-            </Link>
+            </button>
           </div>
         </div>
       )}

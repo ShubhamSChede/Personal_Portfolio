@@ -4,6 +4,7 @@ import ProjectSection from '../components/ProjectSection';
 import AboutMe from '../components/AboutMe';
 import TechStack from '../components/TechStack';
 import Navbar from '../components/Navbar';
+import ContactMe from '../components/ContactMe';
 
 const Page = () => {
   const videoRef = useRef(null);
@@ -43,6 +44,9 @@ const Page = () => {
         </div>
         <div id="projects">
           <ProjectSection />
+        </div>
+        <div id="contact">
+        <ContactMe />
         </div>
       </div>
     </div>
