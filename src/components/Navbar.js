@@ -71,12 +71,12 @@ const Navbar = () => {
           >
             Projects
           </button>
-          <Link 
-            href="/contact" 
-            className=" hover:text-green-400 text-white px-4 py-2 rounded-lg transition-colors font-medium"
+          <button 
+            onClick={() => scrollToSection('contact')} 
+            className="text-white hover:text-green-400 transition-colors"
           >
-            Contact Me
-          </Link>
+            Contact me
+          </button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -120,7 +120,7 @@ const Navbar = () => {
             </button>
             <button
               onClick={() => scrollToSection('contact')}
-              className=" hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors font-medium"
+             className="text-white text-left py-2 hover:text-green-400 transition-colors"
             >
               Contact Me
             </button>

@@ -6,25 +6,29 @@ const TechStack = () => {
   const sectionRef = useRef(null);
   const [isMinimized, setIsMinimized] = useState(false);
   
-  // Data structure for the tech stack
+  // Updated data structure for the tech stack following your categories
   const techData = {
     sections: [
       {
-        title: "FRONTEND",
+        title: "PROGRAMMING LANGUAGES",
         technologies: [
+          { name: "C", icon: "C" },
+          { name: "C++", icon: "C++" },
+          { name: "HTML", icon: "HTML" },
+          { name: "CSS", icon: "CSS" },
           { name: "JavaScript", icon: "JS" },
           { name: "TypeScript", icon: "TS" },
-          { name: "React", icon: "⚛️" },
-          { name: "Next.Js", icon: "N" },
-          { name: "Tailwind CSS", icon: "TW" },
         ]
       },
       {
-        title: "BACKEND",
+        title: "TECHNOLOGIES & FRAMEWORKS",
         technologies: [
-          { name: "Node.Js", icon: "N" },
-          { name: "Express.Js", icon: "Ex" },
-          { name: "Next.Js", icon: "N" },
+          { name: "React.js", icon: "⚛️" },
+          { name: "Next.js", icon: "N" },
+          { name: "React Native", icon: "RN" },
+          { name: "Express.js", icon: "Ex" },
+          { name: "Node.js", icon: "N" },
+          { name: "Tailwind CSS", icon: "TW" },
         ]
       },
       {
@@ -32,25 +36,22 @@ const TechStack = () => {
         technologies: [
           { name: "MongoDB", icon: "M" },
           { name: "PostgreSQL", icon: "PG" },
-          { name: "MySQL", icon: "My" },
+          { name: "MySQL", icon: "SQL" },
         ]
       },
       {
-        title: "LANGUAGES",
+        title: "VERSION CONTROL & TOOLS",
         technologies: [
-          { name: "C", icon: "C" },
-          { name: "C++", icon: "C++" },
-          { name: "HTML", icon: "H" },
-          { name: "CSS", icon: "CS" },
-        ]
-      },
-      {
-        title: "TOOLS",
-        technologies: [
-          { name: "Git", icon: "G" },
+          { name: "Git", icon: "Git" },
           { name: "GitHub", icon: "GH" },
+          { name: "SQL Workbench", icon: "SW" },
           { name: "Prisma", icon: "P" },
-          { name: "Figma", icon: "F" },
+        ]
+      },
+      {
+        title: "DESIGN & PROTOTYPING",
+        technologies: [
+          { name: "Figma", icon: "Fig" },
         ]
       }
     ]
@@ -138,10 +139,10 @@ const TechStack = () => {
               className="mb-16 stack-section opacity-0 translate-y-8 transition-all duration-700 ease-out"
             >
               <div className="flex items-center justify-between">
-                <h3 className="text-5xl font-bold mb-8 text-gray-500">{section.title}</h3>
+                <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-gray-500">{section.title}</h3>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-4">
                 {section.technologies.map((tech, techIndex) => (
                   <div 
                     key={techIndex} 
