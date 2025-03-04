@@ -1,11 +1,24 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
-const ProjectDetails = () => {
+// Loading component to use within Suspense
+const LoadingComponent = () => (
+  <div className="min-h-screen bg-black text-white flex items-center justify-center">
+    <div className="text-center">
+      <h1 className="text-4xl font-bold mb-6">Loading project details...</h1>
+      <Link href="/" className="text-green-400 hover:text-green-300 underline">
+        Back to Projects
+      </Link>
+    </div>
+  </div>
+);
+
+// ProjectContent component that uses useSearchParams
+const ProjectContent = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
   const [project, setProject] = useState(null);
@@ -63,7 +76,6 @@ const ProjectDetails = () => {
         ],
         year: '2025',
         link: 'https://my-trackery-website.vercel.app/',
-        //write uptil mt16
         images: ['/images/Mytrakcery/mt1.jpg', '/images/Mytrakcery/mt2.jpg', '/images/Mytrakcery/mt3.jpg', '/images/Mytrakcery/mt4.jpg', '/images/Mytrakcery/mt5.jpg', '/images/Mytrakcery/mt6.jpg', '/images/Mytrakcery/mt7.jpg', '/images/Mytrakcery/mt8.jpg', '/images/Mytrakcery/mt9.jpg', '/images/Mytrakcery/mt10.jpg', '/images/Mytrakcery/mt11.jpg', '/images/Mytrakcery/mt12.jpg', '/images/Mytrakcery/mt13.jpg', '/images/Mytrakcery/mt14.jpg', '/images/Mytrakcery/mt15.jpg', '/images/Mytrakcery/mt16.jpg',]
     },
     '04': {
@@ -156,7 +168,7 @@ const ProjectDetails = () => {
             href={project.link} 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="inline-block  hover:text-green-600 border-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300"
+            className="inline-block hover:text-green-600 border-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300"
           >
             Visit Project
           </a>
@@ -194,6 +206,14 @@ const ProjectDetails = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const ProjectDetails = () => {
+  return (
+    <Suspense fallback={<LoadingComponent />}>
+      <ProjectContent />
+    </Suspense>
   );
 };
 
