@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ProjectSection from '../components/ProjectSection';
 import AboutMe from '../components/AboutMe';
 import TechStack from '../components/TechStack';
@@ -8,22 +8,31 @@ import ContactMe from '../components/ContactMe';
 
 const Page = () => {
   const videoRef = useRef(null);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 0.4
-const Page = () => {
-  const videoRef = useRef(null);
+  const [videoLoaded, setVideoLoaded] = useState(false);
 
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.playbackRate = 0.4;
-      videoRef.current.play();
+      
+      // Add event listeners to handle video loading
+      videoRef.current.addEventListener('loadeddata', () => {
+        setVideoLoaded(true);
+      });
+      
+      videoRef.current.addEventListener('error', () => {
+        console.error('Video failed to load');
+        setVideoLoaded(false);
+      });
     }
   }, []);
 
   return (
-    <div className="relative w-full overflow-hidden bg-black">
+    <div className="relative w-full">
+      {/* Background Fallback - shows when video isn't loaded */}
+      {!videoLoaded && (
+        <div className="fixed top-0 left-0 w-full h-full -z-10 bg-gray-900 opacity-90" />
+      )}
+      
       {/* Background Video */}
       <video 
         ref={videoRef}
@@ -33,42 +42,7 @@ const Page = () => {
         loop 
         muted 
         playsInline
-      />
-
-      {/* Navigation */}
-      <Navbar />
-
-      {/* Content */}
-      <div className="relative z-10 pt-24">
-        <div id="about" className="py-12">
-          <AboutMe />
-        </div>
-        <div id="tech" className="py-12">
-          <TechStack />
-        </div>
-        <div id="projects" className="py-12">
-          <ProjectSection />
-        </div>
-        <div id="contact" className="py-12">
-          <ContactMe />
-        </div>
-      </div>
-    </div>
-  );
-};;
-    }
-  }, []);
-
-  return (
-    <div className="relative w-full">
-      {/* Background Video */}
-      <video 
-        ref={videoRef}
-        className="fixed top-0 left-0 w-full h-full object-cover -z-10 opacity-20" 
-        src="https://res.cloudinary.com/drwljhedb/video/upload/v1741360926/geuaxnnj4oqv0hngelbf.mp4" 
-        autoPlay 
-        loop 
-        muted 
+        preload="auto"
       />
 
       {/* Navigation */}
