@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import ProjectSection from '../components/ProjectSection';
 import AboutMe from '../components/AboutMe';
 import TechStack from '../components/TechStack';
@@ -7,12 +7,24 @@ import Navbar from '../components/Navbar';
 import ContactMe from '../components/ContactMe';
 
 const Page = () => {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 0.4;
+    }
+  }, []);
+
   return (
     <div className="relative w-full">
-      {/* Background Image */}
-      <div 
-        className="fixed top-0 left-0 w-full h-full -z-10 opacity-20 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url(/images/bg.jpg)' }}
+      {/* Background Video */}
+      <video 
+        ref={videoRef}
+        className="fixed top-0 left-0 w-full h-full object-cover -z-10 opacity-20" 
+        src="https://res.cloudinary.com/drwljhedb/video/upload/v1741360926/geuaxnnj4oqv0hngelbf.mp4" 
+        autoPlay 
+        loop 
+        muted 
       />
 
       {/* Navigation */}
