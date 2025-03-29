@@ -49,6 +49,12 @@ const ProjectsSection = () => {
       technologies: ['Next.js'],
       screenshot: `/images/04.jpg`,
     },
+  {
+      id: '05',
+      name: 'Handyman Aggregation system',
+      technologies: ['Next.js', 'MongoDB'],
+      screenshot: `/images/05.png`,
+  }
   ];
 
   return (
@@ -94,7 +100,7 @@ const ProjectsSection = () => {
               {isMobile && hoveredProject === project.id && (
                 <div className="mt-4 h-52 sm:h-64 relative rounded-lg overflow-hidden">
                   <Image 
-                    src={`/images/${project.id}.jpg`}
+                    src={`/images/${hoveredProject}.${projects.find(p => p.id === hoveredProject).screenshot.split('.').pop()}`}
                     alt={project.name}
                     fill
                     style={{objectFit: 'cover'}}
@@ -113,7 +119,7 @@ const ProjectsSection = () => {
               {hoveredProject && (
                 <div className="w-full h-96 md:h-[28rem] relative transition-all duration-300 opacity-100">
                   <Image 
-                    src={`/images/${hoveredProject}.jpg`}
+                    src={`/images/${hoveredProject}.${projects.find(p => p.id === hoveredProject).screenshot.split('.').pop()}`}
                     alt={projects.find(p => p.id === hoveredProject).name} 
                     fill 
                     style={{objectFit: 'contain'}}
