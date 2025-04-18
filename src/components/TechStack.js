@@ -2,6 +2,29 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 
+// First, let's create a custom component for icons with white backgrounds
+const TechIcon = ({ src, alt, withBackground = false }) => {
+  return (
+    <div className="w-12 h-12 flex items-center justify-center backdrop-blur-sm bg-gray-800/30 rounded-md overflow-hidden border border-gray-700 hover:border-gray-500 transition-all duration-300">
+      {withBackground ? (
+        <div className="bg-white p-1 rounded-sm flex items-center justify-center w-8 h-8">
+          <img 
+            src={src} 
+            alt={alt} 
+            className="w-6 h-6 object-contain" 
+          />
+        </div>
+      ) : (
+        <img 
+          src={src} 
+          alt={alt} 
+          className="w-8 h-8 object-contain" 
+        />
+      )}
+    </div>
+  );
+};
+
 const TechStack = () => {
   const sectionRef = useRef(null);
   const [isMinimized, setIsMinimized] = useState(false);
@@ -12,46 +35,46 @@ const TechStack = () => {
       {
         title: "PROGRAMMING LANGUAGES",
         technologies: [
-          { name: "C", icon: "C" },
-          { name: "C++", icon: "C++" },
-          { name: "HTML", icon: "HTML" },
-          { name: "CSS", icon: "CSS" },
-          { name: "JavaScript", icon: "JS" },
-          { name: "TypeScript", icon: "TS" },
+          { name: "C", icon: "/icons/C.png", withBackground: false },
+          { name: "C++", icon: "/icons/C++ (CPlusPlus).png", withBackground: false },
+          { name: "HTML", icon: "/icons/HTML5.png", withBackground: false },
+          { name: "CSS", icon: "/icons/CSS3.png", withBackground: false },
+          { name: "JavaScript", icon: "/icons/JavaScript.png", withBackground: false },
+          { name: "TypeScript", icon: "/icons/TypeScript.png", withBackground: false },
         ]
       },
       {
         title: "TECHNOLOGIES & FRAMEWORKS",
         technologies: [
-          { name: "React.js", icon: "⚛️" },
-          { name: "Next.js", icon: "N" },
-          { name: "React Native", icon: "RN" },
-          { name: "Express.js", icon: "Ex" },
-          { name: "Node.js", icon: "N" },
-          { name: "Tailwind CSS", icon: "TW" },
+          { name: "React.js", icon: "/icons/React.png", withBackground: false },
+          { name: "Next.js", icon: "/icons/Next.js.png", withBackground: true },
+          { name: "React Native", icon: "/icons/React.png", withBackground: false },
+          { name: "Express.js", icon: "/icons/Express.png", withBackground: true },
+          { name: "Node.js", icon: "/icons/Node.js.png", withBackground: false },
+          { name: "Tailwind CSS", icon: "/icons/Tailwind CSS.png", withBackground: false },
         ]
       },
       {
         title: "DATABASES",
         technologies: [
-          { name: "MongoDB", icon: "M" },
-          { name: "PostgreSQL", icon: "PG" },
-          { name: "MySQL", icon: "SQL" },
+          { name: "MongoDB", icon: "/icons/MongoDB.png", withBackground: false },
+          { name: "PostgreSQL", icon: "/icons/PostgresSQL.png", withBackground: false },
+          { name: "MySQL", icon: "/icons/MySQL.png", withBackground: false },
         ]
       },
       {
         title: "VERSION CONTROL & TOOLS",
         technologies: [
-          { name: "Git", icon: "Git" },
-          { name: "GitHub", icon: "GH" },
-          { name: "SQL Workbench", icon: "SW" },
-          { name: "Prisma", icon: "P" },
+          { name: "Git", icon: "/icons/Git.png", withBackground: false },
+          { name: "GitHub", icon: "/icons/GitHub.png", withBackground: true },
+          { name: "SQL Workbench", icon: "/icons/MySQL.png", withBackground: false },
+          { name: "Prisma", icon: "/icons/prisma.png", withBackground: true },
         ]
       },
       {
         title: "DESIGN & PROTOTYPING",
         technologies: [
-          { name: "Figma", icon: "Fig" },
+          { name: "Figma", icon: "/icons/Figma.png", withBackground: false },
         ]
       }
     ]
@@ -149,9 +172,11 @@ const TechStack = () => {
                     className="tech-item flex items-center gap-4 opacity-0 translate-y-4 transition-all duration-500 ease-out"
                     style={{ transitionDelay: `${techIndex * 50}ms` }}
                   >
-                    <div className="w-12 h-12 flex items-center justify-center backdrop-blur-sm bg-gray-800/30 rounded-md overflow-hidden border border-gray-700 hover:border-gray-500 transition-all duration-300">
-                      <span className="text-xl font-bold">{tech.icon}</span>
-                    </div>
+                    <TechIcon 
+                      src={tech.icon} 
+                      alt={tech.name} 
+                      withBackground={tech.withBackground} 
+                    />
                     <span className="text-xl">{tech.name}</span>
                   </div>
                 ))}
