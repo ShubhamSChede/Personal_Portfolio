@@ -53,16 +53,36 @@ export async function POST(request) {
     };
 
     // Send the email
+    console.log('Attempting to send email with configuration:', {
+      host: process.env.EMAIL_SERVER_HOST,
+      port: process.env.EMAIL_SERVER_PORT,
+      secure: process.env.EMAIL_SERVER_SECURE === 'true',
+      // Omit actual credentials from logs
+      user: process.env.EMAIL_SERVER_USER ? '[CONFIGURED]' : '[MISSING]',
+      pass: process.env.EMAIL_SERVER_PASSWORD ? '[CONFIGURED]' : '[MISSING]'
+    });
+    
     await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully');
 
     return NextResponse.json(
       { message: 'Your message has been sent. I\'ll get back to you soon!' },
       { status: 200 }
     );
   } catch (error) {
-    console.error('Contact form error:', error);
+    console.error('Contact form error details:', {
+      message: error.message,
+      stack: error.stack,
+      code: error.code,
+      responseCode: error.responseCode
+    });
+    
+    // More informative error message for debugging
     return NextResponse.json(
-      { message: 'Something went wrong. Please try again later.' },
+      { 
+        message: 'Something went wrong. Please try again later.',
+        error: process.env.NODE_ENV === 'development' ? error.message : undefined 
+      },
       { status: 500 }
     );
   }

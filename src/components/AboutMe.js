@@ -47,7 +47,7 @@ export default function AboutMe() {
             instagramUrl="https://www.instagram.com/shubham.dark/"
           />
           <a 
-            href="/Shubham_Chede_CV.pdf" 
+            href="/shubham_chede_resume_final.pdf" 
             download
             className="inline-flex items-center border border-green-600 text-green-500 font-medium py-2 px-4 rounded-lg transition-colors duration-300 hover:bg-green-600/10"
           >
