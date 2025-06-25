@@ -1,5 +1,6 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
 import ProjectSection from '../components/ProjectSection';
 import AboutMe from '../components/AboutMe';
 import TechStack from '../components/TechStack';
@@ -8,7 +9,47 @@ import ContactMe from '../components/ContactMe';
 
 const Page = () => {
   const videoRef = useRef(null);
+  const waveRef = useRef(null);
   const [videoReady, setVideoReady] = useState(false);
+
+  // Enhanced GSAP animation for floating wave
+  useEffect(() => {
+    if (!waveRef.current) return;
+    
+    // Create a more dynamic wave animation
+    const waveTl = gsap.timeline({
+      repeat: -1,
+      yoyo: true,
+    });
+    
+    // Add multiple animations to create a more complex wave effect
+    waveTl.to(waveRef.current, {
+      y: "-=35",
+      x: "+=15",
+      rotation: 3,
+      duration: 2.5,
+      ease: "sine.inOut"
+    })
+    .to(waveRef.current, {
+      y: "-=15",
+      x: "-=20",
+      rotation: -2,
+      duration: 3,
+      ease: "sine.inOut"
+    })
+    .to(waveRef.current, {
+      y: "+=25",
+      x: "+=5",
+      rotation: 1,
+      duration: 2.8,
+      ease: "sine.inOut"
+    });
+    
+    return () => {
+      // Cleanup animation
+      waveTl.kill();
+    };
+  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -55,7 +96,21 @@ const Page = () => {
   }, [videoReady]);
   
   return (
-    <div className="relative w-full min-h-screen bg-black">
+    <div className="relative w-full min-h-screen bg-black overflow-hidden">
+      {/* Wave animation */}
+      <div 
+        ref={waveRef}
+        className="fixed w-full h-[400px] left-0 bottom-[-160px] -z-5 opacity-10"
+      >
+        <svg viewBox="0 0 1440 320" preserveAspectRatio="none" className="w-full h-full">
+          <path 
+            fill="#4F46E5" 
+            fillOpacity="0.8"
+            d="M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,90.7C672,85,768,107,864,133.3C960,160,1056,192,1152,186.7C1248,181,1344,139,1392,117.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+          ></path>
+        </svg>
+      </div>
+      
       {/* Video background - only shown when ready */}
       {videoReady && (
         <video 

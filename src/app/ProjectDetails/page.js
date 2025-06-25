@@ -4,6 +4,7 @@ import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // Loading component to use within Suspense
 const LoadingComponent = () => (
@@ -101,6 +102,7 @@ const ProjectContent = () => {
     },
     
      '05' : {
+      id: '05',
       name: 'Handyman Aggregation System',
       fullName: 'Handyman Aggregation System - A platform for connecting customers with local handyman services.',
       description: 'A platform for connecting customers with local handyman services.',
@@ -112,7 +114,7 @@ const ProjectContent = () => {
 'Auto Location Tracking – Detects user location for precise service matching.',
  'Vendor Empowerment – Service providers have full control over their working hours and bookings.',
 'Secure Transactions – Payments via UPI, credit/debit cards, and wallets for a hassle-free experience.',
- 'Localized Services – Tailored to Goa’s unique market, with the potential to scale beyond.'
+ 'Localized Services – Tailored to Goa\'s unique market, with the potential to scale beyond.'
       ],
       year: '2025',
       link: 'https://handyman-aggregation-system.vercel.app/',
@@ -144,8 +146,31 @@ const ProjectContent = () => {
     );
   }
 
+  // Animation variants
+  const sectionVariant = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: 'easeOut', staggerChildren: 0.12 } },
+  };
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' } },
+  };
+  const techTagVariant = {
+    hidden: { opacity: 0, y: 10 },
+    visible: (i) => ({ opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.4 } }),
+  };
+  const galleryImgVariant = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: (i) => ({ opacity: 1, scale: 1, transition: { delay: i * 0.08, duration: 0.5 } }),
+  };
+
   return (
-    <div className="min-h-screen bg-black text-white px-4 sm:px-8 md:px-12 py-8 sm:py-16 max-w-7xl mx-auto">
+    <motion.div
+      className="min-h-screen bg-black text-white px-4 sm:px-8 md:px-12 py-8 sm:py-16 max-w-7xl mx-auto"
+      variants={sectionVariant}
+      initial="hidden"
+      animate="visible"
+    >
       <Link 
         href="/#projects" 
         className="inline-flex items-center text-green-600 hover:text-green-300 mb-8 sm:mb-12"
@@ -156,43 +181,55 @@ const ProjectContent = () => {
         Back to Projects
       </Link>
 
-      <div className="flex items-center mb-4 sm:mb-6 opacity-60">
-        <span className="font-mono text-base sm:text-xl">_{project.id}.</span>
-      </div>
+      <motion.div className="flex items-center mb-4 sm:mb-6 opacity-60" variants={fadeInUp}>
+        <span className="font-mono text-base sm:text-xl text-blue-400">_{project.id}.</span>
+      </motion.div>
       
-      <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-green-600 mb-3 sm:mb-4">
+      <motion.h1
+        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-500 mb-3 sm:mb-4 drop-shadow-xl"
+        variants={fadeInUp}
+      >
         {project.name}
-      </h1>
+      </motion.h1>
       
-      <h2 className="text-xl sm:text-2xl md:text-3xl mb-6 sm:mb-8 text-gray-300">{project.fullName}</h2>
+      <motion.h2 className="text-xl sm:text-2xl md:text-3xl mb-6 sm:mb-8 text-gray-300" variants={fadeInUp}>
+        {project.fullName}
+      </motion.h2>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-16 mb-12 lg:mb-16">
         <div className="lg:col-span-2">
-          <p className="text-lg sm:text-xl text-gray-300 mb-6 sm:mb-8">
+          <motion.p className="text-lg sm:text-xl text-gray-300 mb-6 sm:mb-8" variants={fadeInUp}>
             {project.description}
-          </p>
+          </motion.p>
           
-          <h3 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">Key Features</h3>
-          <ul className="list-disc pl-5 mb-6 sm:mb-8 space-y-1 sm:space-y-2">
+          <motion.h3 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4" variants={fadeInUp}>Key Features</motion.h3>
+          <motion.ul className="list-disc pl-5 mb-6 sm:mb-8 space-y-1 sm:space-y-2" variants={fadeInUp}>
             {project.features.map((feature, index) => (
-              <li key={index} className="text-base sm:text-lg text-gray-300">{feature}</li>
+              <motion.li key={index} className="text-base sm:text-lg text-gray-300" variants={fadeInUp}>{feature}</motion.li>
             ))}
-          </ul>
+          </motion.ul>
           
           <div className="flex flex-wrap gap-2 sm:gap-4 mb-6 sm:mb-8">
             {project.technologies.map((tech, index) => (
-              <span key={index} className="bg-gray-800 text-gray-200 px-3 py-1 sm:px-4 sm:py-2 rounded-md text-sm sm:text-base">
+              <motion.span
+                key={index}
+                className="text-sm sm:text-base px-3 py-1 bg-gray-800/30 backdrop-blur-sm rounded-lg border border-gray-700/50 transition-all duration-300 hover:border-blue-400/50 shadow-md"
+                custom={index}
+                variants={techTagVariant}
+                initial="hidden"
+                animate="visible"
+              >
                 {tech}
-              </span>
+              </motion.span>
             ))}
           </div>
           
-          <div className="mb-6 sm:mb-8">
+          <motion.div className="mb-6 sm:mb-8" variants={fadeInUp}>
             <span className="text-gray-400">Year: </span>
             <span className="text-white">{project.year}</span>
-          </div>
+          </motion.div>
           
-          <div className="flex flex-wrap gap-4">
+          <motion.div className="flex flex-wrap gap-4" variants={fadeInUp}>
             <a 
               href={project.link} 
               target="_blank" 
@@ -216,45 +253,55 @@ const ProjectContent = () => {
               </svg>
               View on GitHub
             </a>
-          </div>
+          </motion.div>
         </div>
         
         {/* Featured image - moves to top on mobile, stays sticky on desktop */}
-        <div className="order-first lg:order-last mb-8 lg:mb-0 lg:col-span-1">
+        <motion.div className="order-first lg:order-last mb-8 lg:mb-0 lg:col-span-1" variants={fadeInUp}>
           <div className="lg:sticky lg:top-24">
-            <div className="relative h-60 sm:h-80 w-full rounded-lg shadow-xl mb-6 overflow-hidden">
+            <motion.div className="relative h-60 sm:h-80 w-full rounded-lg shadow-xl mb-6 overflow-hidden bg-gradient-to-br from-blue-400/30 via-purple-500/20 to-green-400/20 backdrop-blur-lg border border-blue-400/20" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.7 }}>
               <Image 
                 src={project.images[0]} // Use the first image directly from the array
                 alt={project.name}
                 fill
                 style={{ objectFit: 'cover' }}
                 className="rounded-lg"
+                priority={true}
               />
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
       
       {/* Project Gallery */}
-      <div className="mb-12 sm:mb-16">
+      <motion.div className="mb-12 sm:mb-16" variants={fadeInUp}>
         <h3 className="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8">Project Gallery</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {project.images.map((image, index) => (
-            <div key={index} className="overflow-hidden rounded-lg relative h-48 sm:h-56 md:h-64">
+            <motion.div
+              key={index}
+              className="overflow-hidden rounded-lg relative h-48 sm:h-56 md:h-64 bg-gradient-to-br from-blue-400/10 via-purple-500/10 to-green-400/10 border border-blue-400/10"
+              custom={index}
+              variants={galleryImgVariant}
+              initial="hidden"
+              animate="visible"
+              whileHover={{ scale: 1.04, boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.25)' }}
+              transition={{ duration: 0.4, ease: 'easeInOut' }}
+            >
               <Image 
                 src={image} 
                 alt={`${project.name} screenshot ${index + 1}`}
                 fill
                 style={{objectFit: 'contain'}}
-                className="transform hover:scale-105 transition-transform duration-300"
+                className="rounded-lg shadow-xl"
               />
-            </div>
+            </motion.div>
           ))}
         </div>
-      </div>
+      </motion.div>
       
       {/* Bottom navigation */}
-      <div className="flex flex-col sm:flex-row justify-between items-center pt-8 border-t border-gray-800">
+      <motion.div className="flex flex-col sm:flex-row justify-between items-center pt-8 border-t border-gray-800" variants={fadeInUp}>
         <Link 
           href="/#projects" 
           className="inline-flex items-center text-green-600 hover:text-green-300 mb-4 sm:mb-0"
@@ -262,11 +309,6 @@ const ProjectContent = () => {
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
         </svg>
-
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-
-          </svg>
           All Projects
         </Link>
         
@@ -295,8 +337,8 @@ const ProjectContent = () => {
             </svg>
           </a>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

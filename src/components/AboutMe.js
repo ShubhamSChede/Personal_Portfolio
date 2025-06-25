@@ -1,46 +1,73 @@
 import Image from "next/image";
 import SocialLinks from "./Socials";
+import { motion } from "framer-motion";
 
 export default function AboutMe() {
-  return (
-    <section className="text-white flex flex-col md:flex-row items-center justify-between py-12 px-6 md:px-16 max-w-7xl mx-auto">
-      {/* Left Section */}
-      <div className="w-full md:max-w-2xl text-center md:text-left lg:pr-12">
-        <h3 className="text-gray-400 text-sm tracking-wider mb-2">
-          MORE ABOUT ME
-        </h3>
-        <h1 className="text-4xl md:text-5xl font-bold">
-          Full-Stack Developer and{" "}
-          <span className="inline-block md:hidden">
-            <br />
-          </span>
-          <span className="hidden md:inline-block">
-            <br />
-          </span>
-          a little bit of{" "}
-          <span className="bg-green-600 text-transparent bg-clip-text">
-            everything
-          </span>
-        </h1>
-        <p className="mt-4 text-gray-300">
-  I'm Shubham Chede, a proactive full-stack developer passionate about
-  creating dynamic web experiences. From frontend to backend, I thrive
-  on solving complex problems with clean, efficient code. My expertise
-  spans React Native, Next.js, and Node.js, and I have a keen eye for UI/UX design.
-</p>
-<p className="mt-4 text-gray-300">
-  When I'm not coding, I'm exploring new ideas and staying curious. I also enjoy
-  working on design and digital art, adding a creative touch to my projects.
-  Life's about balance, and I love embracing every part of it.
-</p>
-<p className="mt-4 text-gray-300">
-  I believe in waking up each day eager to make a difference!
-</p>
+  // Animation variants
+  const sectionVariant = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: 'easeOut', staggerChildren: 0.12 } },
+  };
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' } },
+  };
+  const floatVariant = {
+    animate: {
+      y: [0, -16, 0],
+      boxShadow: [
+        '0 4px 32px 0 rgba(59,130,246,0.15)',
+        '0 8px 48px 0 rgba(168,85,247,0.25)',
+        '0 4px 32px 0 rgba(59,130,246,0.15)'
+      ],
+      transition: {
+        duration: 4,
+        repeat: Infinity,
+        ease: 'easeInOut',
+      },
+    },
+  };
 
-        <p className="mt-4 text-gray-300 font-serif">
+  return (
+    <motion.section
+      className="text-white flex flex-col md:flex-row items-center justify-between py-16 px-6 md:px-16 max-w-7xl mx-auto relative"
+      variants={sectionVariant}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+    >
+      {/* Left Section */}
+      <motion.div className="w-full md:max-w-2xl text-center md:text-left lg:pr-12 z-10" variants={fadeInUp}>
+        <motion.h3 className="text-gray-400 text-sm tracking-wider mb-2" variants={fadeInUp}>
+          MORE ABOUT ME
+        </motion.h3>
+        <motion.h1
+          className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-green-400 to-purple-500 bg-clip-text text-transparent drop-shadow-lg"
+          variants={fadeInUp}
+        >
+          Full-Stack Developer and
+          <span className="inline-block md:hidden"><br /></span>
+          <span className="hidden md:inline-block"><br /></span>
+          a little bit of <span className="bg-green-600 text-transparent bg-clip-text">everything</span>
+        </motion.h1>
+        <motion.p className="mt-4 text-gray-300" variants={fadeInUp}>
+          I'm Shubham Chede, a proactive full-stack developer passionate about
+          creating dynamic web experiences. From frontend to backend, I thrive
+          on solving complex problems with clean, efficient code. My expertise
+          spans React Native, Next.js, and Node.js, and I have a keen eye for UI/UX design.
+        </motion.p>
+        <motion.p className="mt-4 text-gray-300" variants={fadeInUp}>
+          When I'm not coding, I'm exploring new ideas and staying curious. I also enjoy
+          working on design and digital art, adding a creative touch to my projects.
+          Life's about balance, and I love embracing every part of it.
+        </motion.p>
+        <motion.p className="mt-4 text-gray-300" variants={fadeInUp}>
+          I believe in waking up each day eager to make a difference!
+        </motion.p>
+        <motion.p className="mt-4 text-gray-300 font-serif" variants={fadeInUp}>
           You can find me here
-        </p>
-        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-4">
+        </motion.p>
+        <motion.div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-4" variants={fadeInUp}>
           <SocialLinks 
             linkedinUrl="https://www.linkedin.com/in/shubham-chede-2957bb278"
             githubUrl="https://github.com/ShubhamSChede"
@@ -56,17 +83,31 @@ export default function AboutMe() {
             </svg>
             Download CV
           </a>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Right Section (Profile Image) */}
-      <div className="mt-12 md:mt-0 flex justify-center">
-        <div className="relative">
-          {/* Background effect */}
-          <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 rounded-2xl blur opacity-30 group-hover:opacity-70 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
-          
+      <motion.div className="mt-12 md:mt-0 flex justify-center z-20" variants={fadeInUp}>
+        <motion.div
+          className="relative group"
+          variants={floatVariant}
+          animate="animate"
+        >
+          {/* Animated Gradient Background */}
+          <motion.div
+            className="absolute -inset-2 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 rounded-2xl blur-xl opacity-40 group-hover:opacity-70 transition duration-1000 group-hover:duration-200"
+            animate={{ opacity: [0.4, 0.7, 0.4] }}
+            transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
+          ></motion.div>
+          {/* Glassmorphism Overlay */}
+          <div className="absolute inset-0 rounded-2xl bg-white/5 backdrop-blur-md border border-blue-400/10 z-10"></div>
           {/* Image container */}
-          <div className="relative">
+          <motion.div
+            className="relative z-20"
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+          >
             <Image
               src="/images/shubham.jpg"
               alt="Shubham Chede"
@@ -75,9 +116,11 @@ export default function AboutMe() {
               className="rounded-2xl border-2 border-gray-800 shadow-2xl object-cover w-auto h-auto"
               priority
             />
-          </div>
-        </div>
-      </div>
-    </section>
+          </motion.div>
+        </motion.div>
+      </motion.div>
+
+
+    </motion.section>
   );
 }
