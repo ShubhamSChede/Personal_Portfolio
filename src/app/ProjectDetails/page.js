@@ -124,6 +124,29 @@ const ProjectContent = () => {
         '/images/handyman-11.png', '/images/handyman-12.png', '/images/handyman-13.png',
         '/images/handyman-14.png'
       ]
+    },
+    '06': {
+      id: '06',
+      name: 'Taskaholic',
+      fullName: 'Taskaholic - Secure Task Management Platform',
+      description: 'Taskaholic is a powerful, secure, and intuitive task management platform designed to help individuals and teams stay organized and productive. Built with Supabase for backend and authentication services, it features sign-in, two-factor authentication (2FA), and a clean, modular interface for seamless task handling across personal and collaborative environments.',
+      technologies: ['Next.js', 'Supabase', 'TypeScript', 'ShadCN', 'Tailwind CSS'],
+      features: [
+        '🔐 Authentication & Security: Secure login with two-factor authentication (2FA) powered by Supabase Auth',
+        '📊 Dashboard: Overview of total tasks, completion rate, task status, recent tasks, and organizations',
+        '📝 My Tasks: Create and manage tasks with title, description, due date, priority, tags, and completion status',
+        '👥 My Organizations: Join/create collaborative groups with task templates and member management',
+        '📈 Statistics: Visual insights into task completion rates, priority distribution, and trends over time',
+        '🙍‍♂ My Profile: Update personal details including full name and avatar URL',
+        '🔄 Task Types: Support for both personal tasks and organization-wide collaborative tasks',
+        '✅ Create Task Features: Add tasks with priority levels (Low, Medium, High) and customizable tags',
+        '🎯 Task Management: Sort, organize, and track tasks with comprehensive filtering options',
+        '🔒 Security: Two-factor authentication ensures data privacy and user security'
+      ],
+      year: '2025',
+      link: 'https://task-o-holic.vercel.app/',
+      github: 'https://github.com/ShubhamSChede/Task-o-holic',
+      images: ['/images/task/task (1).png', '/images/task/task (2).png', '/images/task/task (3).png', '/images/task/task (4).png', '/images/task/task (5).png', '/images/task/task (6).png', '/images/task/task (7).png', '/images/task/task (8).png', '/images/task/task (9).png', '/images/task/task (10).png', '/images/task/task (11).png', '/images/task/task (12).png']
     }
   };
 

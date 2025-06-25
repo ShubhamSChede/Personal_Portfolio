@@ -48,7 +48,7 @@ export default function AboutMe() {
           Full-Stack Developer and
           <span className="inline-block md:hidden"><br /></span>
           <span className="hidden md:inline-block"><br /></span>
-          a little bit of <span className="bg-green-600 text-transparent bg-clip-text">everything</span>
+           little bit of <span className="bg-green-600 text-transparent bg-clip-text">everything</span>
         </motion.h1>
         <motion.p className="mt-4 text-gray-300" variants={fadeInUp}>
           I'm Shubham Chede, a proactive full-stack developer passionate about
@@ -93,12 +93,7 @@ export default function AboutMe() {
           variants={floatVariant}
           animate="animate"
         >
-          {/* Animated Gradient Background */}
-          <motion.div
-            className="absolute -inset-2 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 rounded-2xl blur-xl opacity-40 group-hover:opacity-70 transition duration-1000 group-hover:duration-200"
-            animate={{ opacity: [0.4, 0.7, 0.4] }}
-            transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
-          ></motion.div>
+
           {/* Glassmorphism Overlay */}
           <div className="absolute inset-0 rounded-2xl bg-white/5 backdrop-blur-md border border-blue-400/10 z-10"></div>
           {/* Image container */}
@@ -109,7 +104,7 @@ export default function AboutMe() {
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
             <Image
-              src="/images/shubham.jpg"
+              src="/images/shubham2.jpg"
               alt="Shubham Chede"
               width={280}
               height={280}

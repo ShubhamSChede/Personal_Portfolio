@@ -92,7 +92,7 @@ const ProjectsSection = () => {
       id: '06',
       name: 'Task-o-holic',
       technologies: ['Next.js', 'Tailwind CSS', 'ShadCN', 'Supabase'],
-      screenshot: `/images/06.jpg`,
+      screenshot: `/images/task/task (1).png`,
     }
   ];
 
