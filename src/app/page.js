@@ -102,6 +102,9 @@ const Page = () => {
         <title>Shubham Chede | Full Stack Developer Portfolio</title>
         <meta name="description" content="Shubham Chede - Full Stack Developer specializing in Next.js, React Native, Node.js, Supabase, and modern web technologies. View portfolio, projects, and contact Shubham Chede for development opportunities." />
         <meta name="keywords" content="Shubham Chede, Full Stack Developer, Next.js, React Native, Node.js, Supabase, Tailwind, ShadCN, Portfolio, Web Developer, India, Taskaholic, FitTrack, Roshstocks, Technix, Handyman" />
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="index, follow" />
+        <meta name="google" content="notranslate" />
         <meta name="author" content="Shubham Chede" />
         <meta property="og:title" content="Shubham Chede | Full Stack Developer Portfolio" />
         <meta property="og:description" content="Shubham Chede - Full Stack Developer specializing in Next.js, React Native, Node.js, Supabase, and modern web technologies. View portfolio, projects, and contact Shubham Chede for development opportunities." />
