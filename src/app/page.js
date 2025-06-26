@@ -165,7 +165,7 @@ const Page = () => {
         <Navbar />
 
         {/* Content */}
-        <div className="relative z-10 pt-32">
+        <div className="relative z-10 pt-12">
           <div id="about">
             <AboutMe />
           </div>
