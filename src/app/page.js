@@ -100,17 +100,17 @@ const Page = () => {
     <>
       <Head>
         <title>Shubham Chede | Full Stack Developer Portfolio</title>
-        <meta name="description" content="Portfolio of Shubham Chede - Full Stack Developer, Next.js, React Native, Node.js, Supabase, Tailwind, ShadCN. Explore projects, skills, and contact info." />
+        <meta name="description" content="Shubham Chede - Full Stack Developer specializing in Next.js, React Native, Node.js, Supabase, and modern web technologies. View portfolio, projects, and contact Shubham Chede for development opportunities." />
         <meta name="keywords" content="Shubham Chede, Full Stack Developer, Next.js, React Native, Node.js, Supabase, Tailwind, ShadCN, Portfolio, Web Developer, India, Taskaholic, FitTrack, Roshstocks, Technix, Handyman" />
         <meta name="author" content="Shubham Chede" />
         <meta property="og:title" content="Shubham Chede | Full Stack Developer Portfolio" />
-        <meta property="og:description" content="Portfolio of Shubham Chede - Full Stack Developer, Next.js, React Native, Node.js, Supabase, Tailwind, ShadCN. Explore projects, skills, and contact info." />
+        <meta property="og:description" content="Shubham Chede - Full Stack Developer specializing in Next.js, React Native, Node.js, Supabase, and modern web technologies. View portfolio, projects, and contact Shubham Chede for development opportunities." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://shubhamchede.tech/" />
         <meta property="og:image" content="/images/shubham2.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Shubham Chede | Full Stack Developer Portfolio" />
-        <meta name="twitter:description" content="Portfolio of Shubham Chede - Full Stack Developer, Next.js, React Native, Node.js, Supabase, Tailwind, ShadCN. Explore projects, skills, and contact info." />
+        <meta name="twitter:description" content="Shubham Chede - Full Stack Developer specializing in Next.js, React Native, Node.js, Supabase, and modern web technologies. View portfolio, projects, and contact Shubham Chede for development opportunities." />
         <meta name="twitter:image" content="/images/shubham2.jpg" />
         <link rel="canonical" href="https://shubhamchede.tech/" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
