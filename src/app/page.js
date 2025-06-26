@@ -164,26 +164,6 @@ const Page = () => {
         {/* Navigation */}
         <Navbar />
 
-        {/* Status Banner */}
-        <div className="fixed top-16 right-4 z-50 bg-black/80 backdrop-blur-md border border-gray-700/50 rounded-lg shadow-lg">
-          <div className="px-4 py-2">
-            <div className="flex-row items-center space-x-4 text-gray-300 text-sm font-medium">
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span className="text-green-400 font-semibold whitespace-nowrap">
-                  Open to New Opportunities
-                </span>
-              </div>
-              <div className="hidden lg:flex items-center space-x-2">
-                <span className="text-gray-500"></span>
-                <span className="text-blue-400 font-semibold whitespace-nowrap">
-                  Immediately Available
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Content */}
         <div className="relative z-10 pt-32">
           <div id="about">
