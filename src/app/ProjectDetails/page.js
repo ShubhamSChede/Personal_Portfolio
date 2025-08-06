@@ -59,16 +59,14 @@ const ProjectContent = () => {
     '02': {
       id: '02',
       name: 'Roshstocks',
-      fullName: 'Roshstocks - Stock Market Analysis Platform',
+      fullName: 'Wedding Invitation Website',
       description: 'A stock market analysis and portfolio management tool with real-time data and insights.',
       technologies: ['Next.js', 'Tailwind CSS','MongoDB'],
       features: [
-        'Real-time stock market data and analysis',
-        'Portfolio management and tracking',
-        'Interactive charts and visualizations',
-        'Stock screening and filtering tools',
-        'Responsive design for all devices',
-        'User authentication and data persistence'
+        'Developed a full-stack website for a wedding invites business, featuring 4+ sections like Home, Categories, Reviews, and Process.',
+        'Designed a user-friendly interface to showcase dynamic categories and client testimonials.',
+        'Implemented a password-protected Admin Panel for securely managing categories, including uploading and editing invites.',
+        'Enabled admin control over moderating user reviews to maintain quality and authenticity across the platform.'
       ],
       year: '2025',
       link: 'https://roshstocks.vercel.app/',

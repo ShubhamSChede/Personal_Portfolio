@@ -35,7 +35,7 @@ const ProjectsSection = () => {
     {
       id: '02',
       name: 'Roshstocks',
-      description: 'A stock market analysis and portfolio management tool.',
+      description: 'Wedding Invitation Website',
       technologies: ['Next.js', 'Tailwind CSS','MongoDB'],
       screenshot: `/images/02.jpg`,
     },
