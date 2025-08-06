@@ -1,23 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue:wght@400&family=Inconsolata:wght@400;500&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-bebas: 'Bebas Neue', sans-serif;
+  --font-inconsolata: 'Inconsolata', monospace;
+  --background: #242424;
+  --foreground: #ffffff;
 }
 
 body {
   color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background: 
+    linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.02) 50%, transparent 60%),
+    linear-gradient(-45deg, transparent 40%, rgba(255,255,255,0.02) 50%, transparent 60%),
+    var(--background);
+  background-size: 100px 100px, 100px 100px, 100% 100%;
+  font-family: var(--font-inconsolata);
+  overflow-x: hidden;
+}
+
+/* Custom cursor styles */
+#cursor-dot-outline {
+  pointer-events: none;
+  z-index: 9999;
+}
+
+#cursor-dot {
+  pointer-events: none;
+  z-index: 9999;
 }
 
 /* Add these to your global CSS */
@@ -60,4 +72,29 @@ body {
 .backface-hidden {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+}
+
+/* Glass morphism effects */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #242424;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4f46e5;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6366f1;
 }

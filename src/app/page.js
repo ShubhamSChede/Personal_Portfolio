@@ -6,6 +6,9 @@ import AboutMe from '../components/AboutMe';
 import TechStack from '../components/TechStack';
 import Navbar from '../components/Navbar';
 import ContactMe from '../components/ContactMe';
+import ExperienceSection from '../components/ExperienceSection';
+import HackathonSection from '../components/HackathonSection';
+import Footer from '../components/Footer';
 import Head from 'next/head';
 
 const Page = () => {
@@ -135,35 +138,7 @@ const Page = () => {
           description: 'Portfolio of Shubham Chede - Full Stack Developer, Next.js, React Native, Node.js, Supabase, Tailwind, ShadCN.'
         }) }} />
       </Head>
-      <div className="relative w-full min-h-screen bg-black overflow-hidden">
-        {/* Wave animation */}
-        <div 
-          ref={waveRef}
-          className="fixed w-full h-[400px] left-0 bottom-[-160px] -z-5 opacity-10"
-        >
-          <svg viewBox="0 0 1440 320" preserveAspectRatio="none" className="w-full h-full">
-            <path 
-              fill="#4F46E5" 
-              fillOpacity="0.8"
-              d="M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,90.7C672,85,768,107,864,133.3C960,160,1056,192,1152,186.7C1248,181,1344,139,1392,117.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-            ></path>
-          </svg>
-        </div>
-        
-        {/* Video background - only shown when ready */}
-        {videoReady && (
-          <video 
-            ref={videoRef}
-            className="fixed top-0 left-0 w-full h-full object-cover -z-10 opacity-20" 
-            src="https://res.cloudinary.com/drwljhedb/video/upload/v1741360926/geuaxnnj4oqv0hngelbf.mp4" 
-            autoPlay 
-            loop 
-            muted 
-            playsInline
-            preload="auto"
-          />
-        )}
-
+      <div className="relative w-full min-h-screen bg-[#242424] overflow-hidden">
         {/* Navigation */}
         <Navbar />
 
@@ -175,12 +150,19 @@ const Page = () => {
           <div id="tech">
             <TechStack />
           </div>
+          <div id="experience">
+            <ExperienceSection />
+          </div>
+          <div id="hackathons">
+            <HackathonSection />
+          </div>
           <div id="projects">
             <ProjectSection />
           </div>
           <div id="contact">
             <ContactMe />
           </div>
+          <Footer />
         </div>
       </div>
     </>

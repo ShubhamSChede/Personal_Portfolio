@@ -66,84 +66,104 @@ const ContactMe = () => {
   };
 
   return (
-    <div id="contact" className="py-24 px-6 md:px-16 max-w-6xl mx-auto">
+    <section id="contact" className="py-24 px-6 md:px-16 max-w-6xl mx-auto">
       <div className="text-center mb-16">
-        <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="text-gray-400">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" fill="currentColor" />
-            </svg>
-          </div>
-          <h2 className="text-4xl font-bold text-white tracking-wider">GET IN TOUCH</h2>
-        </div>
-        <p className="text-gray-400 max-w-lg mx-auto">
+        <h2 
+          className="text-[7vw] md:text-[3vw] font-extrabold text-white drop-shadow-lg tracking-widest text-center leading-none mb-2"
+          style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.12em', textShadow: '0 8px 32px rgba(0,0,0,0.25)' }}
+        >
+          GET IN TOUCH
+        </h2>
+        <p 
+          className="text-indigo-400 text-base md:text-lg font-bold tracking-wide text-center max-w-lg mx-auto"
+          style={{ fontFamily: 'var(--font-inconsolata)' }}
+        >
           Have a project in mind or want to collaborate? Send me a message and let's create something amazing together.
         </p>
       </div>
 
       {status.info.error && (
-        <div className="mb-8 p-4 bg-red-900/20 border border-red-500/30 rounded-lg text-red-500 text-center">
-          <p>{status.info.msg}</p>
+        <div className="mb-8 p-4 glass border border-red-500/30 rounded-lg text-red-400 text-center">
+          <p style={{ fontFamily: 'var(--font-inconsolata)' }}>{status.info.msg}</p>
         </div>
       )}
       
       {status.submitted && !status.info.error && (
-        <div className="mb-8 p-4 bg-green-900/20 border border-green-500/30 rounded-lg text-green-500 text-center">
-          <p>{status.info.msg}</p>
+        <div className="mb-8 p-4 glass border border-green-500/30 rounded-lg text-green-400 text-center">
+          <p style={{ fontFamily: 'var(--font-inconsolata)' }}>{status.info.msg}</p>
         </div>
       )}
       
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <label htmlFor="name" className="block text-sm text-gray-400 font-medium">
+          <label 
+            htmlFor="name" 
+            className="block text-sm text-indigo-400 font-medium"
+            style={{ fontFamily: 'var(--font-inconsolata)' }}
+          >
             NAME
           </label>
           <input
-            id="name"
             type="text"
+            id="name"
             name="name"
             value={formData.name}
             onChange={handleChange}
             required
+            className="w-full px-4 py-3 glass border border-white/10 rounded-lg text-white placeholder-gray-400 focus:border-indigo-400 focus:outline-none transition-colors duration-300"
             placeholder="Your name"
-            className="w-full bg-transparent border-b border-gray-800 focus:border-green-500 py-2 text-white placeholder-gray-600 focus:outline-none transition-colors duration-300"
+            style={{ fontFamily: 'var(--font-inconsolata)' }}
           />
         </div>
-        
+
         <div className="space-y-2">
-          <label htmlFor="email" className="block text-sm text-gray-400 font-medium">
+          <label 
+            htmlFor="email" 
+            className="block text-sm text-indigo-400 font-medium"
+            style={{ fontFamily: 'var(--font-inconsolata)' }}
+          >
             EMAIL
           </label>
           <input
-            id="email"
             type="email"
+            id="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
             required
-            placeholder="Your email address"
-            className="w-full bg-transparent border-b border-gray-800 focus:border-green-500 py-2 text-white placeholder-gray-600 focus:outline-none transition-colors duration-300"
+            className="w-full px-4 py-3 glass border border-white/10 rounded-lg text-white placeholder-gray-400 focus:border-indigo-400 focus:outline-none transition-colors duration-300"
+            placeholder="your.email@example.com"
+            style={{ fontFamily: 'var(--font-inconsolata)' }}
           />
         </div>
-        
+
         <div className="space-y-2 md:col-span-2">
-          <label htmlFor="subject" className="block text-sm text-gray-400 font-medium">
+          <label 
+            htmlFor="subject" 
+            className="block text-sm text-indigo-400 font-medium"
+            style={{ fontFamily: 'var(--font-inconsolata)' }}
+          >
             SUBJECT
           </label>
           <input
-            id="subject"
             type="text"
+            id="subject"
             name="subject"
             value={formData.subject}
             onChange={handleChange}
             required
-            placeholder="Subject of your message"
-            className="w-full bg-transparent border-b border-gray-800 focus:border-green-500 py-2 text-white placeholder-gray-600 focus:outline-none transition-colors duration-300"
+            className="w-full px-4 py-3 glass border border-white/10 rounded-lg text-white placeholder-gray-400 focus:border-indigo-400 focus:outline-none transition-colors duration-300"
+            placeholder="What's this about?"
+            style={{ fontFamily: 'var(--font-inconsolata)' }}
           />
         </div>
-        
+
         <div className="space-y-2 md:col-span-2">
-          <label htmlFor="message" className="block text-sm text-gray-400 font-medium">
+          <label 
+            htmlFor="message" 
+            className="block text-sm text-indigo-400 font-medium"
+            style={{ fontFamily: 'var(--font-inconsolata)' }}
+          >
             MESSAGE
           </label>
           <textarea
@@ -152,74 +172,89 @@ const ContactMe = () => {
             value={formData.message}
             onChange={handleChange}
             required
-            placeholder="Your message"
-            rows="6"
-            className="w-full bg-transparent border-b border-gray-800 focus:border-green-500 py-2 text-white placeholder-gray-600 focus:outline-none transition-colors duration-300 resize-none"
+            rows={6}
+            className="w-full px-4 py-3 glass border border-white/10 rounded-lg text-white placeholder-gray-400 focus:border-indigo-400 focus:outline-none transition-colors duration-300 resize-none"
+            placeholder="Tell me about your project..."
+            style={{ fontFamily: 'var(--font-inconsolata)' }}
           />
         </div>
-        
-        <div className="md:col-span-2 flex justify-center mt-8">
-          <button 
-            type="submit" 
+
+        <div className="md:col-span-2 text-center">
+          <button
+            type="submit"
             disabled={status.submitting}
-            className={`bg-transparent border-2 border-green-600 hover:bg-green-900/30 text-green-500 font-medium py-3 px-8 rounded-lg transition-all duration-300 flex items-center space-x-2 ${
-              status.submitting ? 'opacity-70 cursor-not-allowed' : ''
-            }`}
+            className="px-8 py-4 glass border border-indigo-400 text-indigo-400 rounded-lg hover:bg-indigo-400/10 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            style={{ fontFamily: 'var(--font-inconsolata)' }}
           >
-            {status.submitting && (
-              <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-            )}
-            <span>{status.submitting ? 'SENDING...' : 'SEND MESSAGE'}</span>
+            {status.submitting ? 'Sending...' : 'Send Message'}
           </button>
         </div>
       </form>
 
-      <div className="mt-24 grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
-        <div className="space-y-4">
-          <div className="flex justify-center">
-            <div className="w-12 h-12 rounded-full bg-gray-800/50 flex items-center justify-center border border-gray-700">
-              <svg className="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-            </div>
+      {/* Contact Info */}
+      <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="text-center">
+          <div className="w-12 h-12 glass rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
           </div>
-          <h3 className="text-white font-medium">EMAIL</h3>
-          <p className="text-gray-400">shubhamchede@gmail.com</p>
+          <h3 
+            className="text-white font-bold mb-2"
+            style={{ fontFamily: 'var(--font-bebas)' }}
+          >
+            EMAIL
+          </h3>
+          <p 
+            className="text-gray-300"
+            style={{ fontFamily: 'var(--font-inconsolata)' }}
+          >
+            shubhamchede1602@gmail.com
+          </p>
         </div>
 
-        <div className="space-y-4">
-          <div className="flex justify-center">
-            <div className="w-12 h-12 rounded-full bg-gray-800/50 flex items-center justify-center border border-gray-700">
-              <svg className="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-            </div>
+        <div className="text-center">
+          <div className="w-12 h-12 glass rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
           </div>
-          <h3 className="text-white font-medium">LOCATION</h3>
-          <p className="text-gray-400">Goa</p>
+          <h3 
+            className="text-white font-bold mb-2"
+            style={{ fontFamily: 'var(--font-bebas)' }}
+          >
+            LOCATION
+          </h3>
+          <p 
+            className="text-gray-300"
+            style={{ fontFamily: 'var(--font-inconsolata)' }}
+          >
+            Goa, India
+          </p>
         </div>
 
-        <div className="space-y-4">
-          <div className="flex justify-center">
-            <div className="w-12 h-12 rounded-full bg-gray-800/50 flex items-center justify-center border border-gray-700">
-              <svg className="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
+        <div className="text-center">
+          <div className="w-12 h-12 glass rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
           </div>
-          <h3 className="text-white font-medium">AVAILABILITY</h3>
-          <p className="text-gray-400">Open to new opportunities</p>
+          <h3 
+            className="text-white font-bold mb-2"
+            style={{ fontFamily: 'var(--font-bebas)' }}
+          >
+            AVAILABILITY
+          </h3>
+          <p 
+            className="text-gray-300"
+            style={{ fontFamily: 'var(--font-inconsolata)' }}
+          >
+            Open to opportunities
+          </p>
         </div>
       </div>
-
-      <div className="mt-16 text-center text-gray-500 text-sm">
-        © {new Date().getFullYear()} Shubham Chede. All rights reserved.
-      </div>
-    </div>
+    </section>
   );
 };
 
