@@ -46,14 +46,14 @@ export default function AboutMe() {
           MORE ABOUT ME
         </motion.h3>
         <motion.h1
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-3 sm:mb-4 drop-shadow-xl"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-indigo-400 mb-3 sm:mb-4 drop-shadow-xl"
           variants={fadeInUp}
           style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.04em' }}
         >
           Full-Stack Developer and
           <span className="inline-block md:hidden"><br /></span>
           <span className="hidden md:inline-block"><br /></span>
-           little bit of <span className="text-transparent">everything</span>
+           little bit of <span className="text-white">everything</span>
         </motion.h1>
         <motion.p 
           className="mt-4 text-gray-300" 

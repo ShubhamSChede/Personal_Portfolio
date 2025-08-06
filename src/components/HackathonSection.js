@@ -171,7 +171,7 @@ export default function HackathonSection() {
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <h1
-          className="text-[8vw] md:text-[5vw] font-extrabold text-white font-bebas drop-shadow-lg tracking-widest text-center leading-none"
+          className="text-[8vw] md:text-[5vw] font-extrabold text-indigo-400 font-bebas drop-shadow-lg tracking-widest text-center leading-none"
           style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.12em', textShadow: '0 8px 32px rgba(0,0,0,0.25)' }}
           animate={floatingAnimation}
         >
@@ -241,51 +241,51 @@ export default function HackathonSection() {
               exit="exit"
               className="w-full max-w-2xl glass rounded-3xl shadow-2xl p-8 flex flex-col items-center lg:items-start relative overflow-hidden"
             >
-              {/* Background glow effect */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-3xl"
-                animate={{
-                  opacity: [0.3, 0.6, 0.3],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              />
-              
-              {/* Hero Image */}
-              <motion.div className="relative z-10 mb-6">
-                <motion.div 
-                  className="w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 rounded-2xl shadow-2xl bg-gradient-to-br from-indigo-400 to-purple-400 flex items-center justify-center overflow-hidden"
-                  variants={imageVariants}
-                  whileHover="hover"
-                  animate="visible"
-                >
-                  {hackathons[active].image ? (
-                    <Image
-                      src={hackathons[active].image}
-                      alt={hackathons[active].title}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 128px, (max-width: 1024px) 160px, 192px"
-                    />
-                  ) : (
-                    <span className="text-4xl font-bold text-white">🏆</span>
-                  )}
-                </motion.div>
-                <motion.div
-                  className="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-400/30 to-purple-400/30"
-                  animate={{
-                    opacity: [0, 0.5, 0],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-              </motion.div>
+               {/* Background glow effect */}
+               <motion.div
+                 className="absolute inset-0 bg-indigo-500/20 rounded-3xl"
+                 animate={{
+                   opacity: [0.3, 0.6, 0.3],
+                 }}
+                 transition={{
+                   duration: 3,
+                   repeat: Infinity,
+                   ease: "easeInOut",
+                 }}
+               />
+               
+               {/* Hero Image */}
+               <motion.div className="relative z-10 mb-6">
+                 <motion.div 
+                   className="w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 rounded-2xl shadow-2xl bg-indigo-400 flex items-center justify-center overflow-hidden"
+                   variants={imageVariants}
+                   whileHover="hover"
+                   animate="visible"
+                 >
+                   {hackathons[active].image ? (
+                     <Image
+                       src={hackathons[active].image}
+                       alt={hackathons[active].title}
+                       fill
+                       className="object-cover"
+                       sizes="(max-width: 768px) 128px, (max-width: 1024px) 160px, 192px"
+                     />
+                   ) : (
+                     <span className="text-4xl font-bold text-white">🏆</span>
+                   )}
+                 </motion.div>
+                 <motion.div
+                   className="absolute inset-0 rounded-2xl bg-indigo-400/30"
+                   animate={{
+                     opacity: [0, 0.5, 0],
+                   }}
+                   transition={{
+                     duration: 2,
+                     repeat: Infinity,
+                     ease: "easeInOut",
+                   }}
+                 />
+               </motion.div>
 
               {/* Content */}
               <div className="relative z-10 text-center lg:text-left">

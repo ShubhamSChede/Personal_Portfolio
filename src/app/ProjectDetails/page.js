@@ -251,11 +251,11 @@ const ProjectContent = () => {
       </motion.div>
       
       <motion.h1
-        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-3 sm:mb-4 drop-shadow-xl"
+        className="text-4xl md:text-6xl font-bold text-indigo-400 mb-4"
         variants={fadeInUp}
         style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.04em' }}
       >
-        {project.name}
+        {project.fullName}
       </motion.h1>
       
       <motion.h2 

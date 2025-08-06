@@ -48,7 +48,7 @@ const Navbar = () => {
         <div className="flex-1 md:flex-none">
           <Link href="/" className="text-white font-bold text-xl md:text-2xl block text-center md:text-left">
             <span 
-              className="bg-gradient-to-r from-indigo-400 to-purple-400 text-transparent bg-clip-text"
+              className="text-indigo-400"
               style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.04em' }}
             >
               SHUBHAM CHEDE

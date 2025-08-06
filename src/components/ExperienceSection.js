@@ -88,7 +88,7 @@ export default function ExperienceSection() {
           className="absolute left-1/2 top-0 -translate-x-1/2 z-0 rounded-full hidden md:block"
           style={{
             width: '4px',
-            background: 'linear-gradient(to bottom, #818cf8 0%, #a5b4fc 50%, #c4b5fd 100%)',
+            background: '#6366f1',
             height: lineHeight,
             transition: 'height 0.7s cubic-bezier(0.4,0,0.2,1)',
           }}

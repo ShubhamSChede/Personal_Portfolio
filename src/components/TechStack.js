@@ -118,7 +118,7 @@ const TechStack = () => {
       {/* Header */}
       <div className="text-center mb-12">
         <h2 
-          className="text-[7vw] md:text-[3vw] font-extrabold text-white drop-shadow-lg tracking-widest text-center leading-none mb-2"
+          className="text-[7vw] md:text-[3vw] font-extrabold text-indigo-400 drop-shadow-lg tracking-widest text-center leading-none mb-2"
           style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.12em', textShadow: '0 8px 32px rgba(0,0,0,0.25)' }}
         >
           TECH STACK
