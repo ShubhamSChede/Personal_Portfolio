@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { staggerFadeIn, magneticEffect, floatingAnimation } from "../utils/gsapAnimations";
+import { staggerFadeIn, magneticEffect } from "../utils/gsapAnimations";
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
@@ -186,9 +186,6 @@ export default function HackathonSection() {
           }
         }
       );
-
-      // Add floating animation to header
-      floatingAnimation(header);
 
       // Animate hackathon cards
       if (cards.length > 0) {
