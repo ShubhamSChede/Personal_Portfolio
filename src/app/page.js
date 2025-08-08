@@ -149,7 +149,7 @@ const Page = () => {
       )}
       
       {!isLoading && (
-        <div className="relative w-full min-h-screen bg-[#242424] overflow-hidden">
+        <div className="relative w-full min-h-screen overflow-hidden">
           {/* Custom Cursor */}
           <CustomCursor />
           

@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 // Loading component to use within Suspense
 const LoadingComponent = () => (
-  <div className="min-h-screen bg-[#242424] text-white flex items-center justify-center">
+        <div className="min-h-screen text-white flex items-center justify-center">
     <div className="text-center p-4">
       <h1 
         className="text-2xl sm:text-4xl font-bold mb-6"
@@ -211,7 +211,7 @@ const ProjectContent = () => {
 
   if (!project) {
     return (
-      <div className="min-h-screen bg-[#242424] text-white flex items-center justify-center">
+      <div className="min-h-screen text-white flex items-center justify-center">
         <div className="text-center p-4">
           <h1 
             className="text-2xl sm:text-4xl font-bold mb-6"
@@ -251,7 +251,7 @@ const ProjectContent = () => {
 
   return (
     <motion.div
-      className="min-h-screen bg-[#242424] text-white px-4 sm:px-8 md:px-12 py-8 sm:py-16 max-w-7xl mx-auto"
+      className="min-h-screen text-white px-4 sm:px-8 md:px-12 py-8 sm:py-16 max-w-7xl mx-auto"
       variants={sectionVariant}
       initial="hidden"
       animate="visible"
