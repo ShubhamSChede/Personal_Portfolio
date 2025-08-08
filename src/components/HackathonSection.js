@@ -1,8 +1,14 @@
 'use client';
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { staggerFadeIn, magneticEffect, floatingAnimation } from "../utils/gsapAnimations";
+
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger);
 
 const hackathons = [
   {
@@ -10,27 +16,28 @@ const hackathons = [
     date: "April 2025",
     desc: `Developed a full-stack application connecting students with companies, featuring resume parsing, LeetCode-style DSA compiler, AI-generated aptitude tests, voice-based HR interview feedback, and job-test eligibility matching.`,
     image: "/images/RIT.jpeg",
-    projectLink: "/ProjectDetails?id=07"
+    projectLink: "/ProjectDetails?id=50864"
   },
   {
-    title: "ParticipanT – 24-H Hackathon 2025 (PCCE) | ",
+    title: "Participant – 24-H Hackathon 2025 (PCCE) | Career Path",
     date: "March 2025",
-    desc: `Developed a gamified platform to encourage eco-friendly habits, with leaderboards, daily challenges, and community rewards.`,
-    image: null
+    desc: `Developed a comprehensive career development platform with AI-driven insights, interactive learning paths, gamified roadmaps, job marketplace, and professional networking features.`,
+    image: "/images/careerpath/cp (1).png",
+    projectLink: "/ProjectDetails?id=39485"
   },
   
   {
     title: "Participant – INTERNSPIRIT HACKATHON | Handyman",
     date: "March 2025",
     desc: `Built a service marketplace platform connecting customers with local handyman services, featuring AI-powered matching, real-time booking, location tracking, and secure payment integration.`,
-    projectLink: "/ProjectDetails?id=05",
+    projectLink: "/ProjectDetails?id=19576",
     image: "/images/IS.jpeg"
   },
   {
     title: "Winner – IRIX-2024 (Chowgule College) Webathon | FitTrack",
     date: "January 2025",
     desc: `Developed a fitness tracking app with a dashboard for steps, calories, and activity insights; added BMI, food logging, sleep trends, real-time chat (Socket.io), badge rewards, 2FA security, and light/dark mode UI.`,
-    projectLink: "/ProjectDetails?id=01",
+    projectLink: "/ProjectDetails?id=47293",
     image: "/images/IRIX.jpeg"
   },
 
@@ -149,22 +156,97 @@ const imageVariants = {
   },
 };
 
-const floatingAnimation = {
-  y: [0, -10, 0],
-  transition: {
-    duration: 3,
-    repeat: Infinity,
-    ease: "easeInOut",
-  },
-};
-
 export default function HackathonSection() {
   const [active, setActive] = useState(0);
+  const sectionRef = useRef(null);
+  const headerRef = useRef(null);
+  const hackathonCardsRef = useRef([]);
+  const contentRef = useRef(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const header = headerRef.current;
+    const cards = hackathonCardsRef.current;
+    const content = contentRef.current;
+
+    if (section && header) {
+      // Animate header with floating effect
+      gsap.fromTo(header,
+        { opacity: 0, y: -50, scale: 0.9 },
+        { 
+          opacity: 1, 
+          y: 0, 
+          scale: 1,
+          duration: 0.8, 
+          ease: "back.out(1.7)",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+
+      // Add floating animation to header
+      floatingAnimation(header);
+
+      // Animate hackathon cards
+      if (cards.length > 0) {
+        gsap.fromTo(cards,
+          { opacity: 0, x: -50, scale: 0.9 },
+          { 
+            opacity: 1, 
+            x: 0, 
+            scale: 1,
+            duration: 0.6, 
+            stagger: 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 70%",
+              toggleActions: "play none none reverse"
+            }
+          }
+        );
+
+        // Add magnetic effect to cards
+        cards.forEach(card => {
+          if (card) {
+            magneticEffect(card);
+          }
+        });
+      }
+
+      // Animate content area
+      if (content) {
+        gsap.fromTo(content,
+          { opacity: 0, x: 50, scale: 0.95 },
+          { 
+            opacity: 1, 
+            x: 0, 
+            scale: 1,
+            duration: 0.8, 
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 60%",
+              toggleActions: "play none none reverse"
+            }
+          }
+        );
+      }
+    }
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
+  }, []);
 
   return (
-    <section className="w-full flex flex-col items-center py-24 px-4 relative min-h-[80vh]" style={{ fontFamily: 'var(--font-inconsolata)' }}>
+    <section ref={sectionRef} className="w-full flex flex-col items-center py-24 px-4 relative min-h-[80vh]" style={{ fontFamily: 'var(--font-inconsolata)' }}>
       {/* Header with floating animation */}
       <motion.div 
+        ref={headerRef}
         className="relative flex flex-col items-center mb-12 w-full"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -173,7 +255,6 @@ export default function HackathonSection() {
         <h1
           className="text-[8vw] md:text-[5vw] font-extrabold text-indigo-400 font-bebas drop-shadow-lg tracking-widest text-center leading-none"
           style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.12em', textShadow: '0 8px 32px rgba(0,0,0,0.25)' }}
-          animate={floatingAnimation}
         >
           HACKATHONS
         </h1>
@@ -210,6 +291,7 @@ export default function HackathonSection() {
           {hackathons.map((hack, idx) => (
             <motion.div
               key={hack.title}
+              ref={el => hackathonCardsRef.current[idx] = el}
               className={`group relative flex items-center cursor-pointer glass rounded-xl shadow-lg px-6 py-4 transition-all duration-300 ${active === idx ? 'ring-4 ring-indigo-400/40' : ''}`}
               variants={cardVariants}
               whileHover="hover"
@@ -231,7 +313,7 @@ export default function HackathonSection() {
         </motion.div>
 
         {/* Right: Animated Reveal */}
-        <div className="flex-1 flex items-center justify-center min-h-[400px] relative">
+        <div ref={contentRef} className="flex-1 flex items-center justify-center min-h-[400px] relative">
           <AnimatePresence mode="wait">
             <motion.div
               key={active}

@@ -1,6 +1,12 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { staggerFadeIn, scaleIn, magneticEffect } from '../utils/gsapAnimations';
+
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger);
 
 // Enhanced futuristic tech icon component
 const TechIcon = ({ src, alt, withBackground = false }) => {
@@ -30,6 +36,8 @@ const TechIcon = ({ src, alt, withBackground = false }) => {
 
 const TechStack = () => {
   const sectionRef = useRef(null);
+  const headerRef = useRef(null);
+  const techSectionsRef = useRef([]);
   
   // Updated data structure for the tech stack following your categories
   const techData = {
@@ -84,39 +92,85 @@ const TechStack = () => {
   };
 
   useEffect(() => {
-    // Animation function
-    const animateOnScroll = () => {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('animate-in');
-            }
-          });
-        },
-        { threshold: 0.1, rootMargin: '0px 0px -100px 0px' }
+    const section = sectionRef.current;
+    const header = headerRef.current;
+    const techSections = techSectionsRef.current;
+
+    if (section && header && techSections.length > 0) {
+      // Animate header
+      gsap.fromTo(header,
+        { opacity: 0, y: 50, scale: 0.9 },
+        { 
+          opacity: 1, 
+          y: 0, 
+          scale: 1,
+          duration: 0.8, 
+          ease: "back.out(1.7)",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+          }
+        }
       );
-      
-      // Observe all tech sections
-      const techSections = document.querySelectorAll('.tech-section');
-      techSections.forEach((section) => {
-        observer.observe(section);
+
+      // Stagger animate tech sections
+      gsap.fromTo(techSections,
+        { opacity: 0, y: 50, scale: 0.95 },
+        { 
+          opacity: 1, 
+          y: 0, 
+          scale: 1,
+          duration: 0.6, 
+          stagger: 0.15,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 70%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+
+      // Add magnetic effect to tech sections
+      techSections.forEach(techSection => {
+        if (techSection) {
+          magneticEffect(techSection);
+        }
       });
 
-      return () => {
-        techSections.forEach((section) => {
-          observer.unobserve(section);
+      // Animate individual tech icons on hover
+      const techIcons = section.querySelectorAll('.tech-icon-container');
+      techIcons.forEach(icon => {
+        icon.addEventListener('mouseenter', () => {
+          gsap.to(icon, {
+            scale: 1.1,
+            rotation: 5,
+            duration: 0.3,
+            ease: "back.out(1.7)"
+          });
         });
-      };
-    };
 
-    animateOnScroll();
+        icon.addEventListener('mouseleave', () => {
+          gsap.to(icon, {
+            scale: 1,
+            rotation: 0,
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        });
+      });
+    }
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
   }, []);
 
   return (
     <section ref={sectionRef} className="py-16 px-6 md:px-16 max-w-7xl mx-auto">
       {/* Header */}
-      <div className="text-center mb-12">
+      <div ref={headerRef} className="text-center mb-12">
         <h2 
           className="text-[7vw] md:text-[3vw] font-extrabold text-indigo-400 drop-shadow-lg tracking-widest text-center leading-none mb-2"
           style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.12em', textShadow: '0 8px 32px rgba(0,0,0,0.25)' }}
@@ -136,8 +190,8 @@ const TechStack = () => {
         {techData.sections.map((section, sectionIndex) => (
           <div
             key={sectionIndex}
-            className="tech-section glass rounded-xl p-6 border border-white/10 hover:border-indigo-400/30 transition-all duration-300 transform hover:scale-105"
-            style={{ opacity: 0, transform: 'translateY(30px)' }}
+            ref={el => techSectionsRef.current[sectionIndex] = el}
+            className="tech-section glass rounded-xl p-6 border border-white/10 hover:border-indigo-400/30 transition-all duration-300 cursor-pointer"
           >
             <h3 
               className="text-lg font-bold text-white mb-4 tracking-wide"
@@ -166,19 +220,7 @@ const TechStack = () => {
         ))}
       </div>
 
-      <style jsx>{`
-        .tech-section.animate-in {
-          opacity: 1 !important;
-          transform: translateY(0) !important;
-          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        
-        .tech-section:nth-child(1) { transition-delay: 0.1s; }
-        .tech-section:nth-child(2) { transition-delay: 0.2s; }
-        .tech-section:nth-child(3) { transition-delay: 0.3s; }
-        .tech-section:nth-child(4) { transition-delay: 0.4s; }
-        .tech-section:nth-child(5) { transition-delay: 0.5s; }
-      `}</style>
+
     </section>
   );
 };

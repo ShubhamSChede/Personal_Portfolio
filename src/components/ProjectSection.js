@@ -5,6 +5,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { staggerFadeIn, scaleIn, magneticEffect } from '../utils/gsapAnimations';
+
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger);
 
 const ProjectsSection = () => {
   const [hoveredProject, setHoveredProject] = useState(null);
@@ -30,24 +36,77 @@ const ProjectsSection = () => {
     // Clean up
     return () => window.removeEventListener('resize', checkIfMobile);
   }, []);
+
+  // GSAP animations
+  useEffect(() => {
+    const section = sectionRef.current;
+    const cards = cardRefs.current;
+
+    if (section) {
+      // Animate section header
+      gsap.fromTo(section.querySelector('h2'),
+        { opacity: 0, y: 50 },
+        { 
+          opacity: 1, 
+          y: 0, 
+          duration: 0.8, 
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+
+      // Stagger animate project cards
+      if (cards.length > 0) {
+        gsap.fromTo(cards,
+          { opacity: 0, y: 30, scale: 0.95 },
+          { 
+            opacity: 1, 
+            y: 0, 
+            scale: 1, 
+            duration: 0.6, 
+            stagger: 0.15,
+            ease: "back.out(1.7)",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 70%",
+              toggleActions: "play none none reverse"
+            }
+          }
+        );
+
+        // Add magnetic effect to cards
+        cards.forEach(card => {
+          if (card) magneticEffect(card);
+        });
+      }
+    }
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
+  }, []);
   
   const projects = [
     {
-      id: '02',
+      id: '85617',
       name: 'Roshstocks',
       description: 'Wedding Invitation Website',
       technologies: ['Next.js', 'Tailwind CSS','MongoDB'],
       screenshot: `/images/02.jpg`,
     },
     {
-      id: '03',
+      id: '92148',
       name: 'MYTRACKERY',
       description: 'A mobile app for personal tracking and productivity.',
       technologies: ['React Native', 'Express.js', 'MongoDB'],
       screenshot: `/images/Mytrakcery/mt1.jpg`,
     },
     {
-      id: '06',
+      id: '74329',
       name: 'Taskaholic',
       description: 'A productivity app for task management and time tracking.',
       technologies: ['Next.js', 'Supabase', 'TypeScript', 'shadcn'],
@@ -107,7 +166,7 @@ const ProjectsSection = () => {
           className="text-[7vw] md:text-[3vw] font-extrabold text-indigo-400 drop-shadow-lg tracking-widest text-center leading-none mb-2"
           style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.12em', textShadow: '0 8px 32px rgba(0,0,0,0.25)' }}
         >
-          PROJECTS
+                            PERSONAL PROJECTS
         </h2>
         <p
           className="text-indigo-400 text-base md:text-lg font-bold tracking-wide text-center"

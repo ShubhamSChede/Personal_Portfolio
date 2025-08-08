@@ -1,7 +1,13 @@
 'use client';
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { staggerFadeIn, magneticEffect } from "../utils/gsapAnimations";
+
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger);
 
 const experiences = [
   {
@@ -25,14 +31,108 @@ const experiences = [
       "Led the website team and worked with 10+ council members to understand requirements and develop a fully responsive Squid Game themed website for the Computer Department's technical event, achieving seamless user experience.",
       "Implemented interactive elements, animations, and optimized navigation for an engaging and visually appealing interface."
     ],
-    projectLink: "/ProjectDetails?id=04"
+    projectLink: "/ProjectDetails?id=63842"
   }
 ];
 
 export default function ExperienceSection() {
   const sectionRef = useRef(null);
+  const headerRef = useRef(null);
+  const timelineRef = useRef(null);
+  const experienceCardsRef = useRef([]);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const header = headerRef.current;
+    const timeline = timelineRef.current;
+    const cards = experienceCardsRef.current;
+
+    if (section && header && timeline && cards.length > 0) {
+      // Animate header
+      gsap.fromTo(header,
+        { opacity: 0, y: 50, scale: 0.9 },
+        { 
+          opacity: 1, 
+          y: 0, 
+          scale: 1,
+          duration: 0.8, 
+          ease: "back.out(1.7)",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+
+      // Animate timeline line
+      gsap.fromTo(timeline,
+        { scaleY: 0 },
+        { 
+          scaleY: 1,
+          duration: 1.2, 
+          ease: "power2.out",
+          transformOrigin: "top center",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 70%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+
+      // Stagger animate experience cards
+      gsap.fromTo(cards,
+        { opacity: 0, x: (index) => index % 2 === 0 ? -50 : 50, scale: 0.9 },
+        { 
+          opacity: 1, 
+          x: 0, 
+          scale: 1,
+          duration: 0.8, 
+          stagger: 0.2,
+          ease: "back.out(1.7)",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 60%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+
+      // Add magnetic effect to cards
+      cards.forEach(card => {
+        if (card) {
+          magneticEffect(card);
+        }
+      });
+
+      // Animate timeline dots
+      const dots = section.querySelectorAll('.timeline-dot');
+      dots.forEach((dot, index) => {
+        gsap.fromTo(dot,
+          { scale: 0, opacity: 0 },
+          { 
+            scale: 1, 
+            opacity: 1,
+            duration: 0.5,
+            delay: 0.5 + (index * 0.2),
+            ease: "back.out(1.7)",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 60%",
+              toggleActions: "play none none reverse"
+            }
+          }
+        );
+      });
+    }
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -61,6 +161,7 @@ export default function ExperienceSection() {
     <section ref={sectionRef} className="w-full flex flex-col items-center py-16 md:py-20 px-4 md:px-8 relative min-h-[60vh]">
       {/* Header */}
       <motion.div 
+        ref={headerRef}
         className="relative flex flex-col items-center mb-8 md:mb-10 w-full"
         initial={{ opacity: 0, y: -40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -85,6 +186,7 @@ export default function ExperienceSection() {
       <div className="relative w-full max-w-4xl mx-auto">
         {/* Animated Timeline vertical line */}
         <motion.div
+          ref={timelineRef}
           className="absolute left-1/2 top-0 -translate-x-1/2 z-0 rounded-full hidden md:block"
           style={{
             width: '4px',
@@ -108,12 +210,13 @@ export default function ExperienceSection() {
             >
               {/* Timeline dot - Hidden on mobile */}
               <div className="absolute left-1/2 -translate-x-1/2 top-6 z-20 hidden md:block">
-                <div className="w-4 h-4 bg-indigo-400 border-2 border-white/30 rounded-full shadow-lg" />
+                <div className="timeline-dot w-4 h-4 bg-indigo-400 border-2 border-white/30 rounded-full shadow-lg" />
               </div>
               
               {/* Card */}
               <div
-                className={`relative glass rounded-xl shadow-lg px-4 md:px-6 py-4 md:py-6 flex flex-col w-full md:w-[calc(50%-16px)] ${idx % 2 === 0 ? 'md:ml-0 md:mr-auto md:items-end md:pr-6' : 'md:mr-0 md:ml-auto md:items-start md:pl-6'}`}
+                ref={el => experienceCardsRef.current[idx] = el}
+                className={`relative glass rounded-xl shadow-lg px-4 md:px-6 py-4 md:py-6 flex flex-col w-full md:w-[calc(50%-16px)] cursor-pointer ${idx % 2 === 0 ? 'md:ml-0 md:mr-auto md:items-end md:pr-6' : 'md:mr-0 md:ml-auto md:items-start md:pl-6'}`}
                 style={{ marginTop: 0 }}
               >
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-3 md:mb-1 w-full">

@@ -1,6 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { staggerFadeIn, magneticEffect } from '../utils/gsapAnimations';
+
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger);
 
 const ContactMe = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +21,103 @@ const ContactMe = () => {
     submitting: false,
     info: { error: false, msg: null }
   });
+
+  const sectionRef = useRef(null);
+  const headerRef = useRef(null);
+  const formRef = useRef(null);
+  const contactInfoRef = useRef(null);
+  const submitButtonRef = useRef(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const header = headerRef.current;
+    const form = formRef.current;
+    const contactInfo = contactInfoRef.current;
+    const submitButton = submitButtonRef.current;
+
+    if (section && header && form) {
+      // Animate header
+      gsap.fromTo(header,
+        { opacity: 0, y: 50, scale: 0.9 },
+        { 
+          opacity: 1, 
+          y: 0, 
+          scale: 1,
+          duration: 0.8, 
+          ease: "back.out(1.7)",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+
+      // Animate form fields
+      const formFields = form.querySelectorAll('input, textarea');
+      gsap.fromTo(formFields,
+        { opacity: 0, y: 30, scale: 0.95 },
+        { 
+          opacity: 1, 
+          y: 0, 
+          scale: 1,
+          duration: 0.6, 
+          stagger: 0.1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: form,
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+
+      // Animate contact info
+      if (contactInfo) {
+        gsap.fromTo(contactInfo,
+          { opacity: 0, x: -50, scale: 0.95 },
+          { 
+            opacity: 1, 
+            x: 0, 
+            scale: 1,
+            duration: 0.8, 
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 70%",
+              toggleActions: "play none none reverse"
+            }
+          }
+        );
+      }
+
+      // Add magnetic effect to submit button
+      if (submitButton) {
+        magneticEffect(submitButton);
+      }
+
+      // Animate form container
+      gsap.fromTo(form,
+        { opacity: 0, x: 50, scale: 0.95 },
+        { 
+          opacity: 1, 
+          x: 0, 
+          scale: 1,
+          duration: 0.8, 
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 70%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+    }
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
+  }, []);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -66,8 +169,8 @@ const ContactMe = () => {
   };
 
   return (
-    <section id="contact" className="py-24 px-6 md:px-16 max-w-6xl mx-auto">
-      <div className="text-center mb-16">
+    <section ref={sectionRef} id="contact" className="py-24 px-6 md:px-16 max-w-6xl mx-auto">
+      <div ref={headerRef} className="text-center mb-16">
         <h2
           className="text-[7vw] md:text-[3vw] font-extrabold text-indigo-400 drop-shadow-lg tracking-widest text-center leading-none mb-2"
           style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.12em', textShadow: '0 8px 32px rgba(0,0,0,0.25)' }}
@@ -94,7 +197,7 @@ const ContactMe = () => {
         </div>
       )}
       
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <form ref={formRef} onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <label 
             htmlFor="name" 
@@ -181,9 +284,10 @@ const ContactMe = () => {
 
         <div className="md:col-span-2 text-center">
           <button
+            ref={submitButtonRef}
             type="submit"
             disabled={status.submitting}
-            className="px-8 py-4 glass border border-indigo-400 text-indigo-400 rounded-lg hover:bg-indigo-400/10 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-8 py-4 glass border border-indigo-400 text-indigo-400 rounded-lg hover:bg-indigo-400/10 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             style={{ fontFamily: 'var(--font-inconsolata)' }}
           >
             {status.submitting ? 'Sending...' : 'Send Message'}
@@ -192,7 +296,7 @@ const ContactMe = () => {
       </form>
 
       {/* Contact Info */}
-      <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div ref={contactInfoRef} className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="text-center">
           <div className="w-12 h-12 glass rounded-full flex items-center justify-center mx-auto mb-4">
             <svg className="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

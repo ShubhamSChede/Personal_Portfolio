@@ -8,13 +8,17 @@ import Navbar from '../components/Navbar';
 import ContactMe from '../components/ContactMe';
 import ExperienceSection from '../components/ExperienceSection';
 import HackathonSection from '../components/HackathonSection';
+import AcademicSection from '../components/AcademicSection';
 import Footer from '../components/Footer';
+import CustomCursor from '../components/CustomCursor';
+import LoadingScreen from '../components/LoadingScreen';
 import Head from 'next/head';
 
 const Page = () => {
   const videoRef = useRef(null);
   const waveRef = useRef(null);
   const [videoReady, setVideoReady] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Enhanced GSAP animation for floating wave
   useEffect(() => {
@@ -138,9 +142,19 @@ const Page = () => {
           description: 'Portfolio of Shubham Chede - Full Stack Developer, Next.js, React Native, Node.js, Supabase, Tailwind, ShadCN.'
         }) }} />
       </Head>
-      <div className="relative w-full min-h-screen bg-[#242424] overflow-hidden">
-        {/* Navigation */}
-        <Navbar />
+      
+      {/* Loading Screen */}
+      {isLoading && (
+        <LoadingScreen onComplete={() => setIsLoading(false)} />
+      )}
+      
+      {!isLoading && (
+        <div className="relative w-full min-h-screen bg-[#242424] overflow-hidden">
+          {/* Custom Cursor */}
+          <CustomCursor />
+          
+          {/* Navigation */}
+          <Navbar />
 
         {/* Content */}
         <div className="relative z-10 pt-12">
@@ -159,12 +173,16 @@ const Page = () => {
           <div id="projects">
             <ProjectSection />
           </div>
+          <div id="academic">
+            <AcademicSection />
+          </div>
           <div id="contact">
             <ContactMe />
           </div>
           <Footer />
         </div>
-      </div>
+        </div>
+      )}
     </>
   );
 };

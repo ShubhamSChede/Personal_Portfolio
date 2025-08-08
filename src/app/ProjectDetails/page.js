@@ -34,8 +34,8 @@ const ProjectContent = () => {
   const [project, setProject] = useState(null);
 
   const projectsData = {
-    '01': {
-      id: '01',
+     '47293': {
+       id: '47293',
       name: 'FitTrack',
       fullName: 'FitTrack - Comprehensive Fitness Tracker',
       description: 'A fitness tracking application with real-time insights and an intuitive dashboard.',
@@ -56,9 +56,9 @@ const ProjectContent = () => {
       github: 'https://github.com/ShubhamSChede/FitTrack',
       images: [ '/images/01.jpg', '/images/fittrack-1.png', '/images/fittrack-2.png', '/images/fittrack-3.png', '/images/fittrack-4.png', '/images/fittrack-5.png', '/images/fittrack-6.png', '/images/fittrack-7.png', '/images/fittrack-8.png', '/images/fittrack-9.png']
     },
-    '02': {
-      id: '02',
-      name: 'Roshstocks',
+         '85617': {
+       id: '85617',
+       name: 'Roshstocks',
       fullName: 'Wedding Invitation Website',
       description: 'A stock market analysis and portfolio management tool with real-time data and insights.',
       technologies: ['Next.js', 'Tailwind CSS','MongoDB'],
@@ -73,8 +73,8 @@ const ProjectContent = () => {
       github: 'https://github.com/ShubhamSChede/Roshstocks_website',
       images: ['/images/02.jpg','/images/rosh (1).png', '/images/rosh (2).png', '/images/rosh (3).png', '/images/rosh (4).png', '/images/rosh (5).png', '/images/rosh (6).png', '/images/rosh (7).png', '/images/rosh (8).png', '/images/rosh (9).png', '/images/rosh (10).png', '/images/rosh (11).png']
     },
-    '03': {
-      id: '03',
+         '92148': {
+       id: '92148',
       name: 'MYTRACKERY',
       fullName: 'MYTRACKERY - Personal Finance & Growth Tracker',
       description: 'A mobile application for expense tracking and personal growth management.',
@@ -92,8 +92,8 @@ const ProjectContent = () => {
       github: 'https://github.com/ShubhamSChede/MyTrackery_Fullstack',
       images: ['/images/Mytrakcery/mt1.jpg', '/images/Mytrakcery/mt2.jpg', '/images/Mytrakcery/mt3.jpg', '/images/Mytrakcery/mt4.jpg', '/images/Mytrakcery/mt5.jpg', '/images/Mytrakcery/mt6.jpg', '/images/Mytrakcery/mt7.jpg', '/images/Mytrakcery/mt8.jpg', '/images/Mytrakcery/mt9.jpg', '/images/Mytrakcery/mt10.jpg', '/images/Mytrakcery/mt11.jpg', '/images/Mytrakcery/mt12.jpg', '/images/Mytrakcery/mt13.jpg', '/images/Mytrakcery/mt14.jpg', '/images/Mytrakcery/mt15.jpg', '/images/Mytrakcery/mt16.jpg']
     },
-    '04': {
-      id: '04',
+         '63842': {
+       id: '63842',
       name: 'TECHNIX 2025',
       fullName: 'TECHNIX 2025 - Technical Event Website',
       description: 'A responsive website for our department\'s technical event, TECH NIX 2025, with a Squid Game-themed UI.',
@@ -110,28 +110,28 @@ const ProjectContent = () => {
       github: 'https://github.com/ShubhamSChede/Technix_2025',
       images: ['/images/04.jpg', '/images/t1 (1).png', '/images/t1 (2).png', '/images/t1 (3).png', '/images/t1 (4).png']
     },
-    '05': {
-      id: '05',
-      name: 'Handyman',
+         '19576': {
+       id: '19576',
+       name: 'Handyman',
       fullName: 'Handyman Aggregation System - Service Marketplace',
       description: 'A platform for connecting customers with local handyman services.',
       technologies: ['Next.js', 'MongoDB'],
       features: [
         'AI-Powered Real-Time Matching – Our recommendation system suggests the best service provider based on availability, reviews, expertise, and distance.',
-        'Freedom of Choice – Unlike other platforms, users can handpick their preferred service provider instead of being randomly assigned.',
-        'Seamless Booking & Scheduling – Instant and scheduled bookings with real-time availability.',
-        'Auto Location Tracking – Detects user location for precise service matching.',
-        'Vendor Empowerment – Service providers have full control over their working hours and bookings.',
-        'Secure Transactions – Payments via UPI, credit/debit cards, and wallets for a hassle-free experience.',
-        'Localized Services – Tailored to Goa\'s unique market, with the potential to scale beyond.'
+ 'Freedom of Choice – Unlike other platforms, users can handpick their preferred service provider instead of being randomly assigned.',
+ 'Seamless Booking & Scheduling – Instant and scheduled bookings with real-time availability.',
+'Auto Location Tracking – Detects user location for precise service matching.',
+ 'Vendor Empowerment – Service providers have full control over their working hours and bookings.',
+'Secure Transactions – Payments via UPI, credit/debit cards, and wallets for a hassle-free experience.',
+ 'Localized Services – Tailored to Goa\'s unique market, with the potential to scale beyond.'
       ],
       year: '2025',
       link: 'https://handyman-aggregation-system.vercel.app/',
       github: 'https://github.com/ShubhamSChede/Handyman',
       images: ['/images/05.png','/images/handyman-1.png', '/images/handyman-2.png', '/images/handyman-3.png', '/images/handyman-4.png', '/images/handyman-6.png', '/images/handyman-7.png', '/images/handyman-8.png', '/images/handyman-10.jpeg', '/images/handyman-11.png', '/images/handyman-12.png', '/images/handyman-13.png', '/images/handyman-14.png']
     },
-    '06': {
-      id: '06',
+         '74329': {
+       id: '74329',
       name: 'Taskaholic',
       fullName: 'Taskaholic - Secure Task Management Platform',
       description: 'Taskaholic is a powerful, secure, and intuitive task management platform designed to help individuals and teams stay organized and productive.',
@@ -152,9 +152,9 @@ const ProjectContent = () => {
       github: 'https://github.com/ShubhamSChede/Task-o-holic',
       images: ['/images/task/task (1).png', '/images/task/task (2).png', '/images/task/task (3).png', '/images/task/task (4).png', '/images/task/task (5).png', '/images/task/task (6).png', '/images/task/task (7).png', '/images/task/task (8).png', '/images/task/task (9).png', '/images/task/task (10).png', '/images/task/task (11).png', '/images/task/task (12).png']
     },
-    '07': {
-      id: '07',
-      name: 'CareerConnection',
+         '50864': {
+       id: '50864',
+       name: 'CareerConnection',
       fullName: 'CareerConnection - AI-Powered Job Platform',
       description: 'A comprehensive job platform connecting students with companies through AI-powered screening and preparation tools.',
       technologies: ['Next.js', 'Express.js', 'MongoDB', 'Gemini API'],
@@ -173,7 +173,34 @@ const ProjectContent = () => {
       link: 'https://careerconnections.vercel.app/',
       github: 'https://github.com/ShubhamSChede/CareerConnection',
       images: ['/images/cc/cc1.jpeg', '/images/cc/cc2.jpeg', '/images/cc/cc3.jpeg', '/images/cc/cc4.jpeg', '/images/cc/cc5.jpeg', '/images/cc/cc6.jpeg', '/images/cc/cc7.jpeg', '/images/cc/cc8.jpeg', '/images/cc/cc9.jpeg', '/images/cc/cc10.jpeg', '/images/cc/cc11.jpeg', '/images/cc/cc12.jpeg', '/images/cc/cc13.jpeg']
-    }
+    },
+    '39485': {
+      id: '39485',
+      name: 'Career Path',
+      fullName: 'Career Path - AI-Powered Career Development Platform',
+      description: 'A comprehensive career development platform with AI-driven insights, interactive learning paths, and professional networking features.',
+      technologies: ['Next.js', 'React', 'MongoDB', 'Mongoose', 'Supabase', 'Google Gemini AI', 'Three.js', 'GSAP', 'TailwindCSS', 'Chart.js', 'React-Leaflet', 'Bootstrap'],
+      features: [
+        'AI-powered career assessment test with personality-based recommendations',
+        'Interactive job marketplace with AI-driven job matching and recommendations',
+        'Real-time interview simulator with speech recognition and AI feedback',
+        'Gamified learning roadmaps (Super Mario themed) with video resources and quizzes',
+        'Professional learning paths with structured modules and practice questions',
+        'Interactive job market map with geographical visualization using Leaflet',
+        'AI-powered resource finder with educational content recommendations',
+        'User profile management with skills, qualifications, and interests tracking',
+        'Meeting scheduler for career counseling sessions',
+        'Saved jobs functionality with personalized dashboard',
+        'Comprehensive authentication system with secure login/signup',
+        'Three.js animated landing page with particle effects and GSAP animations',
+        'Responsive design with Bootstrap and TailwindCSS integration',
+        'Career path visualization with detailed insights and recommendations'
+      ],
+      year: '2025',
+      link: 'https://careerpath-platform.vercel.app/',
+      github: 'https://github.com/ShubhamSChede/CareerPath',
+      images: ['/images/careerpath/cp (1).png', '/images/careerpath/cp (2).png', '/images/careerpath/cp (3).png', '/images/careerpath/cp (4).png', '/images/careerpath/cp (5).png', '/images/careerpath/cp (6).png', '/images/careerpath/cp (7).png', '/images/careerpath/cp (8).png', '/images/careerpath/cp (9).png', '/images/careerpath/cp (10).png', '/images/careerpath/cp (11).png', '/images/careerpath/cp (12).png', '/images/careerpath/cp (13).png']
+    },
   };
 
   useEffect(() => {
@@ -409,9 +436,9 @@ const ProjectContent = () => {
           href="/#projects" 
           className="inline-flex items-center text-indigo-400 hover:text-indigo-300 mb-4 sm:mb-0"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
           All Projects
         </Link>
         
