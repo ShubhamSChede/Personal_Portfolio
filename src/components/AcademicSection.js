@@ -38,22 +38,30 @@ const academicProjects = [
   },
   {
     id: 2,
-    title: "Project 2",
-    semester: "Semester 7",
-    subject: "Coming Soon",
-    description: "Academic project details will be added soon.",
-    objectives: ["Coming Soon"],
+    title: "CricScorers",
+    semester: "Semester 5",
+    subject: "DBMS",
+    description: "CricScorer addresses the common challenges of cricket scorekeeping by offering a reliable, user-friendly, and comprehensive digital solution. With real-time scoring, seamless data storage, cross-platform compatibility, and a range of cricket-specific features, CricScorer streamlines the scoring process for match officials, players, and spectators alike.",
+    objectives: [
+      "Scorer authentication with firstname, lastname, email, and password",
+      "Match setup with details including overs per match, overs per bowler, location, date, and ball type",
+      "Toss result recording with winning team and decision to bat or bowl first",
+      "User-friendly scoring interface for ball-by-ball score updates",
+      "Live score tracking accessible to spectators in real time",
+      "Player data storage with stats and performance history",
+      "Detailed match results and scorecards generation at the end of the game"
+    ],
     techStack: {
-      backend: ["TBD"],
-      frontend: ["TBD"]
+      backend: ["Express JS", "Node JS", "PostgreSQL"],
+      frontend: ["React Native", "Expo", "Typescript"]
     },
-    reportLink: "#",
-    images: ["/images/placeholder.jpg"]
+    reportLink: "./Final Report cricscorer.pdf",
+    images: ["/images/cric/1.jpg", "/images/cric/cric (3).jpg", "/images/cric/cric (8).jpg","/images/cric/cric (12).jpg",  "/images/cric/cric (20).jpg" , "/images/cric/cric (22).jpg"  ]
   },
   {
     id: 3,
-    title: "Project 3",
-    semester: "Semester 8",
+    title: "Final year project",
+    semester: "Semester 7-8",
     subject: "Coming Soon", 
     description: "Academic project details will be added soon.",
     objectives: ["Coming Soon"],
