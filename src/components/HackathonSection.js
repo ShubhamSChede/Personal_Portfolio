@@ -1,14 +1,7 @@
 'use client';
-import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { staggerFadeIn, magneticEffect } from "../utils/gsapAnimations";
-
-// Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger);
 
 const hackathons = [
   {
@@ -50,363 +43,72 @@ const hackathons = [
   
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.3,
-    },
-  },
-};
-
-const cardVariants = {
-  hidden: { 
-    opacity: 0, 
-    x: -50,
-    scale: 0.8,
-  },
-  visible: { 
-    opacity: 1, 
-    x: 0,
-    scale: 1,
-    transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 15,
-    },
-  },
-  hover: {
-    scale: 1.05,
-    x: 10,
-    transition: {
-      type: "spring",
-      stiffness: 300,
-      damping: 20,
-    },
-  },
-  active: {
-    scale: 1.1,
-    x: 15,
-    boxShadow: "0 20px 40px rgba(78, 154, 241, 0.3)",
-    transition: {
-      type: "spring",
-      stiffness: 400,
-      damping: 25,
-    },
-  },
-};
-
-const contentVariants = {
-  hidden: { 
-    opacity: 0, 
-    x: 100,
-    scale: 0.9,
-    rotateY: -15,
-  },
-  visible: { 
-    opacity: 1, 
-    x: 0,
-    scale: 1,
-    rotateY: 0,
-    transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 20,
-      duration: 0.8,
-    },
-  },
-  exit: {
-    opacity: 0,
-    x: -100,
-    scale: 0.9,
-    rotateY: 15,
-    transition: {
-      duration: 0.3,
-    },
-  },
-};
-
-const imageVariants = {
-  hidden: { 
-    opacity: 0, 
-    scale: 0.5,
-    rotate: -10,
-  },
-  visible: { 
-    opacity: 1, 
-    scale: 1,
-    rotate: 0,
-    transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 15,
-      delay: 0.2,
-    },
-  },
-  hover: {
-    scale: 1.1,
-    rotate: 5,
-    transition: {
-      type: "spring",
-      stiffness: 200,
-      damping: 20,
-    },
-  },
-};
-
 export default function HackathonSection() {
-  const [active, setActive] = useState(0);
-  const sectionRef = useRef(null);
-  const headerRef = useRef(null);
-  const hackathonCardsRef = useRef([]);
-  const contentRef = useRef(null);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    const header = headerRef.current;
-    const cards = hackathonCardsRef.current;
-    const content = contentRef.current;
-
-    if (section && header) {
-      // Animate header with floating effect
-      gsap.fromTo(header,
-        { opacity: 0, y: -50, scale: 0.9 },
-        { 
-          opacity: 1, 
-          y: 0, 
-          scale: 1,
-          duration: 0.8, 
-          ease: "back.out(1.7)",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 80%",
-            toggleActions: "play none none reverse"
-          }
-        }
-      );
-
-      // Animate hackathon cards
-      if (cards.length > 0) {
-        gsap.fromTo(cards,
-          { opacity: 0, x: -50, scale: 0.9 },
-          { 
-            opacity: 1, 
-            x: 0, 
-            scale: 1,
-            duration: 0.6, 
-            stagger: 0.1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: section,
-              start: "top 70%",
-              toggleActions: "play none none reverse"
-            }
-          }
-        );
-
-        // Add magnetic effect to cards
-        cards.forEach(card => {
-          if (card) {
-            magneticEffect(card);
-          }
-        });
-      }
-
-      // Animate content area
-      if (content) {
-        gsap.fromTo(content,
-          { opacity: 0, x: 50, scale: 0.95 },
-          { 
-            opacity: 1, 
-            x: 0, 
-            scale: 1,
-            duration: 0.8, 
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: section,
-              start: "top 60%",
-              toggleActions: "play none none reverse"
-            }
-          }
-        );
-      }
-    }
-
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
-  }, []);
 
   return (
-    <section ref={sectionRef} className="w-full flex flex-col items-center py-24 px-4 relative min-h-[80vh]" style={{ fontFamily: 'var(--font-inconsolata)' }}>
-      {/* Header with floating animation */}
-      <motion.div 
-        ref={headerRef}
-        className="relative flex flex-col items-center mb-12 w-full"
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        <h1
-          className="text-[8vw] md:text-[5vw] font-extrabold text-indigo-400 font-bebas drop-shadow-lg tracking-widest text-center leading-none"
+    <section className="w-full flex flex-col items-center py-16 md:py-20 px-4 md:px-8 relative" style={{ fontFamily: 'var(--font-inconsolata)' }}>
+      {/* Header */}
+      <div className="relative flex flex-col items-center mb-12 md:mb-16 w-full">
+        <h2
+          className="text-[8vw] md:text-[3vw] font-extrabold text-indigo-400 font-bebas drop-shadow-lg tracking-widest text-center leading-none mb-2"
           style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.12em', textShadow: '0 8px 32px rgba(0,0,0,0.25)' }}
         >
           HACKATHONS
-        </h1>
-      </motion.div>
-
-      {/* Cards and Reveal */}
-      <div className="w-full max-w-7xl flex flex-col lg:flex-row gap-12 mt-12 min-h-[500px]">
-        {/* Left: Card List */}
-        <motion.div 
-          className="flex flex-col gap-4 flex-shrink-0 lg:w-1/3 w-full"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
+        </h2>
+        <span 
+          className="text-indigo-400 font-inconsolata text-sm md:text-lg font-bold tracking-wide text-center px-4"
+          style={{ fontFamily: 'var(--font-inconsolata)' }}
         >
-          {/* Nerdy Subtitle */}
-          <motion.div
-            className="mb-6 p-4 glass rounded-xl border border-white/10"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-          >
-            <p 
-              className="text-sm text-gray-300 leading-relaxed"
-              style={{ fontFamily: 'var(--font-inconsolata)' }}
-            >
-              <span className="text-indigo-400 font-semibold">while (college_life) {`{`}</span><br/>
-              &nbsp;&nbsp;hackathon_grind();<br/>
-              &nbsp;&nbsp;sleepless_nights++;<br/>
-              &nbsp;&nbsp;coffee_consumption *= 2;<br/>
-              <span className="text-indigo-400 font-semibold">{`}`}</span>
-            </p>
-          </motion.div>
-          
-          {hackathons.map((hack, idx) => (
-            <motion.div
-              key={hack.title}
-              ref={el => hackathonCardsRef.current[idx] = el}
-              className={`group relative flex items-center cursor-pointer glass rounded-xl shadow-lg px-6 py-4 transition-all duration-300 ${active === idx ? 'ring-4 ring-indigo-400/40' : ''}`}
-              variants={cardVariants}
-              whileHover="hover"
-              animate={active === idx ? "active" : "visible"}
-              onMouseEnter={() => setActive(idx)}
-              onClick={() => setActive(idx)}
-              style={{ outline: 'none' }}
-            >
-              <motion.div
-                className="w-3 h-3 rounded-full bg-indigo-400 mr-4"
-                animate={active === idx ? { scale: [1, 1.5, 1] } : { scale: 1 }}
-                transition={{ duration: 0.5, repeat: active === idx ? Infinity : 0 }}
-              />
-              <span className="text-md md:text-lg font-bebas font-extrabold text-white tracking-wide text-left" style={{ fontFamily: 'var(--font-bebas)' }}>
-                {hack.title.split('|')[0]}
-              </span>
-            </motion.div>
-          ))}
-        </motion.div>
+          Competitive coding and innovation challenges
+        </span>
+      </div>
 
-        {/* Right: Animated Reveal */}
-        <div ref={contentRef} className="flex-1 flex items-center justify-center min-h-[400px] relative">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={active}
-              variants={contentVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              className="w-full max-w-2xl glass rounded-3xl shadow-2xl p-8 flex flex-col items-center lg:items-start relative overflow-hidden"
-            >
-               {/* Background glow effect */}
-               <motion.div
-                 className="absolute inset-0 bg-indigo-500/20 rounded-3xl"
-                 animate={{
-                   opacity: [0.3, 0.6, 0.3],
-                 }}
-                 transition={{
-                   duration: 3,
-                   repeat: Infinity,
-                   ease: "easeInOut",
-                 }}
-               />
-               
-               {/* Hero Image */}
-               <motion.div className="relative z-10 mb-6">
-                 <motion.div 
-                   className="w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 rounded-2xl shadow-2xl bg-indigo-400 flex items-center justify-center overflow-hidden"
-                   variants={imageVariants}
-                   whileHover="hover"
-                   animate="visible"
-                 >
-                   {hackathons[active].image ? (
-                     <Image
-                       src={hackathons[active].image}
-                       alt={hackathons[active].title}
-                       fill
-                       className="object-cover"
-                       sizes="(max-width: 768px) 128px, (max-width: 1024px) 160px, 192px"
-                     />
-                   ) : (
-                     <span className="text-4xl font-bold text-white">🏆</span>
-                   )}
-                 </motion.div>
-                 <motion.div
-                   className="absolute inset-0 rounded-2xl bg-indigo-400/30"
-                   animate={{
-                     opacity: [0, 0.5, 0],
-                   }}
-                   transition={{
-                     duration: 2,
-                     repeat: Infinity,
-                     ease: "easeInOut",
-                   }}
-                 />
-               </motion.div>
+      {/* Hackathons List */}
+      <div className="w-full max-w-5xl mx-auto">
+        <div className="flex flex-col gap-4 md:gap-6">
+          {hackathons.map((hack, idx) => (
+            <div key={idx} className="glass rounded-lg shadow-md p-4 md:p-5 flex flex-col md:flex-row gap-3 md:gap-4">
+              {/* Image */}
+              {hack.image && (
+                <div className="flex-shrink-0 w-full md:w-28 h-28 md:h-28 rounded-md overflow-hidden relative bg-indigo-400/20">
+                  <Image
+                    src={hack.image}
+                    alt={hack.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 128px"
+                  />
+                </div>
+              )}
 
               {/* Content */}
-              <div className="relative z-10 text-center lg:text-left">
-                <motion.span 
-                  className="text-2xl md:text-3xl font-bebas font-extrabold text-indigo-400 tracking-widest mb-3 block"
-                  style={{ fontFamily: 'var(--font-bebas)' }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3, duration: 0.6 }}
-                >
-                  {hackathons[active].title}
-                </motion.span>
-                
-                <motion.span 
-                  className="text-md text-gray-300 font-inconsolata mb-4 block"
-                  style={{ fontFamily: 'var(--font-inconsolata)' }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.6 }}
-                >
-                  {hackathons[active].date}
-                </motion.span>
-                
-                <motion.p 
-                  className="text-lg md:text-xl text-gray-100 font-inconsolata leading-relaxed"
-                  style={{ fontFamily: 'var(--font-inconsolata)' }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5, duration: 0.6 }}
-                >
-                  {hackathons[active].desc}
-                </motion.p>
-                
-                {hackathons[active].projectLink && (
-                  <motion.div
-                    className="mt-4"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6, duration: 0.6 }}
+              <div className="flex-1 flex flex-col">
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-1.5">
+                  <h3
+                    className="text-base md:text-lg font-extrabold text-white mb-0.5 tracking-wide"
+                    style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.04em' }}
                   >
+                    {hack.title}
+                  </h3>
+                  <span
+                    className="text-[11px] md:text-xs text-gray-300 font-semibold md:ml-4 flex-shrink-0"
+                    style={{ fontFamily: 'var(--font-inconsolata)' }}
+                  >
+                    {hack.date}
+                  </span>
+                </div>
+                
+                <p
+                  className="text-gray-300 text-xs md:text-sm leading-relaxed mb-2"
+                  style={{ fontFamily: 'var(--font-inconsolata)' }}
+                >
+                  {hack.desc}
+                </p>
+
+                {hack.projectLink && (
+                  <div className="mt-auto">
                     <Link
-                      href={hackathons[active].projectLink}
+                      href={hack.projectLink}
                       className="inline-flex items-center text-indigo-400 hover:text-indigo-300 text-sm font-semibold transition-colors duration-300"
                       style={{ fontFamily: 'var(--font-inconsolata)' }}
                     >
@@ -415,38 +117,11 @@ export default function HackathonSection() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                       </svg>
                     </Link>
-                  </motion.div>
+                  </div>
                 )}
               </div>
-
-              {/* Floating particles effect */}
-              <motion.div
-                className="absolute top-4 right-4 w-2 h-2 bg-indigo-400 rounded-full"
-                animate={{
-                  y: [0, -20, 0],
-                  opacity: [0.5, 1, 0.5],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              />
-              <motion.div
-                className="absolute bottom-8 left-8 w-1 h-1 bg-purple-400 rounded-full"
-                animate={{
-                  y: [0, 15, 0],
-                  opacity: [0.3, 0.8, 0.3],
-                }}
-                transition={{
-                  duration: 2.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 0.5,
-                }}
-              />
-            </motion.div>
-          </AnimatePresence>
+            </div>
+          ))}
         </div>
       </div>
     </section>

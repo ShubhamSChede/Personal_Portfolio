@@ -107,14 +107,14 @@ export default function AboutMe() {
     return (
     <motion.section
       ref={sectionRef}
-      className="text-white flex flex-col md:flex-row items-center justify-between py-8 md:py-12 px-6 md:px-8 max-w-7xl mx-auto relative min-h-screen md:min-h-[85vh]"
+      className="text-white flex flex-col md:flex-row items-center justify-between py-5 md:py-6 px-3 md:px-4 max-w-5xl mx-auto relative min-h-[70vh] md:min-h-[68vh]"
       variants={sectionVariant}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
     >
       {/* Left Section */}
-      <motion.div className="w-full md:max-w-2xl md:-mt-8 text-center md:text-left lg:pr-12 z-10" variants={fadeInUpVariant}>
+      <motion.div className=" pt-10 w-full md:max-w-lg md:-mt-5 text-center md:text-left lg:pr-6 z-10" variants={fadeInUpVariant}>
         <motion.h3 
           ref={titleRef}
           className="text-indigo-400 text-sm tracking-wider mb-2" 
@@ -125,7 +125,7 @@ export default function AboutMe() {
         </motion.h3>
         <motion.h1
           ref={headingRef}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-indigo-400 mb-2 md:mb-3 drop-shadow-xl"
+          className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tighter text-indigo-400 mb-1 md:mb-1.5 drop-shadow-xl"
           variants={fadeInUpVariant}
           style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.04em' }}
         >
@@ -135,14 +135,14 @@ export default function AboutMe() {
          <br/>   <span className="text-white ">everything</span>
         </motion.h1>
         <motion.p 
-          className="mt-1 md:mt-2 text-gray-300 text-sm md:text-base leading-relaxed" 
+          className="mt-1 md:mt-1 text-gray-300 text-[11px] md:text-xs leading-snug" 
           variants={fadeInUp}
           style={{ fontFamily: 'var(--font-inconsolata)' }}
         >
 I'm Shubham Chede, a proactive full stack developer passionate about building dynamic and impactful web experiences. I enjoy working across the stack solving complex problems with clean, efficient code. With hands on experience in React Native, Next.js, and Node.js, I also bring a strong eye for UI/UX design. I'm currently pursuing a B.E. in Computer Engineering from Goa Engineering College (GEC), where I'm honing both my technical and creative development skills.
         </motion.p>
         <motion.p 
-          className="mt-1 md:mt-2 text-gray-300 text-sm md:text-base leading-relaxed" 
+          className="mt-1 md:mt-1 text-gray-300 text-[11px] md:text-xs leading-snug" 
           variants={fadeInUp}
           style={{ fontFamily: 'var(--font-inconsolata)' }}
         >
@@ -151,20 +151,20 @@ I'm Shubham Chede, a proactive full stack developer passionate about building dy
           Life's about balance, and I love embracing every part of it.
         </motion.p>
         <motion.p 
-          className="mt-1 md:mt-2 text-gray-300 text-sm md:text-base leading-relaxed" 
+          className="mt-1 md:mt-1 text-gray-300 text-[11px] md:text-xs leading-snug" 
           variants={fadeInUp}
           style={{ fontFamily: 'var(--font-inconsolata)' }}
         >
           I believe in waking up each day eager to make a difference!
         </motion.p>
         <motion.p 
-          className="mt-1 md:mt-2 text-gray-400 text-xs md:text-sm font-medium" 
+          className="mt-1 md:mt-1 text-gray-400 text-[10px] md:text-[11px] font-medium" 
           variants={fadeInUp}
           style={{ fontFamily: 'var(--font-inconsolata)' }}
         >
           You can find me here
         </motion.p>
-        <motion.div className="flex flex-wrap items-center justify-center md:justify-start gap-3 md:gap-4 mt-1 md:mt-2" variants={fadeInUp}>
+        <motion.div className="flex flex-wrap items-center justify-center md:justify-start gap-1.5 md:gap-2 mt-1 md:mt-1" variants={fadeInUp}>
           <SocialLinks 
             linkedinUrl="https://www.linkedin.com/in/shubham-chede-2957bb278"
             githubUrl="https://github.com/ShubhamSChede"
@@ -174,10 +174,10 @@ I'm Shubham Chede, a proactive full stack developer passionate about building dy
             ref={buttonRef}
             href="/shubham_chede_resume_final.pdf" 
             download
-            className="inline-flex items-center border border-indigo-400 text-indigo-400 font-medium py-2 px-4 rounded-lg transition-colors duration-300 hover:bg-indigo-400/10 hover:scale-105 transform"
+            className="inline-flex items-center border border-indigo-400 text-indigo-400 font-medium py-1 px-2.5 rounded-md transition-colors duration-300 hover:bg-indigo-400/10 hover:scale-105 transform text-[11px] md:text-xs"
             style={{ fontFamily: 'var(--font-inconsolata)' }}
           >
-            <svg className="w-5 h-5 mr-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+            <svg className="w-4 h-4 mr-1.5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
               <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/>
             </svg>
             Download CV
@@ -186,18 +186,18 @@ I'm Shubham Chede, a proactive full stack developer passionate about building dy
       </motion.div>
 
              {/* Right Section (Profile Image) */}
-       <motion.div className="mt-4 md:mt-0 md:-mt-32 lg:-mt-48 flex justify-center z-20" variants={fadeInUpVariant}>
+      <motion.div className="mt-2 md:mt-0 md:-mt-20 lg:-mt-32 flex justify-center z-20" variants={fadeInUpVariant}>
          <div ref={imageRef} className="relative">
            <Image
              src="/images/shubham.png"
              alt="Shubham Chede"
-             width={480}
-             height={480}
+           width={340}
+            height={340}
              className="object-cover w-auto h-auto filter brightness-90 contrast-110 saturate-80 hue-rotate-5 sepia-10 transition-all duration-300 hover:brightness-95 hover:contrast-115 hover:saturate-85"
              priority
            />
            {/* Fade-out gradient overlay at the bottom */}
-           <div className="absolute bottom-0 left-0 right-0 h-16 md:h-20 bg-gradient-to-t from-[#242424] via-[#242424]/60 to-transparent pointer-events-none"></div>
+         <div className="absolute bottom-0 left-0 right-0 h-10 md:h-12 bg-gradient-to-t from-[#242424] via-[#242424]/60 to-transparent pointer-events-none"></div>
          </div>
        </motion.div>
 

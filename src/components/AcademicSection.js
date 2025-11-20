@@ -1,13 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-// Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger);
 
 const academicProjects = [
   {
@@ -74,402 +68,229 @@ const academicProjects = [
   }
 ];
 
-const floatingAnimation = {
-  animate: {
-    y: [0, -10, 0],
-    transition: {
-      duration: 3,
-      repeat: Infinity,
-      ease: "easeInOut",
-    },
-  },
-};
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut",
-    },
-  },
-};
-
 export default function AcademicSection() {
-  const [currentImageIndex, setCurrentImageIndex] = useState({});
-  const [selectedProject, setSelectedProject] = useState(0);
-  const sectionRef = useRef(null);
+  const [expandedProject, setExpandedProject] = useState(academicProjects[0].id);
+  const [imageIndex, setImageIndex] = useState({});
 
-  // Initialize image indices for all projects
   useEffect(() => {
-    const initialIndices = {};
+    const initial = {};
     academicProjects.forEach(project => {
-      initialIndices[project.id] = 0;
+      initial[project.id] = 0;
     });
-    setCurrentImageIndex(initialIndices);
+    setImageIndex(initial);
   }, []);
 
-  // Auto-slide images for each project
   useEffect(() => {
-    const intervals = {};
-    
-    academicProjects.forEach(project => {
-      intervals[project.id] = setInterval(() => {
-        setCurrentImageIndex(prev => ({
-          ...prev,
-          [project.id]: ((prev[project.id] || 0) + 1) % project.images.length
-        }));
-      }, 3000 + (project.id * 500)); // Stagger the intervals
+    const activeProject = academicProjects.find(project => project.id === expandedProject);
+    if (!activeProject || activeProject.images.length === 0) return;
+
+    const interval = setInterval(() => {
+      setImageIndex(prev => ({
+        ...prev,
+        [activeProject.id]: ((prev[activeProject.id] || 0) + 1) % activeProject.images.length
+      }));
+    }, 3500);
+
+    return () => clearInterval(interval);
+  }, [expandedProject]);
+
+  const handlePrev = (project) => {
+    setImageIndex(prev => {
+      const current = prev[project.id] || 0;
+      const nextIndex = current === 0 ? project.images.length - 1 : current - 1;
+      return { ...prev, [project.id]: nextIndex };
     });
+  };
 
-    return () => {
-      Object.values(intervals).forEach(interval => clearInterval(interval));
-    };
-  }, []);
-
-  // GSAP animations
-  useEffect(() => {
-    const section = sectionRef.current;
-
-    if (section) {
-      gsap.fromTo(section.querySelector('h2'),
-        { opacity: 0, y: 50 },
-        { 
-          opacity: 1, 
-          y: 0, 
-          duration: 0.8, 
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 80%",
-            toggleActions: "play none none reverse"
-          }
-        }
-      );
-
-      // Animate project cards
-      const cards = section.querySelectorAll('.project-card');
-      gsap.fromTo(cards,
-        { opacity: 0, y: 30, scale: 0.95 },
-        { 
-          opacity: 1, 
-          y: 0, 
-          scale: 1, 
-          duration: 0.6, 
-          stagger: 0.2,
-          ease: "back.out(1.7)",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 70%",
-            toggleActions: "play none none reverse"
-          }
-        }
-      );
-    }
-
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
-  }, []);
+  const handleNext = (project) => {
+    setImageIndex(prev => {
+      const current = prev[project.id] || 0;
+      const nextIndex = (current + 1) % project.images.length;
+      return { ...prev, [project.id]: nextIndex };
+    });
+  };
 
   return (
-    <section ref={sectionRef} className="py-16 px-6 md:px-12 max-w-7xl mx-auto">
-      {/* Header */}
-      <div className="text-center mb-16">
+    <section className="py-16 px-6 md:px-8 lg:px-12 max-w-6xl mx-auto">
+      <div className="text-center mb-10 md:mb-12">
         <h2
-          className="text-[7vw] md:text-[3vw] font-extrabold text-indigo-400 drop-shadow-lg tracking-widest text-center leading-none mb-4"
+          className="text-[8vw] md:text-[3vw] font-extrabold text-indigo-400 drop-shadow-lg tracking-widest text-center leading-none mb-2"
           style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.12em', textShadow: '0 8px 32px rgba(0,0,0,0.25)' }}
         >
           ACADEMIC PROJECTS
         </h2>
-        <motion.span
-          className="text-gray-400 font-inconsolata text-sm md:text-base font-medium block mb-6"
+        <p
+          className="text-gray-400 text-sm md:text-base font-medium"
           style={{ fontFamily: 'var(--font-inconsolata)' }}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3, duration: 0.6 }}
         >
-          University coursework and research projects
-        </motion.span>
-
-        {/* Project Navigation Tabs */}
-        <div className="flex flex-wrap justify-center gap-4 mb-8">
-          {academicProjects.map((project, index) => (
-            <button
-              key={project.id}
-              onClick={() => setSelectedProject(index)}
-              className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 ${
-                selectedProject === index
-                  ? 'bg-indigo-500 text-white shadow-lg'
-                  : 'glass text-indigo-400 hover:text-white hover:bg-indigo-500/20'
-              }`}
-              style={{ fontFamily: 'var(--font-inconsolata)' }}
-            >
-              {project.title}
-            </button>
-          ))}
-        </div>
+          University coursework and research builds
+        </p>
       </div>
 
-      {/* Selected Project Display */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={selectedProject}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="project-card"
-        >
-          {selectedProject < academicProjects.length && (
-            <>
-              {/* Top Section: Project Header & Image */}
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10 mb-8">
-              {/* Left: Project Header (1/3) */}
-              <div className="lg:col-span-1 space-y-4">
-                <div className="glass rounded-xl p-6">
+      <div className="flex flex-col gap-4 md:gap-5">
+        {academicProjects.map(project => {
+          const isExpanded = expandedProject === project.id;
+          const currentImage = imageIndex[project.id] || 0;
+
+          return (
+            <div key={project.id} className="glass rounded-lg p-4 md:p-5 shadow-md">
+              <button
+                onClick={() => setExpandedProject(isExpanded ? null : project.id)}
+                className="w-full flex flex-col md:flex-row md:items-center md:justify-between text-left gap-3"
+              >
+                <div>
                   <h3
-                    className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3"
+                    className="text-lg md:text-xl font-bold text-white"
                     style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.04em' }}
                   >
-                    {academicProjects[selectedProject].title}
+                    {project.title}
                   </h3>
-                  <div className="flex flex-wrap gap-3 mb-4">
-                    <span
-                      className="text-indigo-400 text-sm font-semibold px-3 py-1 glass rounded-full"
-                      style={{ fontFamily: 'var(--font-inconsolata)' }}
-                    >
-                      {academicProjects[selectedProject].semester}
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    <span className="text-indigo-400 text-xs font-semibold px-3 py-1 glass rounded-full">
+                      {project.semester}
                     </span>
-                    <span
-                      className="text-purple-400 text-sm font-semibold px-3 py-1 glass rounded-full"
-                      style={{ fontFamily: 'var(--font-inconsolata)' }}
-                    >
-                      {academicProjects[selectedProject].subject}
+                    <span className="text-purple-400 text-xs font-semibold px-3 py-1 glass rounded-full">
+                      {project.subject}
                     </span>
                   </div>
-                  <p
-                    className="text-gray-300 text-sm md:text-base leading-relaxed mb-6"
-                    style={{ fontFamily: 'var(--font-inconsolata)' }}
-                  >
-                    {academicProjects[selectedProject].description}
+                </div>
+
+                <div className="flex items-center gap-2 text-indigo-300 text-xs md:text-sm font-semibold" style={{ fontFamily: 'var(--font-inconsolata)' }}>
+                  {isExpanded ? 'Hide Details' : 'View Details'}
+                  <svg className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </button>
+
+              {isExpanded && (
+                <div className="mt-4 border-t border-white/10 pt-4 space-y-4">
+                  <p className="text-gray-300 text-sm md:text-base leading-relaxed" style={{ fontFamily: 'var(--font-inconsolata)' }}>
+                    {project.description}
                   </p>
 
-                  {/* View Report Button */}
-                  {academicProjects[selectedProject].reportLink !== "#" && (
-                    <div className="flex justify-center">
+                  {project.images && project.images.length > 0 && (
+                    <div className="relative w-full h-48 md:h-56 rounded-lg overflow-hidden bg-indigo-900/20">
+                      <Image
+                        src={project.images[currentImage]}
+                        alt={`${project.title} - slide ${currentImage + 1}`}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 70vw"
+                      />
+                      {project.images.length > 1 && (
+                        <>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); handlePrev(project); }}
+                            className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 glass rounded-full flex items-center justify-center text-white hover:text-indigo-300"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                            </svg>
+                          </button>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); handleNext(project); }}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 glass rounded-full flex items-center justify-center text-white hover:text-indigo-300"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                          </button>
+                          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
+                            {project.images.map((_, idx) => (
+                              <button
+                                key={idx}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setImageIndex(prev => ({ ...prev, [project.id]: idx }));
+                                }}
+                                className={`w-2 h-2 rounded-full ${idx === currentImage ? 'bg-indigo-400' : 'bg-white/40'}`}
+                              />
+                            ))}
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  )}
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {project.objectives && project.objectives[0] !== "Coming Soon" && (
+                      <div>
+                        <h4 className="text-sm font-bold text-indigo-400 mb-2" style={{ fontFamily: 'var(--font-bebas)' }}>
+                          Objectives
+                        </h4>
+                        <ul className="space-y-1.5">
+                          {project.objectives.map((objective, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                              <div className="w-1.5 h-1.5 bg-indigo-400 rounded-full mt-2" />
+                              <p className="text-gray-300 text-xs md:text-sm" style={{ fontFamily: 'var(--font-inconsolata)' }}>
+                                {objective}
+                              </p>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    <div>
+                      <h4 className="text-sm font-bold text-indigo-400 mb-2" style={{ fontFamily: 'var(--font-bebas)' }}>
+                        Tech Stack
+                      </h4>
+                      <div className="space-y-2">
+                        <div>
+                          <span className="text-purple-400 font-semibold text-xs block mb-1">Backend</span>
+                          <div className="flex flex-wrap gap-2">
+                            {project.techStack.backend.map((tech, index) => (
+                              <span
+                                key={index}
+                                className="text-[11px] px-3 py-1 bg-indigo-500/20 text-indigo-200 rounded-md border border-indigo-500/20"
+                                style={{ fontFamily: 'var(--font-inconsolata)' }}
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <span className="text-purple-400 font-semibold text-xs block mb-1">Frontend</span>
+                          <div className="flex flex-wrap gap-2">
+                            {project.techStack.frontend.map((tech, index) => (
+                              <span
+                                key={index}
+                                className="text-[11px] px-3 py-1 bg-indigo-500/20 text-indigo-200 rounded-md border border-indigo-500/20"
+                                style={{ fontFamily: 'var(--font-inconsolata)' }}
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {project.reportLink !== "#" && (
+                    <div className="pt-3">
                       <a
-                        href={academicProjects[selectedProject].reportLink}
+                        href={project.reportLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center px-6 py-3 glass text-white hover:text-white hover:bg-indigo-500/20 transition-all duration-300 rounded-lg font-semibold hover:scale-105 transform"
+                        className="inline-flex items-center text-indigo-400 hover:text-indigo-300 text-sm font-semibold transition-colors duration-300"
                         style={{ fontFamily: 'var(--font-inconsolata)' }}
                       >
-                        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        View Detailed Report
+                        <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                         </svg>
-                        View Project Report
                       </a>
                     </div>
                   )}
                 </div>
-              </div>
-
-              {/* Right: Image Slider (2/3) */}
-              <div className="lg:col-span-2">
-                <div className="overflow-hidden">
-                  <div className="relative h-64 md:h-72 lg:h-96 rounded-lg overflow-hidden bg-gray-800 p-4">
-                    {academicProjects[selectedProject].images[0] !== "/images/placeholder.jpg" ? (
-                      <>
-                        <AnimatePresence mode="wait">
-                          <motion.div
-                            key={currentImageIndex[academicProjects[selectedProject].id] || 0}
-                            initial={{ opacity: 0, x: 300 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -300 }}
-                            transition={{ duration: 0.5, ease: "easeInOut" }}
-                            className="absolute inset-4"
-                          >
-                            <Image
-                              src={academicProjects[selectedProject].images[currentImageIndex[academicProjects[selectedProject].id] || 0]}
-                              alt={`${academicProjects[selectedProject].title} - Image ${(currentImageIndex[academicProjects[selectedProject].id] || 0) + 1}`}
-                              fill
-                              className="object-contain rounded-lg"
-                              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 66vw, 60vw"
-                            />
-                          </motion.div>
-                        </AnimatePresence>
-
-                        {/* Navigation Dots */}
-                        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                          {academicProjects[selectedProject].images.map((_, index) => (
-                            <button
-                              key={index}
-                              onClick={() => setCurrentImageIndex(prev => ({
-                                ...prev,
-                                [academicProjects[selectedProject].id]: index
-                              }))}
-                              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                                index === (currentImageIndex[academicProjects[selectedProject].id] || 0)
-                                  ? 'bg-indigo-400 scale-110'
-                                  : 'bg-white/30 hover:bg-white/50'
-                              }`}
-                            />
-                          ))}
-                        </div>
-
-                        {/* Navigation Arrows */}
-                        <button
-                          onClick={() => {
-                            const currentIdx = currentImageIndex[academicProjects[selectedProject].id] || 0;
-                            const newIdx = currentIdx === 0 ? academicProjects[selectedProject].images.length - 1 : currentIdx - 1;
-                            setCurrentImageIndex(prev => ({
-                              ...prev,
-                              [academicProjects[selectedProject].id]: newIdx
-                            }));
-                          }}
-                          className="absolute left-2 top-1/2 transform -translate-y-1/2 w-10 h-10 glass rounded-full flex items-center justify-center text-white hover:text-indigo-400 transition-colors duration-300"
-                        >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                          </svg>
-                        </button>
-                        <button
-                          onClick={() => {
-                            const currentIdx = currentImageIndex[academicProjects[selectedProject].id] || 0;
-                            const newIdx = (currentIdx + 1) % academicProjects[selectedProject].images.length;
-                            setCurrentImageIndex(prev => ({
-                              ...prev,
-                              [academicProjects[selectedProject].id]: newIdx
-                            }));
-                          }}
-                          className="absolute right-2 top-1/2 transform -translate-y-1/2 w-10 h-10 glass rounded-full flex items-center justify-center text-white hover:text-indigo-400 transition-colors duration-300"
-                        >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                          </svg>
-                        </button>
-                      </>
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="text-center">
-                          <div className="w-16 h-16 bg-indigo-500/20 rounded-full flex items-center justify-center mb-4 mx-auto">
-                            <svg className="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                            </svg>
-                          </div>
-                          <p className="text-gray-400 text-sm" style={{ fontFamily: 'var(--font-inconsolata)' }}>
-                            Project images coming soon
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
+              )}
             </div>
-
-            {/* Bottom Section: Objectives & Tech Stack */}
-            {(academicProjects[selectedProject].objectives[0] !== "Coming Soon" || 
-              academicProjects[selectedProject].techStack.backend[0] !== "TBD") && (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Objectives */}
-                {academicProjects[selectedProject].objectives[0] !== "Coming Soon" && (
-                  <div className="glass rounded-xl p-6">
-                    <h4
-                      className="text-lg md:text-xl font-bold text-indigo-400 mb-4"
-                      style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.04em' }}
-                    >
-                      PROJECT OBJECTIVES
-                    </h4>
-                                         <ul className="space-y-3">
-                       {academicProjects[selectedProject].objectives.map((objective, index) => (
-                         <li
-                           key={index}
-                           className="flex items-start space-x-3"
-                         >
-                           <div className="w-2 h-2 bg-indigo-400 rounded-full mt-2 flex-shrink-0"></div>
-                           <p
-                             className="text-gray-300 text-sm md:text-base leading-relaxed"
-                             style={{ fontFamily: 'var(--font-inconsolata)' }}
-                           >
-                             {objective}
-                           </p>
-                         </li>
-                       ))}
-                     </ul>
-                  </div>
-                )}
-
-                {/* Tech Stack */}
-                {academicProjects[selectedProject].techStack.backend[0] !== "TBD" && (
-                  <div className="glass rounded-xl p-6">
-                    <h4
-                      className="text-lg md:text-xl font-bold text-indigo-400 mb-4"
-                      style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.04em' }}
-                    >
-                      TECH STACK
-                    </h4>
-                    <div className="space-y-4">
-                      <div>
-                        <span
-                          className="text-purple-400 font-semibold text-sm mb-2 block"
-                          style={{ fontFamily: 'var(--font-inconsolata)' }}
-                        >
-                          Backend:
-                        </span>
-                        <div className="flex flex-wrap gap-2">
-                          {academicProjects[selectedProject].techStack.backend.map((tech, index) => (
-                            <span
-                              key={index}
-                              className="text-xs px-3 py-1 bg-indigo-500/20 text-indigo-300 rounded-md border border-indigo-500/30"
-                              style={{ fontFamily: 'var(--font-inconsolata)' }}
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                      <div>
-                        <span
-                          className="text-purple-400 font-semibold text-sm mb-2 block"
-                          style={{ fontFamily: 'var(--font-inconsolata)' }}
-                        >
-                          Frontend:
-                        </span>
-                        <div className="flex flex-wrap gap-2">
-                          {academicProjects[selectedProject].techStack.frontend.map((tech, index) => (
-                            <span
-                              key={index}
-                              className="text-xs px-3 py-1 bg-indigo-500/20 text-indigo-300 rounded-md border border-indigo-500/30"
-                              style={{ fontFamily: 'var(--font-inconsolata)' }}
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-            </>
-          )}
-        </motion.div>
-      </AnimatePresence>
+          );
+        })}
+      </div>
     </section>
   );
 }

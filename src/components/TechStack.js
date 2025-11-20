@@ -1,44 +1,8 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { staggerFadeIn, scaleIn, magneticEffect } from '../utils/gsapAnimations';
-
-// Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger);
-
-// Enhanced futuristic tech icon component
-const TechIcon = ({ src, alt, withBackground = false }) => {
-  return (
-    <div className="tech-icon-container group">
-      <div className="w-12 h-12 flex items-center justify-center glass rounded-md overflow-hidden border border-white/10 group-hover:border-indigo-400 transition-all duration-300 relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        {withBackground ? (
-          <div className="bg-white p-1 rounded-sm flex items-center justify-center w-8 h-8 relative z-10">
-            <img 
-              src={src} 
-              alt={alt} 
-              className="w-6 h-6 object-contain" 
-            />
-          </div>
-        ) : (
-          <img 
-            src={src} 
-            alt={alt} 
-            className="w-8 h-8 object-contain relative z-10" 
-          />
-        )}
-      </div>
-    </div>
-  );
-};
+import React from 'react';
 
 const TechStack = () => {
-  const sectionRef = useRef(null);
-  const headerRef = useRef(null);
-  const techSectionsRef = useRef([]);
-  
   // Updated data structure for the tech stack following your categories
   const techData = {
     sections: [
@@ -91,86 +55,10 @@ const TechStack = () => {
     ]
   };
 
-  useEffect(() => {
-    const section = sectionRef.current;
-    const header = headerRef.current;
-    const techSections = techSectionsRef.current;
-
-    if (section && header && techSections.length > 0) {
-      // Animate header
-      gsap.fromTo(header,
-        { opacity: 0, y: 50, scale: 0.9 },
-        { 
-          opacity: 1, 
-          y: 0, 
-          scale: 1,
-          duration: 0.8, 
-          ease: "back.out(1.7)",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 80%",
-            toggleActions: "play none none reverse"
-          }
-        }
-      );
-
-      // Stagger animate tech sections
-      gsap.fromTo(techSections,
-        { opacity: 0, y: 50, scale: 0.95 },
-        { 
-          opacity: 1, 
-          y: 0, 
-          scale: 1,
-          duration: 0.6, 
-          stagger: 0.15,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 70%",
-            toggleActions: "play none none reverse"
-          }
-        }
-      );
-
-      // Add magnetic effect to tech sections
-      techSections.forEach(techSection => {
-        if (techSection) {
-          magneticEffect(techSection);
-        }
-      });
-
-      // Animate individual tech icons on hover
-      const techIcons = section.querySelectorAll('.tech-icon-container');
-      techIcons.forEach(icon => {
-        icon.addEventListener('mouseenter', () => {
-          gsap.to(icon, {
-            scale: 1.1,
-            rotation: 5,
-            duration: 0.3,
-            ease: "back.out(1.7)"
-          });
-        });
-
-        icon.addEventListener('mouseleave', () => {
-          gsap.to(icon, {
-            scale: 1,
-            rotation: 0,
-            duration: 0.3,
-            ease: "power2.out"
-          });
-        });
-      });
-    }
-
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
-  }, []);
-
   return (
-    <section ref={sectionRef} className="py-16 px-6 md:px-16 max-w-7xl mx-auto">
+    <section className="py-16 px-6 md:px-16 max-w-7xl mx-auto">
       {/* Header */}
-      <div ref={headerRef} className="text-center mb-12">
+      <div className="text-center mb-12">
         <h2 
           className="text-[7vw] md:text-[3vw] font-extrabold text-indigo-400 drop-shadow-lg tracking-widest text-center leading-none mb-2"
           style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.12em', textShadow: '0 8px 32px rgba(0,0,0,0.25)' }}
@@ -185,30 +73,42 @@ const TechStack = () => {
         </p>
       </div>
 
-      {/* Tech Stack Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {/* Compact Tech Stack List */}
+      <div className="flex flex-col gap-6 md:gap-8">
         {techData.sections.map((section, sectionIndex) => (
-          <div
-            key={sectionIndex}
-            ref={el => techSectionsRef.current[sectionIndex] = el}
-            className="tech-section glass rounded-xl p-6 border border-white/10 hover:border-indigo-400/30 transition-all duration-300 cursor-pointer"
-          >
+          <div key={sectionIndex} className="w-full">
+            {/* Section Title */}
             <h3 
-              className="text-lg font-bold text-white mb-4 tracking-wide"
+              className="text-lg md:text-xl font-bold text-white mb-3 md:mb-4 tracking-wide text-center"
               style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.04em' }}
             >
               {section.title}
             </h3>
-            <div className="grid grid-cols-3 gap-3">
+            
+            {/* Technologies List */}
+            <div className="flex flex-wrap gap-3 md:gap-4 items-center justify-center">
               {section.technologies.map((tech, techIndex) => (
-                <div key={techIndex} className="flex flex-col items-center">
-                  <TechIcon
-                    src={tech.icon}
-                    alt={tech.name}
-                    withBackground={tech.withBackground}
-                  />
+                <div 
+                  key={techIndex} 
+                  className="flex items-center gap-2 px-3 md:px-4 py-2 glass rounded-lg border border-white/10 hover:border-indigo-400/30 transition-all duration-300"
+                >
+                  {tech.withBackground ? (
+                    <div className="bg-white p-1 rounded-sm flex items-center justify-center w-6 h-6">
+                      <img 
+                        src={tech.icon} 
+                        alt={tech.name} 
+                        className="w-4 h-4 object-contain" 
+                      />
+                    </div>
+                  ) : (
+                    <img 
+                      src={tech.icon} 
+                      alt={tech.name} 
+                      className="w-6 h-6 object-contain" 
+                    />
+                  )}
                   <span 
-                    className="text-xs text-gray-300 mt-2 text-center"
+                    className="text-sm text-gray-300"
                     style={{ fontFamily: 'var(--font-inconsolata)' }}
                   >
                     {tech.name}
@@ -219,8 +119,6 @@ const TechStack = () => {
           </div>
         ))}
       </div>
-
-
     </section>
   );
 };
