@@ -9,6 +9,21 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-const eslintConfig = [...compat.extends("next/core-web-vitals")];
+const eslintConfig = [
+  {
+    ignores: ["node_modules/**", ".next/**", "out/**", ".vercel/**"],
+  },
+  ...compat.extends("next/core-web-vitals").map(config => {
+    // Remove parser if it contains functions that can't be serialized
+    if (config.languageOptions?.parser) {
+      const { parser, ...restLanguageOptions } = config.languageOptions;
+      return {
+        ...config,
+        languageOptions: restLanguageOptions,
+      };
+    }
+    return config;
+  }),
+];
 
 export default eslintConfig;
