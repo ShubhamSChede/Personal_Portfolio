@@ -27,8 +27,8 @@ const Footer = () => {
             {/* Funny line that changes on hover */}
             <span className="inline-block transition-all duration-300 hover:scale-105">
               <span className="group cursor-pointer">
-                <span className="group-hover:hidden">console.log("You're still here? Impressive! 🎉");</span>
-                <span className="hidden group-hover:inline">console.log("Thanks for scrolling this far! 🚀");</span>
+                <span className="group-hover:hidden">console.log(&quot;You&apos;re still here? Impressive! 🎉&quot;);</span>
+                <span className="hidden group-hover:inline">console.log(&quot;Thanks for scrolling this far! 🚀&quot;);</span>
               </span>
             </span>
           </p>

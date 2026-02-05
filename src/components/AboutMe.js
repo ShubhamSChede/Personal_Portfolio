@@ -139,16 +139,16 @@ export default function AboutMe() {
           variants={fadeInUp}
           style={{ fontFamily: 'var(--font-inconsolata)' }}
         >
-I'm Shubham Chede, a proactive full stack developer passionate about building dynamic and impactful web experiences. I enjoy working across the stack solving complex problems with clean, efficient code. With hands on experience in React Native, Next.js, and Node.js, I also bring a strong eye for UI/UX design. I'm currently pursuing a B.E. in Computer Engineering from Goa Engineering College (GEC), where I'm honing both my technical and creative development skills.
+I&apos;m Shubham Chede, a proactive full stack developer passionate about building dynamic and impactful web experiences. I enjoy working across the stack solving complex problems with clean, efficient code. With hands on experience in React Native, Next.js, and Node.js, I also bring a strong eye for UI/UX design. I&apos;m currently pursuing a B.E. in Computer Engineering from Goa Engineering College (GEC), where I&apos;m honing both my technical and creative development skills.
         </motion.p>
         <motion.p 
           className="mt-1 md:mt-1 text-gray-300 text-[11px] md:text-xs leading-snug" 
           variants={fadeInUp}
           style={{ fontFamily: 'var(--font-inconsolata)' }}
         >
-          When I'm not coding, I'm exploring new ideas and staying curious. I also enjoy
+          When I&apos;m not coding, I&apos;m exploring new ideas and staying curious. I also enjoy
           working on design and digital art, adding a creative touch to my projects.
-          Life's about balance, and I love embracing every part of it.
+          Life&apos;s about balance, and I love embracing every part of it.
         </motion.p>
         <motion.p 
           className="mt-1 md:mt-1 text-gray-300 text-[11px] md:text-xs leading-snug" 

@@ -207,6 +207,7 @@ const ProjectContent = () => {
     if (id && projectsData[id]) {
       setProject(projectsData[id]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- projectsData is static
   }, [id]);
 
   if (!project) {

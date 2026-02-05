@@ -299,7 +299,7 @@ export const cursorFollow = (cursor, follower) => {
   };
 };
 
-export default {
+const gsapAnimations = {
   fadeInUp,
   fadeInLeft,
   fadeInRight,
@@ -314,3 +314,5 @@ export default {
   pageTransition,
   cursorFollow
 };
+
+export default gsapAnimations;

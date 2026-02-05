@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 
 const TechStack = () => {
   // Updated data structure for the tech stack following your categories
@@ -94,17 +95,21 @@ const TechStack = () => {
                 >
                   {tech.withBackground ? (
                     <div className="bg-white p-1 rounded-sm flex items-center justify-center w-6 h-6">
-                      <img 
-                        src={tech.icon} 
-                        alt={tech.name} 
-                        className="w-4 h-4 object-contain" 
+                      <Image
+                        src={tech.icon}
+                        alt={tech.name}
+                        width={16}
+                        height={16}
+                        className="object-contain"
                       />
                     </div>
                   ) : (
-                    <img 
-                      src={tech.icon} 
-                      alt={tech.name} 
-                      className="w-6 h-6 object-contain" 
+                    <Image
+                      src={tech.icon}
+                      alt={tech.name}
+                      width={24}
+                      height={24}
+                      className="object-contain"
                     />
                   )}
                   <span 
