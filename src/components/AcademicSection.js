@@ -1,295 +1,276 @@
 'use client';
 
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 const academicProjects = [
   {
     id: 1,
     title: "Mosaic Generator",
     semester: "Semester 6",
-    subject: "Image Processing & Vision Project",
+    subject: "Image Processing & Vision",
     description: "A comprehensive mosaic generation system that creates artistic mosaics from RGB images using dynamic color mapping and various visual effect filters.",
     objectives: [
       "Color Mosaic Generation with RGB images through dynamic color mapping",
-      "Fixed Block Size (16×16) for balanced resolution suitable for most images", 
-      "Visual Effect Filters including sepia, vintage, pop art for artistic enhancement",
-      "Quality Metrics evaluation using SSIM, MSE, and PSNR for numerical fidelity assessment",
-      "Step-by-Step Processing Workflow: Upload → Preprocess → Generate → Enhance",
-      "Job Status Tracking with real-time progress updates and output management"
+      "Fixed Block Size (16×16) for balanced resolution",
+      "Visual Effect Filters: sepia, vintage, pop art",
+      "Quality Metrics: SSIM, MSE, PSNR",
+      "Step-by-Step Workflow: Upload → Preprocess → Generate → Enhance",
+      "Job Status Tracking with real-time progress",
     ],
     techStack: {
-      backend: ["Python 3.6+", "Flask", "Flask-CORS", "NumPy", "Pillow (PIL)", "OpenCV (cv2)", "scikit-image", "matplotlib"],
-      frontend: ["Next.js", "Tailwind CSS", "React Hooks", "Fetch API"]
+      backend: ["Python 3.6+", "Flask", "NumPy", "Pillow", "OpenCV", "scikit-image"],
+      frontend: ["Next.js", "Tailwind CSS", "React Hooks"],
     },
     reportLink: "/IPV_PROJECT_REPORT.pdf",
     images: [
       "/images/careerpath/mos (1).png",
-      "/images/careerpath/mos (2).png", 
+      "/images/careerpath/mos (2).png",
       "/images/careerpath/mos (3).png",
-      "/images/careerpath/mos (4).png"
-    ]
+      "/images/careerpath/mos (4).png",
+    ],
   },
   {
     id: 2,
     title: "CricScorers",
     semester: "Semester 5",
     subject: "DBMS",
-    description: "CricScorer addresses the common challenges of cricket scorekeeping by offering a reliable, user-friendly, and comprehensive digital solution. With real-time scoring, seamless data storage, cross-platform compatibility, and a range of cricket-specific features, CricScorer streamlines the scoring process for match officials, players, and spectators alike.",
+    description: "CricScorer addresses common cricket scorekeeping challenges with a reliable, user-friendly digital solution: real-time scoring, data storage, cross-platform compatibility, and cricket-specific features.",
     objectives: [
-      "Scorer authentication with firstname, lastname, email, and password",
-      "Match setup with details including overs per match, overs per bowler, location, date, and ball type",
-      "Toss result recording with winning team and decision to bat or bowl first",
-      "User-friendly scoring interface for ball-by-ball score updates",
-      "Live score tracking accessible to spectators in real time",
-      "Player data storage with stats and performance history",
-      "Detailed match results and scorecards generation at the end of the game"
+      "Scorer authentication and match setup",
+      "Toss result and ball-by-ball scoring interface",
+      "Live score tracking for spectators",
+      "Player data storage and stats",
+      "Detailed match results and scorecards",
     ],
     techStack: {
       backend: ["Express JS", "Node JS", "PostgreSQL"],
-      frontend: ["React Native", "Expo", "Typescript"]
+      frontend: ["React Native", "Expo", "TypeScript"],
     },
-    reportLink: "./Final Report cricscorer.pdf",
-    images: ["/images/cric/1.jpg", "/images/cric/cric (3).jpg", "/images/cric/cric (8).jpg","/images/cric/cric (12).jpg",  "/images/cric/cric (20).jpg" , "/images/cric/cric (22).jpg"  ]
+    reportLink: "/Final Report cricscorer.pdf",
+    images: [
+      "/images/cric/1.jpg",
+      "/images/cric/cric (3).jpg",
+      "/images/cric/cric (8).jpg",
+      "/images/cric/cric (12).jpg",
+      "/images/cric/cric (20).jpg",
+      "/images/cric/cric (22).jpg",
+    ],
   },
   {
     id: 3,
     title: "Final year project",
     semester: "Semester 7-8",
-    subject: "Coming Soon", 
+    subject: "Coming Soon",
     description: "Academic project details will be added soon.",
     objectives: ["Coming Soon"],
-    techStack: {
-      backend: ["TBD"],
-      frontend: ["TBD"]
-    },
+    techStack: { backend: ["TBD"], frontend: ["TBD"] },
     reportLink: "#",
-    images: ["/images/placeholder.jpg"]
-  }
+    images: [],
+  },
 ];
 
 export default function AcademicSection() {
-  const [expandedProject, setExpandedProject] = useState(academicProjects[0].id);
-  const [imageIndex, setImageIndex] = useState({});
+  const [activeId, setActiveId] = useState(academicProjects[0].id);
+  const [imageIndex, setImageIndex] = useState(0);
+  const activeProject = academicProjects.find((p) => p.id === activeId);
 
   useEffect(() => {
-    const initial = {};
-    academicProjects.forEach(project => {
-      initial[project.id] = 0;
-    });
-    setImageIndex(initial);
-  }, []);
+    setImageIndex(0);
+  }, [activeId]);
 
   useEffect(() => {
-    const activeProject = academicProjects.find(project => project.id === expandedProject);
-    if (!activeProject || activeProject.images.length === 0) return;
-
+    if (!activeProject?.images?.length) return;
     const interval = setInterval(() => {
-      setImageIndex(prev => ({
-        ...prev,
-        [activeProject.id]: ((prev[activeProject.id] || 0) + 1) % activeProject.images.length
-      }));
+      setImageIndex((i) => (i + 1) % activeProject.images.length);
     }, 3500);
-
     return () => clearInterval(interval);
-  }, [expandedProject]);
+  }, [activeId, activeProject?.images?.length]);
 
-  const handlePrev = (project) => {
-    setImageIndex(prev => {
-      const current = prev[project.id] || 0;
-      const nextIndex = current === 0 ? project.images.length - 1 : current - 1;
-      return { ...prev, [project.id]: nextIndex };
-    });
+  const goPrev = () => {
+    if (!activeProject?.images?.length) return;
+    setImageIndex((i) => (i === 0 ? activeProject.images.length - 1 : i - 1));
   };
 
-  const handleNext = (project) => {
-    setImageIndex(prev => {
-      const current = prev[project.id] || 0;
-      const nextIndex = (current + 1) % project.images.length;
-      return { ...prev, [project.id]: nextIndex };
-    });
+  const goNext = () => {
+    if (!activeProject?.images?.length) return;
+    setImageIndex((i) => (i + 1) % activeProject.images.length);
   };
 
   return (
-    <section className="py-16 px-6 md:px-8 lg:px-12 max-w-6xl mx-auto">
-      <div className="text-center mb-10 md:mb-12">
+    <section
+      id="academic"
+      className="relative py-12 md:py-16 px-4 md:px-8 max-w-5xl mx-auto"
+      style={{ fontFamily: 'var(--font-inconsolata)' }}
+    >
+      {/* Header - compact */}
+      <div className="text-center mb-6 md:mb-8">
         <h2
-          className="text-[8vw] md:text-[3vw] font-extrabold text-indigo-400 drop-shadow-lg tracking-widest text-center leading-none mb-2"
-          style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.12em', textShadow: '0 8px 32px rgba(0,0,0,0.25)' }}
+          className="text-[7vw] md:text-[2.75rem] font-extrabold tracking-[0.15em] leading-none mb-1"
+          style={{
+            fontFamily: 'var(--font-bebas)',
+            background: 'linear-gradient(135deg, #818cf8 0%, #a78bfa 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+          }}
         >
           ACADEMIC PROJECTS
         </h2>
-        <p
-          className="text-gray-400 text-sm md:text-base font-medium"
-          style={{ fontFamily: 'var(--font-inconsolata)' }}
-        >
-          University coursework and research builds
+        <p className="text-gray-500 text-xs md:text-sm font-medium tracking-wider uppercase">
+          Coursework & research builds
         </p>
       </div>
 
-      <div className="flex flex-col gap-4 md:gap-5">
-        {academicProjects.map(project => {
-          const isExpanded = expandedProject === project.id;
-          const currentImage = imageIndex[project.id] || 0;
+      {/* Carousel tabs - compact strip */}
+      <div className="flex flex-wrap justify-center gap-2 mb-4 md:mb-5">
+        {academicProjects.map((project) => (
+          <button
+            key={project.id}
+            onClick={() => setActiveId(project.id)}
+            className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 border ${
+              activeId === project.id
+                ? 'bg-indigo-500/25 border-indigo-400/60 text-white shadow-lg shadow-indigo-500/15'
+                : 'bg-white/5 border-white/10 text-gray-400 hover:border-white/20 hover:text-gray-300'
+            }`}
+            style={{ fontFamily: 'var(--font-inconsolata)' }}
+          >
+            {project.title}
+          </button>
+        ))}
+      </div>
 
-          return (
-            <div key={project.id} className="glass rounded-lg p-4 md:p-5 shadow-md">
-              <button
-                onClick={() => setExpandedProject(isExpanded ? null : project.id)}
-                className="w-full flex flex-col md:flex-row md:items-center md:justify-between text-left gap-3"
-              >
-                <div>
-                  <h3
-                    className="text-lg md:text-xl font-bold text-white"
-                    style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.04em' }}
-                  >
-                    {project.title}
-                  </h3>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    <span className="text-indigo-400 text-xs font-semibold px-3 py-1 glass rounded-full">
-                      {project.semester}
-                    </span>
-                    <span className="text-purple-400 text-xs font-semibold px-3 py-1 glass rounded-full">
-                      {project.subject}
-                    </span>
-                  </div>
-                </div>
+      {/* Single expandable panel - fixed max height, scroll inside */}
+      <div className="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-sm overflow-hidden">
+        {activeProject && (
+          <div className="max-h-[min(65vh,520px)] overflow-y-auto">
+            <div className="p-4 md:p-6 space-y-4">
+              {/* Meta row */}
+              <div className="flex flex-wrap gap-2">
+                <span className="px-2.5 py-1 rounded-lg bg-indigo-400/15 text-indigo-300 text-[11px] font-semibold border border-indigo-400/20">
+                  {activeProject.semester}
+                </span>
+                <span className="px-2.5 py-1 rounded-lg bg-purple-400/15 text-purple-300 text-[11px] font-semibold border border-purple-400/20">
+                  {activeProject.subject}
+                </span>
+              </div>
 
-                <div className="flex items-center gap-2 text-indigo-300 text-xs md:text-sm font-semibold" style={{ fontFamily: 'var(--font-inconsolata)' }}>
-                  {isExpanded ? 'Hide Details' : 'View Details'}
-                  <svg className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </div>
-              </button>
+              <p className="text-gray-300 text-sm leading-relaxed">
+                {activeProject.description}
+              </p>
 
-              {isExpanded && (
-                <div className="mt-4 border-t border-white/10 pt-4 space-y-4">
-                  <p className="text-gray-300 text-sm md:text-base leading-relaxed" style={{ fontFamily: 'var(--font-inconsolata)' }}>
-                    {project.description}
-                  </p>
-
-                  {project.images && project.images.length > 0 && (
-                    <div className="relative w-full h-48 md:h-56 rounded-lg overflow-hidden bg-indigo-900/20">
-                      <Image
-                        src={project.images[currentImage]}
-                        alt={`${project.title} - slide ${currentImage + 1}`}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, 70vw"
-                      />
-                      {project.images.length > 1 && (
-                        <>
-                          <button
-                            onClick={(e) => { e.stopPropagation(); handlePrev(project); }}
-                            className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 glass rounded-full flex items-center justify-center text-white hover:text-indigo-300"
-                          >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                            </svg>
-                          </button>
-                          <button
-                            onClick={(e) => { e.stopPropagation(); handleNext(project); }}
-                            className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 glass rounded-full flex items-center justify-center text-white hover:text-indigo-300"
-                          >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
-                          </button>
-                          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
-                            {project.images.map((_, idx) => (
-                              <button
-                                key={idx}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setImageIndex(prev => ({ ...prev, [project.id]: idx }));
-                                }}
-                                className={`w-2 h-2 rounded-full ${idx === currentImage ? 'bg-indigo-400' : 'bg-white/40'}`}
-                              />
-                            ))}
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  )}
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {project.objectives && project.objectives[0] !== "Coming Soon" && (
-                      <div>
-                        <h4 className="text-sm font-bold text-indigo-400 mb-2" style={{ fontFamily: 'var(--font-bebas)' }}>
-                          Objectives
-                        </h4>
-                        <ul className="space-y-1.5">
-                          {project.objectives.map((objective, index) => (
-                            <li key={index} className="flex items-start gap-2">
-                              <div className="w-1.5 h-1.5 bg-indigo-400 rounded-full mt-2" />
-                              <p className="text-gray-300 text-xs md:text-sm" style={{ fontFamily: 'var(--font-inconsolata)' }}>
-                                {objective}
-                              </p>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    <div>
-                      <h4 className="text-sm font-bold text-indigo-400 mb-2" style={{ fontFamily: 'var(--font-bebas)' }}>
-                        Tech Stack
-                      </h4>
-                      <div className="space-y-2">
-                        <div>
-                          <span className="text-purple-400 font-semibold text-xs block mb-1">Backend</span>
-                          <div className="flex flex-wrap gap-2">
-                            {project.techStack.backend.map((tech, index) => (
-                              <span
-                                key={index}
-                                className="text-[11px] px-3 py-1 bg-indigo-500/20 text-indigo-200 rounded-md border border-indigo-500/20"
-                                style={{ fontFamily: 'var(--font-inconsolata)' }}
-                              >
-                                {tech}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                        <div>
-                          <span className="text-purple-400 font-semibold text-xs block mb-1">Frontend</span>
-                          <div className="flex flex-wrap gap-2">
-                            {project.techStack.frontend.map((tech, index) => (
-                              <span
-                                key={index}
-                                className="text-[11px] px-3 py-1 bg-indigo-500/20 text-indigo-200 rounded-md border border-indigo-500/20"
-                                style={{ fontFamily: 'var(--font-inconsolata)' }}
-                              >
-                                {tech}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {project.reportLink !== "#" && (
-                    <div className="pt-3">
-                      <a
-                        href={project.reportLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center text-indigo-400 hover:text-indigo-300 text-sm font-semibold transition-colors duration-300"
-                        style={{ fontFamily: 'var(--font-inconsolata)' }}
+              {/* Image carousel - compact, neutral fit for varying dimensions */}
+              {activeProject.images?.length > 0 && (
+                <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-black/40 flex items-center justify-center">
+                  <Image
+                    src={activeProject.images[imageIndex]}
+                    alt={`${activeProject.title} ${imageIndex + 1}`}
+                    fill
+                    className="object-contain object-center"
+                    sizes="(max-width: 768px) 100vw, 600px"
+                  />
+                  {activeProject.images.length > 1 && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={goPrev}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 backdrop-blur border border-white/20 flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+                        aria-label="Previous image"
                       >
-                        View Detailed Report
-                        <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                         </svg>
-                      </a>
-                    </div>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={goNext}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 backdrop-blur border border-white/20 flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+                        aria-label="Next image"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </button>
+                      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+                        {activeProject.images.map((_, idx) => (
+                          <button
+                            key={idx}
+                            type="button"
+                            onClick={() => setImageIndex(idx)}
+                            className={`w-1.5 h-1.5 rounded-full transition-colors ${idx === imageIndex ? 'bg-indigo-400' : 'bg-white/50'}`}
+                            aria-label={`Go to image ${idx + 1}`}
+                          />
+                        ))}
+                      </div>
+                    </>
                   )}
                 </div>
               )}
+
+              {/* Objectives + Tech - 2 cols on desktop */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                {activeProject.objectives?.[0] !== 'Coming Soon' && (
+                  <div>
+                    <h4 className="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-2" style={{ fontFamily: 'var(--font-bebas)' }}>
+                      Objectives
+                    </h4>
+                    <ul className="space-y-1.5">
+                      {activeProject.objectives.map((obj, i) => (
+                        <li key={i} className="flex gap-2 text-gray-400 text-xs leading-relaxed">
+                          <span className="w-1 h-1 rounded-full bg-indigo-400 flex-shrink-0 mt-2" />
+                          {obj}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                <div>
+                  <h4 className="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-2" style={{ fontFamily: 'var(--font-bebas)' }}>
+                    Tech Stack
+                  </h4>
+                  <div className="space-y-2">
+                    <div>
+                      <span className="text-purple-400/90 text-[10px] font-semibold uppercase block mb-1">Backend</span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {activeProject.techStack.backend.map((tech, i) => (
+                          <span key={i} className="px-2 py-0.5 rounded bg-indigo-500/15 text-indigo-200 text-[10px] border border-indigo-500/20">
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <span className="text-purple-400/90 text-[10px] font-semibold uppercase block mb-1">Frontend</span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {activeProject.techStack.frontend.map((tech, i) => (
+                          <span key={i} className="px-2 py-0.5 rounded bg-indigo-500/15 text-indigo-200 text-[10px] border border-indigo-500/20">
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {activeProject.reportLink && activeProject.reportLink !== '#' && (
+                <div className="pt-2 border-t border-white/5">
+                  <a
+                    href={activeProject.reportLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-indigo-400 hover:text-indigo-300 text-xs font-semibold transition-colors"
+                  >
+                    View detailed report
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+              )}
             </div>
-          );
-        })}
+          </div>
+        )}
       </div>
     </section>
   );

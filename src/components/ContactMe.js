@@ -8,18 +8,14 @@ import { staggerFadeIn, magneticEffect } from '../utils/gsapAnimations';
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
 
+const EMAIL = 'shubhamchede1602@gmail.com';
+
 const ContactMe = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     subject: '',
     message: ''
-  });
-  
-  const [status, setStatus] = useState({
-    submitted: false,
-    submitting: false,
-    info: { error: false, msg: null }
   });
 
   const sectionRef = useRef(null);
@@ -127,45 +123,15 @@ const ContactMe = () => {
     }));
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    setStatus(prevStatus => ({ ...prevStatus, submitting: true }));
-    
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-      
-      const data = await res.json();
-      
-      if (res.status === 200) {
-        setStatus({
-          submitted: true,
-          submitting: false,
-          info: { error: false, msg: data.message || 'Message sent successfully!' }
-        });
-        setFormData({
-          name: '',
-          email: '',
-          subject: '',
-          message: ''
-        });
-      } else {
-        setStatus({
-          info: { error: true, msg: data.message || 'Something went wrong' }
-        });
-      }
-    } catch (error) {
-      setStatus({
-        submitted: false,
-        submitting: false,
-        info: { error: true, msg: 'Something went wrong. Please try again later.' }
-      });
-    }
+    const subject = encodeURIComponent(formData.subject);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    );
+    const mailtoUrl = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
+    window.location.href = mailtoUrl;
+    setFormData({ name: '', email: '', subject: '', message: '' });
   };
 
   return (
@@ -181,22 +147,10 @@ const ContactMe = () => {
           className="text-indigo-400 text-base md:text-lg font-bold tracking-wide text-center max-w-lg mx-auto"
           style={{ fontFamily: 'var(--font-inconsolata)' }}
         >
-          Have a project in mind or want to collaborate? Send me a message and let's create something amazing together.
+          Have a project in mind or want to collaborate? Send me a message and let&apos;s create something amazing together.
         </p>
       </div>
 
-      {status.info.error && (
-        <div className="mb-8 p-4 glass border border-red-500/30 rounded-lg text-red-400 text-center">
-          <p style={{ fontFamily: 'var(--font-inconsolata)' }}>{status.info.msg}</p>
-        </div>
-      )}
-      
-      {status.submitted && !status.info.error && (
-        <div className="mb-8 p-4 glass border border-green-500/30 rounded-lg text-green-400 text-center">
-          <p style={{ fontFamily: 'var(--font-inconsolata)' }}>{status.info.msg}</p>
-        </div>
-      )}
-      
       <form ref={formRef} onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <label 
@@ -286,11 +240,10 @@ const ContactMe = () => {
           <button
             ref={submitButtonRef}
             type="submit"
-            disabled={status.submitting}
-            className="px-8 py-4 glass border border-indigo-400 text-indigo-400 rounded-lg hover:bg-indigo-400/10 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+            className="px-8 py-4 glass border border-indigo-400 text-indigo-400 rounded-lg hover:bg-indigo-400/10 transition-all duration-300 cursor-pointer"
             style={{ fontFamily: 'var(--font-inconsolata)' }}
           >
-            {status.submitting ? 'Sending...' : 'Send Message'}
+            Send Message
           </button>
         </div>
       </form>

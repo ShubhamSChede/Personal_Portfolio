@@ -1,289 +1,283 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
+import React, { useRef, useEffect } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { staggerFadeIn, scaleIn, magneticEffect } from '../utils/gsapAnimations';
 
-// Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
 
-const ProjectsSection = () => {
-  const [hoveredProject, setHoveredProject] = useState(null);
-  const [isMobile, setIsMobile] = useState(false);
-  const sectionRef = useRef(null);
-  const [previewTop, setPreviewTop] = useState(0);
-  const cardRefs = useRef([]);
-  const [animatingCardId, setAnimatingCardId] = useState(null);
-  const router = useRouter();
-  
-  // Check if the device is mobile
-  useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    // Initial check
-    checkIfMobile();
-    
-    // Add event listener for window resize
-    window.addEventListener('resize', checkIfMobile);
-    
-    // Clean up
-    return () => window.removeEventListener('resize', checkIfMobile);
-  }, []);
+const projects = [
+  {
+    id: '92148',
+    num: '01',
+    name: 'MYTRACKERY',
+    description: 'Mobile app for personal tracking and productivity.',
+    technologies: ['React Native', 'Express.js', 'MongoDB'],
+    screenshot: '/images/Mytrakcery/mt1.jpg',
+  },
+  {
+    id: '74329',
+    num: '02',
+    name: 'Taskaholic',
+    description: 'Productivity app for task management and time tracking.',
+    technologies: ['Next.js', 'Supabase', 'TypeScript', 'shadcn'],
+    screenshot: '/images/task/task (1).png',
+  },
+  {
+    id: '85617',
+    num: '03',
+    name: 'Roshstocks',
+    description: 'Wedding invitation website with a polished, shareable experience.',
+    technologies: ['Next.js', 'Tailwind CSS', 'MongoDB'],
+    screenshot: '/images/02.jpg',
+  },
 
-  // GSAP animations
+];
+
+const ProjectsSection = () => {
+  const sectionRef = useRef(null);
+  const titleRef = useRef(null);
+  const taglineRef = useRef(null);
+  const heroRef = useRef(null);
+  const sideRefs = useRef([]);
+  const router = useRouter();
+
   useEffect(() => {
     const section = sectionRef.current;
-    const cards = cardRefs.current;
+    const title = titleRef.current;
+    const tagline = taglineRef.current;
+    const hero = heroRef.current;
+    const sideCards = sideRefs.current.filter(Boolean);
 
-    if (section) {
-      // Animate section header
-      gsap.fromTo(section.querySelector('h2'),
-        { opacity: 0, y: 50 },
-        { 
-          opacity: 1, 
-          y: 0, 
-          duration: 0.8, 
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 80%",
-            toggleActions: "play none none reverse"
-          }
-        }
-      );
+    if (!section) return;
 
-      // Stagger animate project cards
-      if (cards.length > 0) {
-        gsap.fromTo(cards,
-          { opacity: 0, y: 30, scale: 0.95 },
-          { 
-            opacity: 1, 
-            y: 0, 
-            scale: 1, 
-            duration: 0.6, 
-            stagger: 0.15,
-            ease: "back.out(1.7)",
-            scrollTrigger: {
-              trigger: section,
-              start: "top 70%",
-              toggleActions: "play none none reverse"
-            }
-          }
-        );
-
-        // Add magnetic effect to cards
-        cards.forEach(card => {
-          if (card) magneticEffect(card);
-        });
-      }
+    if (title) {
+      gsap.fromTo(title, { opacity: 0, y: 36 }, {
+        opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: section, start: 'top 82%', toggleActions: 'play none none reverse' },
+      });
+    }
+    if (tagline) {
+      gsap.fromTo(tagline, { opacity: 0, y: 16 }, {
+        opacity: 1, y: 0, duration: 0.5, delay: 0.15, ease: 'power2.out',
+        scrollTrigger: { trigger: section, start: 'top 82%', toggleActions: 'play none none reverse' },
+      });
     }
 
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
+    if (hero) {
+      gsap.set(hero, { opacity: 0, y: 48 });
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top 78%',
+        onEnter: () => gsap.to(hero, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }),
+      });
+      const rect = section.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.85) gsap.to(hero, { opacity: 1, y: 0, duration: 0.5 });
+    }
+
+    sideCards.forEach((card, i) => {
+      if (!card) return;
+      gsap.set(card, { opacity: 0, x: i === 0 ? -32 : 32 });
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top 72%',
+        onEnter: () => gsap.to(card, {
+          opacity: 1, x: 0, duration: 0.6, delay: 0.1 + i * 0.08, ease: 'power2.out',
+        }),
+      });
+      const rect = section.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.85) {
+        gsap.to(card, { opacity: 1, x: 0, duration: 0.4, delay: i * 0.06 });
+      }
+    });
+
+    return () => ScrollTrigger.getAll().forEach(t => t.kill());
   }, []);
-  
-  const projects = [
-    {
-      id: '85617',
-      name: 'Roshstocks',
-      description: 'Wedding Invitation Website',
-      technologies: ['Next.js', 'Tailwind CSS','MongoDB'],
-      screenshot: `/images/02.jpg`,
-    },
-    {
-      id: '92148',
-      name: 'MYTRACKERY',
-      description: 'A mobile app for personal tracking and productivity.',
-      technologies: ['React Native', 'Express.js', 'MongoDB'],
-      screenshot: `/images/Mytrakcery/mt1.jpg`,
-    },
-    {
-      id: '74329',
-      name: 'Taskaholic',
-      description: 'A productivity app for task management and time tracking.',
-      technologies: ['Next.js', 'Supabase', 'TypeScript', 'shadcn'],
-      screenshot: `/images/task/task (1).png`,
-    },
-  ];
 
-  const handleProjectHover = (projectId, event) => {
-    if (isMobile) return;
-    
-    setHoveredProject(projectId);
-    const card = event.currentTarget;
-    const rect = card.getBoundingClientRect();
-    setPreviewTop(rect.top + window.scrollY);
-  };
-
-  const handleProjectLeave = () => {
-    if (isMobile) return;
-    setHoveredProject(null);
-  };
-
-  const handleProjectClick = (projectId) => {
-    setAnimatingCardId(projectId);
-    setTimeout(() => {
-      router.push(`/ProjectDetails?id=${projectId}`);
-    }, 300);
-  };
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
-    },
+  const handleClick = (projectId) => {
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('portfolio_home_scroll', String(window.scrollY));
+    }
+    router.push(`/ProjectDetails?id=${projectId}`);
   };
 
   return (
-    <section ref={sectionRef} className="py-16 px-6 md:px-16 max-w-7xl mx-auto">
-      {/* Header */}
-      <div className="text-center mb-12">
-        <h2
-          className="text-[7vw] md:text-[3vw] font-extrabold text-indigo-400 drop-shadow-lg tracking-widest text-center leading-none mb-2"
-          style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.12em', textShadow: '0 8px 32px rgba(0,0,0,0.25)' }}
-        >
-                            PERSONAL PROJECTS
-        </h2>
-        <p
-          className="text-indigo-400 text-base md:text-lg font-bold tracking-wide text-center"
-          style={{ fontFamily: 'var(--font-inconsolata)' }}
-        >
-          Some of my recent work
-        </p>
+    <section
+      ref={sectionRef}
+      id="projects"
+      className="relative w-full overflow-hidden py-20 md:py-28 px-4 md:px-8"
+      style={{ fontFamily: 'var(--font-inconsolata)' }}
+    >
+      {/* Background */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden>
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-500/5 rounded-full blur-[120px]" />
+        <div
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(129,140,248,0.6) 1px, transparent 0)`,
+            backgroundSize: '32px 32px',
+          }}
+        />
       </div>
 
-      {/* Projects Grid */}
-      <motion.div 
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-      >
-        {projects.map((project, index) => (
-          <motion.div
-            key={project.id}
-            className="glass rounded-xl overflow-hidden border border-white/10 hover:border-indigo-400/30 transition-all duration-300 transform hover:scale-105 cursor-pointer"
-            variants={itemVariants}
-            onMouseEnter={(e) => handleProjectHover(project.id, e)}
-            onMouseLeave={handleProjectLeave}
-            onClick={() => handleProjectClick(project.id)}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+      <div className="relative max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-14 md:mb-16">
+          <h2
+            ref={titleRef}
+            className="text-[10vw] sm:text-[8vw] md:text-[4.5rem] font-extrabold tracking-[0.2em] leading-none mb-2"
+            style={{
+              fontFamily: 'var(--font-bebas)',
+              background: 'linear-gradient(135deg, #818cf8 0%, #a78bfa 50%, #c084fc 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              letterSpacing: '0.18em',
+            }}
           >
-            {/* Project Image */}
-            <div className="relative h-48 overflow-hidden">
-              <Image
-                src={project.screenshot}
-                alt={project.name}
-                fill
-                className="object-cover transition-transform duration-300 hover:scale-110"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-            </div>
+            PERSONAL PROJECTS
+          </h2>
+          <p
+            ref={taglineRef}
+            className="text-gray-500 text-xs md:text-sm font-semibold tracking-[0.35em] uppercase"
+            style={{ fontFamily: 'var(--font-inconsolata)' }}
+          >
+            side quests & weekend builds
+          </p>
+        </div>
 
-            {/* Project Info */}
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-3">
-                <h3 
-                  className="text-xl font-bold text-white"
-                  style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.04em' }}
-                >
-                  {project.name}
-                </h3>
-                <span 
-                  className="text-indigo-400 text-sm font-bold"
-                  style={{ fontFamily: 'var(--font-inconsolata)' }}
-                >
-                  {project.id}
-                </span>
-              </div>
-              
-              <p 
-                className="text-gray-300 mb-4 text-sm leading-relaxed"
-                style={{ fontFamily: 'var(--font-inconsolata)' }}
-              >
-                {project.description}
+        {/* Bento grid: hero (8 cols, 2 rows) | side (4 cols x 2 rows) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 auto-rows-fr">
+          {/* Hero card - spans 2 rows on desktop */}
+          <article
+            ref={heroRef}
+            onClick={() => handleClick(projects[0].id)}
+            className="lg:col-span-8 lg:row-span-2 group relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.04] backdrop-blur-sm transition-all duration-300 hover:border-indigo-400/40 hover:shadow-[0_0_50px_-12px_rgba(129,140,248,0.25)] cursor-pointer flex flex-col lg:flex-row min-h-[320px] lg:min-h-[420px]"
+          >
+            <div className="relative w-full lg:w-[52%] min-h-[220px] lg:min-h-full flex-shrink-0 bg-black/30 flex items-center justify-center">
+              <span className="absolute left-4 top-4 z-10 text-[clamp(4rem,12vw,8rem)] font-black text-white/5 select-none" style={{ fontFamily: 'var(--font-bebas)' }}>
+                {projects[0].num}
+              </span>
+              <Image
+                src={projects[0].screenshot}
+                alt={projects[0].name}
+                fill
+                className="object-contain object-center transition-transform duration-500 group-hover:scale-[1.02]"
+                sizes="(max-width: 1024px) 100vw, 52vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent lg:from-black/30 pointer-events-none" />
+            </div>
+            <div className="relative flex-1 flex flex-col justify-center p-6 md:p-8 lg:p-10">
+              <span className="text-indigo-400/80 text-[10px] font-bold tracking-[0.2em] uppercase mb-2" style={{ fontFamily: 'var(--font-inconsolata)' }}>
+                Project {projects[0].num}
+              </span>
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 tracking-tight" style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.06em' }}>
+                {projects[0].name}
+              </h3>
+              <p className="text-gray-400 text-sm md:text-base leading-relaxed mb-5 max-w-md">
+                {projects[0].description}
               </p>
-              
-              {/* Technologies */}
-              <div className="flex flex-wrap gap-2">
-                {project.technologies.map((tech, techIndex) => (
-                  <span
-                    key={techIndex}
-                    className="px-3 py-1 bg-indigo-400/20 text-indigo-400 text-xs rounded-full border border-indigo-400/30"
-                    style={{ fontFamily: 'var(--font-inconsolata)' }}
-                  >
+              <div className="flex flex-wrap gap-2 mb-6">
+                {projects[0].technologies.map((tech, i) => (
+                  <span key={i} className="px-2.5 py-1 rounded-md bg-indigo-400/15 text-indigo-300/90 text-[11px] font-semibold border border-indigo-400/20">
                     {tech}
                   </span>
                 ))}
               </div>
+              <span className="inline-flex items-center gap-2 text-indigo-400 font-semibold text-sm group-hover:gap-3 transition-all duration-300" style={{ fontFamily: 'var(--font-inconsolata)' }}>
+                View project
+                <span className="text-lg">→</span>
+              </span>
             </div>
-          </motion.div>
-        ))}
-      </motion.div>
+          </article>
 
-      {/* Floating Preview (Desktop Only) */}
-      {!isMobile && hoveredProject && (
-        <AnimatePresence>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            className="fixed z-50 pointer-events-none"
-            style={{ top: previewTop + 100, right: 50 }}
+          {/* Side card 1 */}
+          <article
+            ref={el => { sideRefs.current[0] = el; }}
+            onClick={() => handleClick(projects[1].id)}
+            className="lg:col-span-4 group relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.04] backdrop-blur-sm transition-all duration-300 hover:border-indigo-400/40 hover:shadow-[0_0_40px_-10px_rgba(129,140,248,0.2)] cursor-pointer flex flex-col min-h-[280px]"
           >
-            <div className="glass rounded-xl p-4 border border-white/20 shadow-2xl">
-              <div className="w-64 h-40 rounded-lg overflow-hidden mb-3">
-                <Image
-                  src={projects.find(p => p.id === hoveredProject)?.screenshot || ''}
-                  alt="Preview"
-                  width={256}
-                  height={160}
-                  className="object-cover w-full h-full"
-                />
-              </div>
-              <h4 
-                className="text-white font-bold mb-2"
-                style={{ fontFamily: 'var(--font-bebas)' }}
-              >
-                {projects.find(p => p.id === hoveredProject)?.name}
-              </h4>
-              <p 
-                className="text-gray-300 text-sm"
-                style={{ fontFamily: 'var(--font-inconsolata)' }}
-              >
-                {projects.find(p => p.id === hoveredProject)?.description}
-              </p>
+            <div className="relative w-full aspect-[16/10] flex-shrink-0 bg-black/30 flex items-center justify-center">
+              <span className="absolute left-3 top-3 z-10 text-5xl font-black text-white/10 select-none" style={{ fontFamily: 'var(--font-bebas)' }}>
+                {projects[1].num}
+              </span>
+              <Image
+                src={projects[1].screenshot}
+                alt={projects[1].name}
+                fill
+                className="object-contain object-center transition-transform duration-500 group-hover:scale-[1.02]"
+                sizes="(max-width: 1024px) 100vw, 33vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
             </div>
-          </motion.div>
-        </AnimatePresence>
-      )}
+            <div className="flex-1 flex flex-col justify-between p-4 md:p-5">
+              <div>
+                <h3 className="text-lg font-bold text-white mb-1.5 tracking-tight" style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.04em' }}>
+                  {projects[1].name}
+                </h3>
+                <p className="text-gray-400 text-xs leading-relaxed mb-3 line-clamp-2">
+                  {projects[1].description}
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {projects[1].technologies.slice(0, 3).map((tech, i) => (
+                  <span key={i} className="px-2 py-0.5 rounded bg-indigo-400/10 text-indigo-400/90 text-[10px] font-medium">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+              <span className="inline-flex items-center gap-1 text-indigo-400/90 text-xs font-semibold mt-2 group-hover:gap-2 transition-all duration-300">
+                View
+                <span>→</span>
+              </span>
+            </div>
+          </article>
+
+          {/* Side card 2 */}
+          <article
+            ref={el => { sideRefs.current[1] = el; }}
+            onClick={() => handleClick(projects[2].id)}
+            className="lg:col-span-4 group relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.04] backdrop-blur-sm transition-all duration-300 hover:border-indigo-400/40 hover:shadow-[0_0_40px_-10px_rgba(129,140,248,0.2)] cursor-pointer flex flex-col min-h-[280px]"
+          >
+            <div className="relative w-full aspect-[16/10] flex-shrink-0 bg-black/30 flex items-center justify-center">
+              <span className="absolute left-3 top-3 z-10 text-5xl font-black text-white/10 select-none" style={{ fontFamily: 'var(--font-bebas)' }}>
+                {projects[2].num}
+              </span>
+              <Image
+                src={projects[2].screenshot}
+                alt={projects[2].name}
+                fill
+                className="object-contain object-center transition-transform duration-500 group-hover:scale-[1.02]"
+                sizes="(max-width: 1024px) 100vw, 33vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
+            </div>
+            <div className="flex-1 flex flex-col justify-between p-4 md:p-5">
+              <div>
+                <h3 className="text-lg font-bold text-white mb-1.5 tracking-tight" style={{ fontFamily: 'var(--font-bebas)', letterSpacing: '0.04em' }}>
+                  {projects[2].name}
+                </h3>
+                <p className="text-gray-400 text-xs leading-relaxed mb-3 line-clamp-2">
+                  {projects[2].description}
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {projects[2].technologies.slice(0, 3).map((tech, i) => (
+                  <span key={i} className="px-2 py-0.5 rounded bg-indigo-400/10 text-indigo-400/90 text-[10px] font-medium">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+              <span className="inline-flex items-center gap-1 text-indigo-400/90 text-xs font-semibold mt-2 group-hover:gap-2 transition-all duration-300">
+                View
+                <span>→</span>
+              </span>
+            </div>
+          </article>
+        </div>
+      </div>
     </section>
   );
 };

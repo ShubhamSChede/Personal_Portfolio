@@ -14,11 +14,16 @@ import CustomCursor from '../components/CustomCursor';
 import LoadingScreen from '../components/LoadingScreen';
 import Head from 'next/head';
 
+const HAS_VISITED_KEY = 'portfolio_has_visited';
+const HOME_SCROLL_KEY = 'portfolio_home_scroll';
+
 const Page = () => {
   const videoRef = useRef(null);
   const waveRef = useRef(null);
   const [videoReady, setVideoReady] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() =>
+    typeof window !== 'undefined' && sessionStorage.getItem(HAS_VISITED_KEY) === 'true' ? false : true
+  );
 
   // Enhanced GSAP animation for floating wave
   useEffect(() => {
@@ -102,6 +107,25 @@ const Page = () => {
       clearTimeout(timeoutId);
     };
   }, [videoReady]);
+
+  // Restore scroll position when returning from project details
+  useEffect(() => {
+    if (isLoading) return;
+    const saved = sessionStorage.getItem(HOME_SCROLL_KEY);
+    if (saved === null) return;
+    sessionStorage.removeItem(HOME_SCROLL_KEY);
+    const y = parseInt(saved, 10);
+    if (!Number.isFinite(y)) return;
+    const t = setTimeout(() => {
+      window.scrollTo({ top: y, behavior: 'instant' });
+    }, 50);
+    return () => clearTimeout(t);
+  }, [isLoading]);
+
+  const handleLoaderComplete = () => {
+    if (typeof window !== 'undefined') sessionStorage.setItem(HAS_VISITED_KEY, 'true');
+    setIsLoading(false);
+  };
   
   return (
     <>
@@ -143,9 +167,9 @@ const Page = () => {
         }) }} />
       </Head>
       
-      {/* Loading Screen */}
+      {/* Loading Screen - only on first visit */}
       {isLoading && (
-        <LoadingScreen onComplete={() => setIsLoading(false)} />
+        <LoadingScreen onComplete={handleLoaderComplete} />
       )}
       
       {!isLoading && (
